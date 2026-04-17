@@ -11,6 +11,20 @@
 *.sln.docstates
 *.env
 
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+data_cache/
+
+# power BI
+bireport/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
