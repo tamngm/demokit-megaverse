@@ -49,7 +49,8 @@ def get_data_from_local(local_path):
         if not os.path.exists(local_path):
             logger.warning(f"File not found: {local_path}")
             return None
-        df = pd.read_parquet(local_path, engine='pyarrow')
+        # df = pd.read_parquet(local_path, engine='pyarrow')
+        df = pd.read_csv(local_path, encoding='utf-8')
         logger.info(f"Local -> DF: {local_path} successful.")
         return df
     except Exception as e:

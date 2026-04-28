@@ -1,5 +1,6 @@
 import pandas as pd
-from logging_history import logger 
+from src.logging_history import logger 
+
 import kagglehub
 import os
 
@@ -15,12 +16,21 @@ def extract_data_from_kaggle(kaggle_dataset_name):
         
         logger.info("Path to dataset files:", pathkaggle)
         file_name = kaggle_dataset_name
-        # file_name_ext = file_name + '.csv'
-        local_path = os.path.join(pathkaggle, f"{file_name}.csv")
-        # file_path = os.path.join(pathkaggle, file_name_ext)
-        logger.info(f'Data temporarily located at: {local_path}')
-        logger.info(f'Data file name: {file_name}')
+        #
+        #  find CSV files
+        files = [f for f in os.listdir(pathkaggle) if f.endswith('.csv')]
+        if not files:
+            raise FileNotFoundError(f"No .csv files found in {pathkaggle}")
         
+        # # Pick the first CSV (or add logic to pick by size/name)
+        target_file = os.path.join(pathkaggle, files[0])
+        logger.info(f'First file in path: {target_file}')
+        # local_path = os.path.join(pathkaggle, f"{file_name}.csv")
+
+        # file_path = os.path.join(pathkaggle, file_name_ext)
+        logger.info(f'File extracted to: {pathkaggle}')
+        # logger.info(f'Data temporarily located at: {local_path}')
+
         logger.info('Successful extract raw file to local temporary storage.')
 
 
@@ -28,7 +38,7 @@ def extract_data_from_kaggle(kaggle_dataset_name):
         # exc_info=True adds the full stack trace (the red error text) to the log
         logger.error(f"Unexpected error during extraction: {e}", exc_info=True)
         raise
-    return local_path
+    return target_file
 
 
 # if __name__ == '__main__':

@@ -1,0 +1,113 @@
+table z_test
+	lineageTag: d0162bfb-4c30-4abf-9b2b-e6c1fd74be71
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a90a033-5eb5-45ec-ac36-dd6057d54f6b
+		summarizeBy: sum
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_title
+		dataType: string
+		lineageTag: ceb3fd7c-c72a-43f5-baca-2b93032c61a3
+		summarizeBy: none
+		sourceColumn: product_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column mrp
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c0cfbe5-84a0-483e-9417-374731b97a06
+		summarizeBy: sum
+		sourceColumn: mrp
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: int64
+		formatString: 0
+		lineageTag: 716cdd9b-eb22-4c2c-bf0d-3d70bcad18e5
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_tags
+		dataType: string
+		lineageTag: 9702c56f-b86f-4cbe-8f13-d10137a7588b
+		summarizeBy: none
+		sourceColumn: product_tags
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_url
+		dataType: string
+		lineageTag: 72652c39-5fa4-4d12-9c38-13f3136e0c90
+		summarizeBy: none
+		sourceColumn: product_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		lineageTag: 2acfd98f-fe94-4623-b659-e51e39a2851d
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column category_cf_score
+		dataType: double
+		lineageTag: ca3ddc19-589b-4ca1-a54c-e590139a7d42
+		summarizeBy: sum
+		sourceColumn: category_cf_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column combo_set
+		dataType: string
+		lineageTag: 93256886-415d-4a5f-a41d-50cb4e2df905
+		summarizeBy: none
+		sourceColumn: combo_set
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_function
+		dataType: string
+		lineageTag: 7a10bcba-b187-4639-b531-ff78f8041dd1
+		summarizeBy: none
+		sourceColumn: product_function
+
+		annotation SummarizationSetBy = Automatic
+
+	column function_cf_score
+		dataType: double
+		lineageTag: c8dc4d97-a3df-40cd-8c8a-4b7dd4659aa6
+		summarizeBy: sum
+		sourceColumn: function_cf_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition z_test = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
+				    z_test_Table = offybi_Schema{[Name="z_test",Kind="Table"]}[Data]
+				in
+				    z_test_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
