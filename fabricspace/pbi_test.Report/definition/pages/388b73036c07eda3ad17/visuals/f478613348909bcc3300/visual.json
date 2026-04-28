@@ -1,0 +1,67 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "f478613348909bcc3300",
+  "position": {
+    "x": 655.64444444444439,
+    "y": 68.266666666666666,
+    "z": 1,
+    "height": 153.6,
+    "width": 624.35555555555561,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "card",
+    "autoSelectVisualType": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "z_test"
+                        }
+                      },
+                      "Property": "mrp"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(z_test.mrp)",
+              "nativeQueryRef": "Sum of mrp"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "68bd90983c6d0bbd90b0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "z_test"
+                  }
+                },
+                "Property": "mrp"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
