@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 # 1. LOAD THE SECRETS (Do this once at the top)
-load_dotenv() 
+load_dotenv(override=True) 
 
 # 2. GET THE VARIABLES
 # os.getenv looks in the memory where load_dotenv put them
@@ -18,4 +18,4 @@ AWS_REGION = os.getenv('AWS_REGION')
 S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
 S3_BUCKET_PRODUCT_REVIEW_PATH = os.getenv('S3_BUCKET_PRODUCT_REVIEW_PATH')
 
-# print(AWS_ACCESS_KEY_ID)
+# print(S3_BUCKET_NAME)

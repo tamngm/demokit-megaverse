@@ -108,7 +108,7 @@ table z_test_product
 				//     z_test_product_Table
 				
 				let
-				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    Source = AmazonAthena.Databases("aws-bi-demo", null, []),
 				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
 				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
 				    z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]

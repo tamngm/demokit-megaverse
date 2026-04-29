@@ -6,13 +6,14 @@ import config
 import pandas as pd
 
 def run_pipeline():
-    kaggle_dataset_name = "jithinanievarghese/cosmetics-and-beauty-products-reviews-top-brands"
+    # kaggle_dataset_name = "jithinanievarghese/cosmetics-and-beauty-products-reviews-top-brands"
+    kaggle_dataset_name = "rayzem/dynamic-apparel-sales-dataset-with-anomalies"
     logger.info("Main script started")
 
     # ------ EXTRACT & LOAD RAW TO S3
-    # file_path = extract_data_from_kaggle(kaggle_dataset_name)
-    s3_file_name_raw = 'cosmetic_product_reviews_raw.parquet'
-    # load_data_to_s3(file_path, s3_file_name_raw)
+    file_path = extract_data_from_kaggle(kaggle_dataset_name)
+    # s3_file_name_raw = 'sales_with_anomalies_raw.parquet'
+    # push_data_to_s3(file_path, s3_file_name_raw)
 
     # ------ GET RAW FROM THE S3
     # s3_bucket_path = ''
@@ -43,11 +44,11 @@ def run_pipeline():
     # dfproductraw = pd.read_csv('data/raw/product_master_data.csv')
     s3_file_name_raw = 'product_master_data_raw.parquet'
     file_path_raw = 'data/raw/product_master_data_raw.csv'
-    load_data_to_s3(file_path_raw, s3_file_name_raw)
+    push_data_to_s3(file_path_raw, s3_file_name_raw)
 
     s3_file_name_categorized = 'product_master_data_categorized.parquet'
     file_path_categorized = 'data/processed/product_master_data_categorized.csv'
-    load_data_to_s3(file_path_categorized, s3_file_name_categorized)
+    push_data_to_s3(file_path_categorized, s3_file_name_categorized)
 
 def sales_pipeline():
     kaggle_dataset_name = "jithinanievarghese/cosmetics-and-beauty-products-reviews-top-brands"
@@ -59,4 +60,4 @@ def sales_pipeline():
     # load_data_to_s3(file_path, s3_file_name_raw)
     
 if __name__ == '__main__':
-    # run_pipeline()
+    run_pipeline()
