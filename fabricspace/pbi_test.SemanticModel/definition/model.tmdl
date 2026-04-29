@@ -8,11 +8,11 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["z_test"]
+annotation PBI_QueryOrder = ["z_test_product"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table z_test
+ref table z_test_product
 
 ref cultureInfo en-US
 
