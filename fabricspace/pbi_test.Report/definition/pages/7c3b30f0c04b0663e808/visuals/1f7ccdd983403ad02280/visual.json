@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "02a3ac707a65c3503475",
+  "name": "1f7ccdd983403ad02280",
   "position": {
-    "x": 34.133333333333333,
-    "y": 68.266666666666666,
+    "x": 9.9555555555555557,
+    "y": 0,
     "z": 0,
-    "height": 487.82222222222219,
-    "width": 624.35555555555561,
+    "height": 418.13333333333333,
+    "width": 356.97777777777776,
     "tabOrder": 0
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "z_test"
+                      "Entity": "z_test_product"
                     }
                   },
-                  "Property": "product_tags"
+                  "Property": "product_category"
                 }
               },
-              "queryRef": "z_test.product_tags",
-              "nativeQueryRef": "product_tags",
+              "queryRef": "z_test_product.product_category",
+              "nativeQueryRef": "product_category",
               "active": true
             }
           ]
@@ -41,17 +41,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "z_test"
+                          "Entity": "z_test_product"
                         }
                       },
-                      "Property": "price"
+                      "Property": "mrp"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(z_test.price)",
-              "nativeQueryRef": "Sum of price"
+              "queryRef": "Sum(z_test_product.mrp)",
+              "nativeQueryRef": "Sum of mrp"
             }
           ]
         }
@@ -65,10 +65,10 @@
                   "Column": {
                     "Expression": {
                       "SourceRef": {
-                        "Entity": "z_test"
+                        "Entity": "z_test_product"
                       }
                     },
-                    "Property": "price"
+                    "Property": "mrp"
                   }
                 },
                 "Function": 0
@@ -85,17 +85,17 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "02bd5c0a820c04737069",
+        "name": "d9a28a5ca142ada33b6e",
         "field": {
           "Aggregation": {
             "Expression": {
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "z_test"
+                    "Entity": "z_test_product"
                   }
                 },
-                "Property": "price"
+                "Property": "mrp"
               }
             },
             "Function": 0
@@ -104,15 +104,15 @@
         "type": "Advanced"
       },
       {
-        "name": "b3544afb2dd55ae0d35a",
+        "name": "f9107d1002006b0b206e",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "z_test"
+                "Entity": "z_test_product"
               }
             },
-            "Property": "product_tags"
+            "Property": "product_category"
           }
         },
         "type": "Categorical"
