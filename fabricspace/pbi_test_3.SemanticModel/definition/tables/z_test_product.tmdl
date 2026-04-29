@@ -1,10 +1,10 @@
-table z_test
-	lineageTag: d0162bfb-4c30-4abf-9b2b-e6c1fd74be71
+table z_test_product
+	lineageTag: 2892dd0d-f156-4c2e-a0b3-efd66f3fe5ab
 
 	column product_id
 		dataType: int64
 		formatString: 0
-		lineageTag: 8a90a033-5eb5-45ec-ac36-dd6057d54f6b
+		lineageTag: 22c4fd1e-180f-487c-8988-24fe016c2d42
 		summarizeBy: sum
 		sourceColumn: product_id
 
@@ -12,7 +12,7 @@ table z_test
 
 	column product_title
 		dataType: string
-		lineageTag: ceb3fd7c-c72a-43f5-baca-2b93032c61a3
+		lineageTag: 0b1cc870-58e7-4654-9205-15f0cf2404b4
 		summarizeBy: none
 		sourceColumn: product_title
 
@@ -21,7 +21,7 @@ table z_test
 	column mrp
 		dataType: int64
 		formatString: 0
-		lineageTag: 5c0cfbe5-84a0-483e-9417-374731b97a06
+		lineageTag: cd888291-5e9a-4b2d-a632-45a7493cfbd7
 		summarizeBy: sum
 		sourceColumn: mrp
 
@@ -30,7 +30,7 @@ table z_test
 	column price
 		dataType: int64
 		formatString: 0
-		lineageTag: 716cdd9b-eb22-4c2c-bf0d-3d70bcad18e5
+		lineageTag: f664d23b-82cf-4e89-964f-a8c1e655cb09
 		summarizeBy: sum
 		sourceColumn: price
 
@@ -38,7 +38,7 @@ table z_test
 
 	column product_tags
 		dataType: string
-		lineageTag: 9702c56f-b86f-4cbe-8f13-d10137a7588b
+		lineageTag: bb63111e-3fa5-4da5-8045-f52ff5633abb
 		summarizeBy: none
 		sourceColumn: product_tags
 
@@ -46,7 +46,7 @@ table z_test
 
 	column product_url
 		dataType: string
-		lineageTag: 72652c39-5fa4-4d12-9c38-13f3136e0c90
+		lineageTag: 3b9c00e9-ab67-4ebd-8b13-a83549186c24
 		summarizeBy: none
 		sourceColumn: product_url
 
@@ -54,7 +54,7 @@ table z_test
 
 	column product_category
 		dataType: string
-		lineageTag: 2acfd98f-fe94-4623-b659-e51e39a2851d
+		lineageTag: 357aca16-19d4-48b5-b61b-2a1a2ef5e6c9
 		summarizeBy: none
 		sourceColumn: product_category
 
@@ -62,7 +62,7 @@ table z_test
 
 	column category_cf_score
 		dataType: double
-		lineageTag: ca3ddc19-589b-4ca1-a54c-e590139a7d42
+		lineageTag: 8a3e8728-c35b-4ebf-8cdb-0fbbb48724da
 		summarizeBy: sum
 		sourceColumn: category_cf_score
 
@@ -72,7 +72,7 @@ table z_test
 
 	column combo_set
 		dataType: string
-		lineageTag: 93256886-415d-4a5f-a41d-50cb4e2df905
+		lineageTag: 9dcd6493-6495-4e76-9986-3587fc087899
 		summarizeBy: none
 		sourceColumn: combo_set
 
@@ -80,7 +80,7 @@ table z_test
 
 	column product_function
 		dataType: string
-		lineageTag: 7a10bcba-b187-4639-b531-ff78f8041dd1
+		lineageTag: 864e250e-5e31-465a-959a-2e2dcadd21cb
 		summarizeBy: none
 		sourceColumn: product_function
 
@@ -88,7 +88,7 @@ table z_test
 
 	column function_cf_score
 		dataType: double
-		lineageTag: c8dc4d97-a3df-40cd-8c8a-4b7dd4659aa6
+		lineageTag: 09ad353b-8911-40fd-a017-2c91f13c5cfc
 		summarizeBy: sum
 		sourceColumn: function_cf_score
 
@@ -96,16 +96,24 @@ table z_test
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	partition z_test = m
+	partition z_test_product = m
 		mode: import
 		source =
+				// let
+				//     Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				//     AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				//     offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
+				//     z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]
+				// in
+				//     z_test_product_Table
+				
 				let
 				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
 				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
 				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
-				    z_test_Table = offybi_Schema{[Name="z_test",Kind="Table"]}[Data]
+				    z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]
 				in
-				    z_test_Table
+				    z_test_product_Table
 
 	annotation PBI_NavigationStepName = Navigation
 
