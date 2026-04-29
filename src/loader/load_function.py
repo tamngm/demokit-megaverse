@@ -7,7 +7,7 @@ import io
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
 
-logger = logger.getLogger(__name__)
+# logger = logger.getLogger(__name__)
 
 def get_s3_client():
     """Creates the S3 client using config credentials."""
@@ -72,9 +72,11 @@ def save_data_to_local(df, local_path):
 # PUSH TO S3
 def push_data_to_s3(local_path, s3_key):
     """Uploads an existing local file -> S3."""
+    logger.info(f'S3 BUCKET NAME is {config.S3_BUCKET_NAME}')
     try:
         s3_client = get_s3_client()
         s3_client.upload_file(local_path, config.S3_BUCKET_NAME, s3_key)
+        
         logger.info(f"Local -> S3: {s3_key} upload successful.")
         return True
     except Exception as e:
@@ -84,3 +86,4 @@ def push_data_to_s3(local_path, s3_key):
 # if __name__ == "__main__":
     # path_to_file = config.S3_BUCKET_NAME + "my_data.parquet"
     # df = get_data_from_s3(path_to_file)
+    # print(config.S3_BUCKET_NAME)

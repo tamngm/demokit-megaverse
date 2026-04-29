@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../pbi_test.SemanticModel"
+      "path": "../pbi_test_3.SemanticModel"
     }
   }
 }

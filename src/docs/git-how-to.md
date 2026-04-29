@@ -28,11 +28,22 @@ git switch -c feature/my_new_task
 git push -u origin feature/my-new-task
 4. start coding
 
-# PUSH BACK FEATURE BRANCH
+# PUSH BACK ALL FEATURE BRANCH
 1. Check your branch (make sure you're on feat brance)
 git status
 2. Stage your changes
 git add .
+3. Commit with a clear message
+git commit -m "feat: add sales_wk0 model with tests"
+4. Push your branch
+Push your branch to the remote so your teammate can see it
+git push -u origin feature/my_task_name
+
+# PUSH ONLY A FOLDER BACK FEATURE BRANCH
+1. Check your branch (make sure you're on feat brance)
+git status
+2. Stage your changes
+git add fabricspace
 3. Commit with a clear message
 git commit -m "feat: add sales_wk0 model with tests"
 4. Push your branch

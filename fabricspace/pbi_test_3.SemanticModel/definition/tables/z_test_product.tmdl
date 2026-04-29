@@ -99,6 +99,14 @@ table z_test_product
 	partition z_test_product = m
 		mode: import
 		source =
+				// let
+				//     Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				//     AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				//     offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
+				//     z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]
+				// in
+				//     z_test_product_Table
+				
 				let
 				    Source = AmazonAthena.Databases("aws-bi-demo", null, []),
 				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
