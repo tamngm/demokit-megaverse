@@ -25,7 +25,7 @@ git pull origin main → brings in the latest commits from GitHub.
 2. Create your new feature branch
 git switch -c feature/my_new_task
 3. Push it to GitHub
-git push -u origin feature/my-new-task
+git push -u origin feature/my_new_task
 4. start coding
 
 # PUSH BACK ALL FEATURE BRANCH
