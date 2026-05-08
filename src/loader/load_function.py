@@ -6,6 +6,7 @@ import config
 import io
 import pyarrow.csv as pv
 import pyarrow.parquet as pq
+import gc
 
 # logger = logger.getLogger(__name__)
 
@@ -23,7 +24,8 @@ def get_data_from_s3(s3_key):
     Downloads a PARQUET file from S3 and returns a DataFrame.
     s3_key: the full path inside the bucket (e.g. 'processed/sales.parquet')
     s3_bucket: my-bucket
-    s3_key: data/raw/sales.parquet - is actually the file path with file name in S3
+    s3_key: data/raw/sales.parquet - is actually the file path with file name in S3, 
+    DO NOT INCLUDE the S3_BUCKET_NAME "s3://offy-bi-demo/" in the s3_key url
 
     """
     logger.info(f"Fetching Parquet file from S3: {s3_key}")
@@ -50,7 +52,7 @@ def get_data_from_local(local_path):
             logger.warning(f"File not found: {local_path}")
             return None
         # df = pd.read_parquet(local_path, engine='pyarrow')
-        df = pd.read_csv(local_path, encoding='utf-8')
+        df = pd.read_csv(local_path, encoding='utf-8', delimiter=';')
         logger.info(f"Local -> DF: {local_path} successful.")
         return df
     except Exception as e:
@@ -69,6 +71,33 @@ def save_data_to_local(df, local_path):
         logger.error(f"Failed local save: {e}", exc_info=True)
         return False
 
+# PUSH DF TO S3 IN PARQUET FORMAT
+def push_df_to_s3(df, s3_key):
+    try:
+        with io.BytesIO() as buffer:
+            # engine='pyarrow' is generally faster and more memory-efficient
+            df.to_parquet(buffer, index=False, engine='pyarrow')
+        
+            buffer.seek(0)
+            s3_client = get_s3_client()
+            get_s3_client().upload_fileobj(buffer, config.S3_BUCKET_NAME, s3_key)
+        
+        
+            
+        logger.info(f"Succes! Direct upload DF to S3: {s3_key}")
+        
+        # 4. CRITICAL: Manual Memory Cleanup
+        # This removes the reference to the dataframe and forces Python to free RAM
+        del table # Clean up the table object
+        gc.collect()
+        
+        # Once outside the 'with' block, parquet_buffer is closed and memory is marked for cleanup
+        return True
+    except Exception as e:
+
+        return False
+
+
 # PUSH TO S3
 def push_data_to_s3(local_path, s3_key):
     """Uploads an existing local file -> S3."""
@@ -82,6 +111,7 @@ def push_data_to_s3(local_path, s3_key):
     except Exception as e:
         logger.error(f"Failed S3 upload: {e}", exc_info=True)
         return False
+
 
 # if __name__ == "__main__":
     # path_to_file = config.S3_BUCKET_NAME + "my_data.parquet"

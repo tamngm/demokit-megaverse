@@ -25,6 +25,9 @@ data_cache/
 # power BI
 bireport/
 
+# ignore folders
+image/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

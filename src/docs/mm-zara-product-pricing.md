@@ -1,0 +1,41 @@
+```mermaid
+---
+title: Use cases
+config:
+    htmlLabels: False
+---
+flowchart TB
+    subgraph one ["Business Case: Promotional Uplift Diagnostic"]
+        direction TB
+
+        Start((Total Sales Data)) --> Calc[Calculate Revenue & Volume Lift]
+        
+        Calc --> Dept{Split by Dept: <br/>MAN vs WOMAN}
+        
+        Dept -->|High Variance| Cat[Identify Hero & Problem Categories]
+        
+        Cat -->|Filter: Top & Bottom performers| Season{Timing Check: <br/>Is lift consistent <br/>across Seasons?}
+        
+        Season -->|If No| Timing[Action: Adjust Promo Calendar]
+        Season -->|If Yes| Placement{Execution Check: <br/>Effect of Aisle/Endcap/Front}
+        
+        Placement -->|If Negative Lift| DNA[Material Specific DNA: <br/>Is the material mismatched <br/>to the location?]
+        
+        DNA --> Result[Action: Change Floor Map <br/>for specific SKUs]
+    end
+
+    subgraph two ["Calc Lift"]
+        direction TB
+        subgraph twoone ["VolumeLift"]
+        direction TB
+            VolumeLift{Volume Lift} --> VolLiftPurpose[ drive traffic and clearing inventory ]
+        end
+        subgraph twotwo ["RevenueLift"]
+        direction TB
+            RevenueLift{Revenue Lift} --> RevLiftPurpose[ drive profitability ]  
+        end
+    end
+    Calc --> two
+
+
+```
