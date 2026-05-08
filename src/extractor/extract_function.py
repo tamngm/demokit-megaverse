@@ -1,5 +1,5 @@
 import pandas as pd
-from src.logging_history import logger 
+from logging_history import logger 
 
 import kagglehub
 import os
@@ -16,8 +16,6 @@ def extract_data_from_kaggle(kaggle_dataset_name):
         
         logger.info("Path to dataset files:", pathkaggle)
         file_name = kaggle_dataset_name
-        #
-        #  find CSV files
         files = [f for f in os.listdir(pathkaggle) if f.endswith('.csv')]
         if not files:
             raise FileNotFoundError(f"No .csv files found in {pathkaggle}")
