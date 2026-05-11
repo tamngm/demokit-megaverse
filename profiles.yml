@@ -1,0 +1,12 @@
+dbt_demokit_pro:
+  outputs:
+    dev:
+      database: awsdatacatalog
+      region_name: eu-west-1
+      s3_data_dir: s3://offy-bi-demo/data/
+      s3_staging_dir: s3://offy-bi-demo/athena_results/
+      schema: offybi
+      threads: 4
+      type: athena
+      aws_profile_name: aws_demokit_pro
+  target: dev

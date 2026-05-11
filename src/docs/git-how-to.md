@@ -1,10 +1,12 @@
 
 # How to setup your local environment
 1. Clone repo → Open in VS Code
-2. Run `uv venv && uv pip install -r requirements.txt`
-3. Copy `.env.example` → `.env` and fill credentials
-4. Open `notebooks/demo.ipynb` and run the first cell
-5. If all imports work → you're ready!
+2. create virtual environment locally (.venv)
+3. Install requirements to .venv `uv venv`
+4. Install libraries & dependencies `uv pip install -r requirements.txt`
+5. Copy `.env.example` → `.env` and fill credentials
+6. Open `notebook/demo.ipynb` or existing one and run the first cell
+7. If all imports work → you're ready!
 
 # UPDATE LOCAL MAIN BRANCH
 1. Make sure you're on main
