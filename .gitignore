@@ -11,6 +11,12 @@
 *.sln.docstates
 *.env
 
+# DBT
+dbt_demokit_pro/profiles.yml
+dbt_demokit_pro/target/
+dbt_demokit_pro/dbt_packages/
+dbt_demokit_pro/logs/
+
 # Environments
 .env
 .envrc
