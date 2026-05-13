@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: uc1_dim_product
+    description: "Product dimension table containing Zara product attributes, derived from the staging table."
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product."
+        data_type: string
+
+      - name: product_position
+        description: "Position of the product in the catalog or listing."
+        data_type: string
+
+      - name: product_category
+        description: "Category the product belongs to (e.g. tops, bottoms, accessories)."
+        data_type: string
+
+      - name: seasonal
+        description: "Indicates whether the product is seasonal."
+        data_type: string
+
+      - name: brand
+        description: "Brand name of the product."
+        data_type: string
+
+      - name: url
+        description: "Product page URL."
+        data_type: string
+
+      - name: name
+        description: "Display name of the product."
+        data_type: string
+
+      - name: description
+        description: "Full product description."
+        data_type: string
+
+      - name: price
+        description: "Listed price of the product."
+        data_type: double
+
+      - name: terms
+        description: "Terms and conditions associated with the product."
+        data_type: string
+
+      - name: section
+        description: "Section or department the product belongs to (e.g. woman, man, kids)."
+        data_type: string
+
+      - name: season
+        description: "Season the product is associated with (e.g. Summer 2024)."
+        data_type: string
+
+      - name: material
+        description: "Material composition of the p"

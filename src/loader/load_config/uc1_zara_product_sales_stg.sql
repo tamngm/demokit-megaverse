@@ -1,5 +1,5 @@
 -- src/loader/queries/zara_product_sales_stg.sql
-CREATE EXTERNAL TABLE IF NOT EXISTS offybi.zara_product_sales_stg (
+CREATE EXTERNAL TABLE IF NOT EXISTS offybi.uc1_zara_product_sales_stg (
     product_id STRING,
     product_position STRING,
     promotion BOOLEAN,

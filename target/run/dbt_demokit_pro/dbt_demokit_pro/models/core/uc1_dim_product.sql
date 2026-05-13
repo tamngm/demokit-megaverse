@@ -1,0 +1,21 @@
+create or replace view
+    "awsdatacatalog"."offybi_core"."uc1_dim_product"
+  as
+    
+
+SELECT DISTINCT
+    product_id,
+    product_position,
+    product_category,
+    seasonal,
+    brand,
+    url,
+    name,
+    description,
+    price,
+    terms ,
+    section ,
+    season,
+    material,
+    origin 
+FROM "awsdatacatalog"."offybi"."uc1_zara_product_sales_stg"

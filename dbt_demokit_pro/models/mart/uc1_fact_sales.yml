@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: uc1_fact_sales
+    description: "Sales fact table containing Zara product sales metrics, derived from the staging table."
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product, foreign key to dim_product."
+        data_type: string
+
+      - name: sales_volume
+        description: "Total number of units sold for the product."
+        data_type: bigint
+
+      - name: sales
+        description: "Total sales revenue for the product, rounded to 2 decimal places."
+        data_type: double
