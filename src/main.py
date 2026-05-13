@@ -31,10 +31,10 @@ def run_pipeline():
     # dffmt = transform_zara_product_price.clean_data(dfraw, test=False, dataname="zara_product_sales_stg")
     
     # ----- UPLOAD FORMATTED DATA TO S3 (after formatted data good to go)
-    # push_df_to_s3(dffmt, "data/marixe_zara_product_sales/staging/zara_product_sales_stg.parquet")
+    # push_df_to_s3(dffmt, "data/marixe_zara_product_sales/staging/uc1_zara_product_sales_stg.parquet")
 
     # ----- TEST
-    create_athena_tbl_(sql_filename=r'src\loader\load_config\zara_product_sales_stg.sql', table_name="zara_product_sales_stg")
+    create_athena_tbl_(sql_filename=r'src\loader\load_config\uc1_zara_product_sales_stg.sql', table_name="uc1_zara_product_sales_stg")
     
 
 # def sales_pipeline():

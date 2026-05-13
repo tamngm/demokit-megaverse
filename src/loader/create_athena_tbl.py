@@ -20,18 +20,18 @@ def create_athena_tbl_(sql_filename: str, table_name: str):
         client = get_athena_client()
         
         # read the sql file
-        sql = open(sql_filename).read().strip()
+        sql = open(sql_filename, encoding='utf-8', errors='ignore').read().strip()
         logging.info(f'Success: Reading SQL.')
-        print(f"S3_STAGING_DIR: '{config.ATHENA_OUTPUT_LOCATION}'")
         print(f"ATHENA_WORKGROUP: '{config.ATHENA_WORKGROUP}'")
         print(f"AWS_REGION: '{config.AWS_REGION}'")
-        
+        print(f"Output location repr: { repr(config.ATHENA_OUTPUT_LOCATION)} ")  # shows hidden chars
+
         # Start query
         resp = client.start_query_execution(
             QueryString= sql,
             QueryExecutionContext={"Database":config.ATHENA_DATABASE},
-            ResultConfiguration={"OutputLocation":config.ATHENA_OUTPUT_LOCATION}
-            # WorkGroup=config.ATHENA_WORKGROUP
+            ResultConfiguration={"OutputLocation":config.ATHENA_OUTPUT_LOCATION},
+            WorkGroup=config.ATHENA_WORKGROUP
         )
 
         query_id = resp["QueryExecutionId"]

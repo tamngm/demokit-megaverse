@@ -30,10 +30,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_demokit_pro:
-    # Config indicated by + and applies to all files under models/example/
     work:
       +materialized: view
-    core:
+      +schema: offybi              # reads from offybi (your default)
+    mart:
       +materialized: table
-    example:
-      +materialized: view
+      +schema: mart         # ← writes dim/fact here

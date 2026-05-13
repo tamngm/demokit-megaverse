@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: uc1_zara_sales      
+    description: "sales data from Zara UC1 pipeline"                   # logical name you'll reference in models: source('zara', 'table')
+    # database: awsdatacatalog      # Athena: your Glue catalog / database name
+    schema: offybi            # Athena: same as database usually
+    tables:
+      - name: uc1_zara_product_sales_stg
+        description: "Raw Zara product sales data loaded from S3"
