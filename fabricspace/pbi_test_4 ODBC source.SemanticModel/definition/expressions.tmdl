@@ -1,0 +1,21 @@
+expression z_test_product =
+		let
+		    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+		    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+		    offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
+		    z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]
+		in
+		    z_test_product_Table
+		// let
+		//     Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+		//     AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+		//     offybi_Schema = AwsDataCatalog_Database{[Name="offybi",Kind="Schema"]}[Data],
+		//     z_test_product_Table = offybi_Schema{[Name="z_test_product",Kind="Table"]}[Data]
+		// in
+		//     z_test_product_Table
+	lineageTag: d1994f47-bbb5-4131-9410-cc9345d94583
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

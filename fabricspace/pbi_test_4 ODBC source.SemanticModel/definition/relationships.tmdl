@@ -1,0 +1,38 @@
+relationship AutoDetected_e2065c8d-caf6-4acf-8001-beccb0afbd7f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: uc1_dim_product.product_id
+	toColumn: uc1_fact_sales.product_id
+
+relationship AutoDetected_9f3df479-8854-4068-b339-b82237bfaf43
+	fromColumn: uc1_dim_product.material
+	toColumn: uc1_dim_material.material
+
+relationship AutoDetected_dd673182-31b0-4901-8693-b1cecb1954f3
+	fromColumn: final_zara_product_placement.material
+	toColumn: uc1_dim_material.material
+
+relationship AutoDetected_235e84ab-1b8b-49c4-ae41-b6f223cbf1ab
+	fromColumn: final_zara_product_placement.terms
+	toColumn: uc1_dim_term.terms
+
+relationship AutoDetected_32407875-35b2-4989-8119-456aaaa0f3fd
+	fromColumn: final_zara_product_placement.section
+	toColumn: uc1_dim_section.section
+
+relationship AutoDetected_90be6388-e638-4f6b-b29a-dc84099e9071
+	fromColumn: final_zara_product_placement.season
+	toColumn: uc1_dim_season.season
+
+relationship fe5e9bce-5c72-bbc9-eec5-47d886e7ed92
+	fromColumn: uc1_dim_product.terms
+	toColumn: uc1_dim_term.terms
+
+relationship c6d3827b-9b81-540c-ef8b-e52fa5032e10
+	fromColumn: uc1_dim_product.season
+	toColumn: uc1_dim_season.season
+
+relationship 57d8623d-4914-0f9e-34e6-7da3276ddfcf
+	fromColumn: uc1_dim_product.section
+	toColumn: uc1_dim_section.section
+

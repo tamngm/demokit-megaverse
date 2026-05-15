@@ -6,13 +6,20 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["z_test_product"]
+annotation PBI_QueryOrder = ["z_test_product","uc1_fact_sales","uc1_dim_material","uc1_dim_product","uc1_dim_season","uc1_dim_section","uc1_dim_term","final_zara_product_placement"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table z_test_product
+ref table uc1_fact_sales
+ref table uc1_dim_material
+ref table uc1_dim_product
+ref table uc1_dim_season
+ref table uc1_dim_section
+ref table uc1_dim_term
+ref table final_zara_product_placement
+ref table _Measures
 
 ref cultureInfo en-US
 

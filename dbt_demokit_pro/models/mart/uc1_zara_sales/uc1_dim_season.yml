@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: uc1_dim_season
+    description: "product material information"
+    columns:
+      - name: season
+        description: "Season the product is associated with (e.g. Summer 2024)."
+        data_type: string
+        tests:
+          - unique
+      - name: season_id
+        description: "season id"
+        data_type: int

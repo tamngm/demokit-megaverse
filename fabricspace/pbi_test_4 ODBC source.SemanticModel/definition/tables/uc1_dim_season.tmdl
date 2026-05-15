@@ -1,0 +1,35 @@
+table uc1_dim_season
+	lineageTag: a5880db3-8fd6-464e-81c7-dfc260cdfc44
+
+	column season
+		dataType: string
+		lineageTag: 85c43cc9-9450-4ff8-bfa8-4846c10395a7
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column season_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 304ce5ad-2069-4215-beee-f2c6467a61a4
+		summarizeBy: sum
+		sourceColumn: season_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc1_dim_season = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uc1_dim_season_Table = offybi_mart_Schema{[Name="uc1_dim_season",Kind="Table"]}[Data]
+				in
+				    uc1_dim_season_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

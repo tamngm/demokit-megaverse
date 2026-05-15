@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: uc1_dim_material
+    description: "product material information"
+    columns:
+      - name: material
+        description: "Material composition of the product"
+        data_type: string
+        tests:
+          - unique
+      - name: material_id
+        description: "material id"
+        data_type: int
