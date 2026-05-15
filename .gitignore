@@ -31,6 +31,9 @@ data_cache/
 # power BI
 bireport/
 
+# data folder
+data/
+
 # ignore folders
 image/
 

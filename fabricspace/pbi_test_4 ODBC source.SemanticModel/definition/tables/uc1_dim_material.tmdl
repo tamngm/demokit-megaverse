@@ -1,0 +1,31 @@
+table uc1_dim_material
+	lineageTag: ff693369-c3ac-48d7-9e4a-376d414cfbea
+
+	column material
+		dataType: string
+		lineageTag: bb5eafd1-29e0-4fc8-9f27-9546a9704f15
+		summarizeBy: none
+		sourceColumn: material
+
+		annotation SummarizationSetBy = Automatic
+
+	column section_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f1fa1637-c053-4a84-a4ef-6a97eb9eb1d2
+		summarizeBy: sum
+		sourceColumn: section_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc1_dim_material = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uc1_dim_material_Table = offybi_mart_Schema{[Name="uc1_dim_material",Kind="Table"]}[Data]
+				in
+				    uc1_dim_material_Table
+

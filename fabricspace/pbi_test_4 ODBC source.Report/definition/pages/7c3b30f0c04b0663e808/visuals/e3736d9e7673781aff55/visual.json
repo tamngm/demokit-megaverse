@@ -1,0 +1,108 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "e3736d9e7673781aff55",
+  "position": {
+    "x": 27.118644067796609,
+    "y": 31.1864406779661,
+    "z": 0,
+    "height": 105.76271186440677,
+    "width": 1019.6610169491524,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "sales"
+                }
+              },
+              "queryRef": "_Measures.sales",
+              "nativeQueryRef": "sales"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "sales_lift"
+                }
+              },
+              "queryRef": "_Measures.sales_lift",
+              "nativeQueryRef": "sales_lift"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "final_zara_product_placement"
+                        }
+                      },
+                      "Property": "sales_yes"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(final_zara_product_placement.sales_yes)",
+              "nativeQueryRef": "Sum of sales_yes"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "final_zara_product_placement"
+                        }
+                      },
+                      "Property": "sales_no"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(final_zara_product_placement.sales_no)",
+              "nativeQueryRef": "Sum of sales_no"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "sales"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

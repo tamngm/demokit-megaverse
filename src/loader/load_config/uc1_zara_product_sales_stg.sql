@@ -2,7 +2,7 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS offybi.uc1_zara_product_sales_stg (
     product_id STRING,
     product_position STRING,
-    promotion BOOLEAN,
+    promotion STRING,
     product_category STRING,
     seasonal STRING,
     sales_volume BIGINT,

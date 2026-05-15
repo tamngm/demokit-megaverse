@@ -48,7 +48,7 @@ def clean_data(df, test: bool, dataname:str):
         standard_schema = {
             "product_id": "string",
             "product_position": "string",
-            "promotion": "bool",
+            "promotion": "string",
             "product_category": "string",
             "seasonal": "string",
             "sales_volume": "int64",
@@ -69,6 +69,7 @@ def clean_data(df, test: bool, dataname:str):
         for col, dtype in standard_schema.items():
             if col in df.columns:
                 df[col] = df[col].astype(dtype)
+                print(f'{col} : {dtype}')
         
         # test first to see if it works
         if test:

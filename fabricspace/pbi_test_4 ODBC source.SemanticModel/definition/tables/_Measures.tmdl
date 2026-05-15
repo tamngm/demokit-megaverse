@@ -1,0 +1,38 @@
+table _Measures
+	lineageTag: 70d44a7b-e93d-4cdd-bcc2-587dd1b9ca2e
+
+	measure sales = SUM(uc1_fact_sales[sales])
+		lineageTag: 312872d1-64dd-4753-b1ab-47bbcd261280
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure sales_lift = DIVIDE([sales_w_promo] - [sales_wo_promo] , [sales_w_promo])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1ed2e927-e6a9-4a3a-900f-0b98bd3dc38d
+
+	measure sales_w_promo = SUMX(final_zara_product_placement, [sales_yes])
+		lineageTag: ced0be0f-af5a-480e-ab71-645f1c9e8a69
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure sales_wo_promo = SUMX(final_zara_product_placement, [sales_no])
+		lineageTag: e27a9bce-2b3e-45b3-bea5-da0fb1334c3c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: e4e5ea18-9514-48e7-8bee-b7dee7a618f0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 337235555f094674bd7bba65c3ff93c8
+

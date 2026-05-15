@@ -3,6 +3,9 @@ version: 2
 models:
   - name: uc1_fact_sales
     description: "Sales fact table containing Zara product sales metrics, derived from the staging table."
+    config:
+      contract:
+        enforced: true
     columns:
       - name: product_id
         description: "Unique identifier for each product, foreign key to dim_product."
@@ -14,4 +17,8 @@ models:
 
       - name: sales
         description: "Total sales revenue for the product, rounded to 2 decimal places."
+        data_type: double
+
+      - name: price
+        description: "price"
         data_type: double

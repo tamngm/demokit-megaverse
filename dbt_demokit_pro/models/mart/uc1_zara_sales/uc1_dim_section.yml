@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: uc1_dim_section
+    description: "product section information"
+    columns:
+      - name: section
+        description: "Section or department the product belongs to (e.g. woman, man, kids)."
+        data_type: string
+        tests:
+          - unique
+      - name: section_id
+        description: "section id"
+        data_type: int

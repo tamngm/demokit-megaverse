@@ -9,6 +9,7 @@ SELECT DISTINCT
     product_id,
     product_position,
     product_category,
+    promotion,
     seasonal,
     brand,
     url,

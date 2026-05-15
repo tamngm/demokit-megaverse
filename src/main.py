@@ -16,8 +16,8 @@ def run_pipeline():
     # print(file_path)
     ## you can copy the file_path local in history_log after running data extraction
     file_path = r'C:\Users\minhtam.nguyen\.cache\kagglehub\datasets\marixe\zara-sales-for-eda\versions\5\Zara_sales_EDA.csv'
-    s3_file_name_raw = 'data/marixe_zara_product_sales/raw/zara_product_sales_raw.parquet'
-    # push_data_to_s3(file_path, s3_file_name_raw)
+    # s3_file_name_raw = 'data/marixe_zara_product_sales/raw/zara_product_sales_raw.parquet'
+    # push_df_to_s3(file_path, s3_file_name_raw)
 
     # ------ GET RAW FROM THE S3
     # s3_bucket_path = ''
@@ -28,13 +28,13 @@ def run_pipeline():
     dfraw = get_data_from_local(file_path)
 
     # ----- CLEAN RAW READY FOR DEEP TRANSFORM WITH DBT
-    # dffmt = transform_zara_product_price.clean_data(dfraw, test=False, dataname="zara_product_sales_stg")
+    dffmt = transform_zara_product_price.clean_data(dfraw, test=False, dataname="zara_product_sales_stg")
     
     # ----- UPLOAD FORMATTED DATA TO S3 (after formatted data good to go)
     # push_df_to_s3(dffmt, "data/marixe_zara_product_sales/staging/uc1_zara_product_sales_stg.parquet")
 
     # ----- TEST
-    create_athena_tbl_(sql_filename=r'src\loader\load_config\uc1_zara_product_sales_stg.sql', table_name="uc1_zara_product_sales_stg")
+    # create_athena_tbl_(sql_filename=r'src\loader\load_config\uc1_zara_product_sales_stg.sql', table_name="uc1_zara_product_sales_stg")
     
 
 # def sales_pipeline():

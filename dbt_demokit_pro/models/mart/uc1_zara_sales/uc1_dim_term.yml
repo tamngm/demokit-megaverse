@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: uc1_dim_term
+    description: "product category"
+    columns:
+      - name: terms
+        description: "Terms and conditions associated with the product."
+        data_type: string
+        tests: 
+          - unique
+      - name: term_id
+        description: "term id"
+        data_type: int

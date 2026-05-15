@@ -1,0 +1,103 @@
+table final_zara_product_placement
+	lineageTag: c6bdbca2-ba07-4b0b-a2a7-241c77080241
+
+	column terms
+		dataType: string
+		lineageTag: e38f8d2b-dbd2-42f8-bb9e-1ba0112832f0
+		summarizeBy: none
+		sourceColumn: terms
+
+		annotation SummarizationSetBy = Automatic
+
+	column section
+		dataType: string
+		lineageTag: 2b84a8b6-2c76-41b9-a7c3-014f126df2b4
+		summarizeBy: none
+		sourceColumn: section
+
+		annotation SummarizationSetBy = Automatic
+
+	column season
+		dataType: string
+		lineageTag: d234c364-c00f-42ca-8218-bb3ff8b7960d
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column material
+		dataType: string
+		lineageTag: e54090f9-5ca4-466f-b64f-065c68f3270b
+		summarizeBy: none
+		sourceColumn: material
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_no
+		dataType: double
+		lineageTag: 3914d48d-3009-431c-9822-33b3fcb98eae
+		summarizeBy: sum
+		sourceColumn: sales_no
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sales_yes
+		dataType: double
+		lineageTag: 419c1704-8d07-4a48-9e1d-38856db32156
+		summarizeBy: sum
+		sourceColumn: sales_yes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column volume_no
+		dataType: int64
+		formatString: 0
+		lineageTag: e47207f0-8706-4c0d-a659-0fddb14c6da7
+		summarizeBy: sum
+		sourceColumn: volume_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column volume_yes
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c2ba672-df28-411f-ba2f-d6c59db2efc7
+		summarizeBy: sum
+		sourceColumn: volume_yes
+
+		annotation SummarizationSetBy = Automatic
+
+	column recommendation
+		dataType: string
+		lineageTag: 0ce9911f-90c8-4500-94bf-979a40216594
+		summarizeBy: none
+		sourceColumn: recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_rec
+		dataType: string
+		lineageTag: 59965bfb-95a3-4913-9312-2ca83f7485ad
+		summarizeBy: none
+		sourceColumn: discount_rec
+
+		annotation SummarizationSetBy = Automatic
+
+	partition final_zara_product_placement = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\minhtam.nguyen\0_Data_project\demokit-megaverse\data\processed\final_zara_product_placement.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"terms", type text}, {"section", type text}, {"season", type text}, {"material", type text}, {"sales_no", type number}, {"sales_yes", type number}, {"volume_no", Int64.Type}, {"volume_yes", Int64.Type}, {"recommendation", type text}, {"discount_rec", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

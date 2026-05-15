@@ -1,0 +1,14 @@
+
+    
+    
+
+select
+    season as unique_field,
+    count(*) as n_records
+
+from "awsdatacatalog"."offybi_mart"."uc1_dim_season"
+where season is not null
+group by season
+having count(*) > 1
+
+

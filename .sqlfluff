@@ -1,0 +1,10 @@
+[sqlfluff]
+templater = dbt
+dialect = athena
+runaway_limit = 100
+
+[sqlfluff:templater:dbt]
+project_dir = .
+profiles_dir = C:\Users\minhtam.nguyen\0_Data_project\demokit-megaverse
+profile = dbt_demokit_pro
+target = dev
