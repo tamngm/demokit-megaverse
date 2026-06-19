@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Use Case 1 - Promotional Uplift Diagnostics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7a72d366-4462-4a36-aca7-ebafb513e372"
+  }
+}

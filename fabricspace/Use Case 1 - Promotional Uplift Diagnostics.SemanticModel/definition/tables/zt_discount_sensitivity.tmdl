@@ -1,0 +1,28 @@
+table zt_discount_sensitivity
+	lineageTag: 7c2b8b44-f473-4e6b-80f6-7c71a09e2542
+
+	measure 'Discount Sensitivity Value' = SELECTEDVALUE('zt_discount_sensitivity'[Discount Sensitivity], 1)
+		lineageTag: 3e46006f-d4fd-4cdb-a259-2531b27f91c4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Discount Sensitivity'
+		lineageTag: bace4b5a-d08a-42a8-b8b6-5afc4abe719e
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition zt_discount_sensitivity = calculated
+		mode: import
+		source = GENERATESERIES(0.5, 2, 0.5)
+
+	annotation PBI_Id = c7da99caab694be384f5de4e08d0db2e
+

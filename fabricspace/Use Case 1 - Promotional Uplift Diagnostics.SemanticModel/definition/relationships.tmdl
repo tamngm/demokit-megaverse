@@ -1,0 +1,20 @@
+relationship AutoDetected_79f8f7c1-d93a-42b0-b4aa-2c8dcccc3dba
+	fromColumn: fact_final_zara_product_adjusted.material
+	toColumn: uc1_dim_material.material
+
+relationship AutoDetected_d0e01c8c-b65d-4c3b-b64d-fbe18f6cbbc5
+	fromColumn: fact_final_zara_product_adjusted.terms
+	toColumn: uc1_dim_term.terms
+
+relationship AutoDetected_830c4dc8-dc07-490c-b6ea-60922ca42b0c
+	fromColumn: fact_final_zara_product_adjusted.section
+	toColumn: uc1_dim_section.section
+
+relationship AutoDetected_5e1f8f37-b8e8-40ee-9499-14057e8408a0
+	fromColumn: fact_final_zara_product_adjusted.season
+	toColumn: uc1_dim_season.season
+
+relationship 6a1fae66-d32b-da27-6b93-132852b812a5
+	fromColumn: fact_final_zara_product_adjusted.discount_bucket_label
+	toColumn: zt_discount_bucket.discount_bucket
+

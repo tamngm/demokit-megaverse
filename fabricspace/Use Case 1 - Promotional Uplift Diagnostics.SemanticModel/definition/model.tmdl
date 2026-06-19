@@ -1,0 +1,30 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["uc1_dim_material","uc1_dim_product","uc1_dim_season","uc1_dim_section","uc1_dim_term","fact_final_zara_product_adjusted"]
+
+annotation PBI_ProTooling = ["TMDLView_Desktop","DevMode"]
+
+ref table uc1_dim_material
+ref table uc1_dim_product
+ref table uc1_dim_season
+ref table uc1_dim_section
+ref table uc1_dim_term
+ref table _Measure
+ref table fact_final_zara_product_adjusted
+ref table 'zt_target_sales_lift %'
+ref table zt_view_by_product_attribute
+ref table zt_view_by_metrics
+ref table zt_scenario_filter
+ref table zt_discount_sensitivity
+ref table zt_discount_bucket
+
+ref cultureInfo en-US
+

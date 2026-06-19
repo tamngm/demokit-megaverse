@@ -1,0 +1,27 @@
+table zt_scenario_filter
+	lineageTag: 389422f1-785e-434a-a0b8-fa799db4e5a0
+
+	column Scenario
+		lineageTag: 05565369-8e0b-4a1d-bca3-92e97fe374ca
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Scenario]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition zt_scenario_filter = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Scenario", STRING,
+				    {
+				        {"Both Positive"},
+				        {"Rev Negative, Vol Positive"},
+				        {"Rev Positive, Vol Negative"},
+				        {"Both Negative"}
+				    }
+				)
+
+	annotation PBI_Id = 765a13ec92394f74b78cdd67aefa2756
+

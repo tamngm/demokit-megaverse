@@ -1,0 +1,440 @@
+table _Measure
+	lineageTag: ba0abb19-6063-4b48-af74-d6ff74e1ab23
+
+	measure 'sales_uplift uc1' = DIVIDE(sum(uc1_fact_sales_promotion[sales_yes]),sum(uc1_fact_sales_promotion[sales_no]),0)-1
+		formatString: 0.00
+		displayFolder: z_test
+		lineageTag: f5cef2de-35b2-425f-b618-a8539726f25f
+
+	measure 'price_uplift uc1' = DIVIDE(sum(uc1_fact_sales_promotion[price_yes]),sum(uc1_fact_sales_promotion[price_no]),0)-1
+		displayFolder: z_test
+		lineageTag: 9ffafbc0-f9dd-4a80-bbde-0a93f8c4eba3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'vol_uplift uc1' = DIVIDE(sum(uc1_fact_sales_promotion[volume_yes]),sum(uc1_fact_sales_promotion[volume_no]),0)-1
+		formatString: 0.000%;-0.000%;0.000%
+		displayFolder: z_test
+		lineageTag: 309c2474-8087-4e5a-8abc-fd3cda7f2583
+
+	measure 'Actual_dis c1' = 1-(divide(1 + ([sales_uplift uc1]/100) , 1 + ([vol_uplift uc1]/100),0))
+		formatString: 0.0000
+		displayFolder: z_test
+		lineageTag: 302c9ea4-2d23-40e6-906c-b778bcc52b03
+
+	measure 'sales_no_pro uc1' = sum(uc1_fact_sales_promotion[sales_no])
+		displayFolder: z_test
+		lineageTag: a03f8d9c-f079-4f15-a2a2-df0859c086e6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Elasticity = DIVIDE([vol_uplift uc1], [price_uplift uc1])
+		displayFolder: z_test
+		lineageTag: 97a21da1-aad3-4006-87ee-769664131b35
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rec Discount %' = ```
+			
+			VAR Elas = [Elasticity]
+			VAR SalesUplift = [sales_uplift uc1]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        SalesUplift >= 0, [Current Discount %],          
+			        Elas >= -1, 0,                                   
+			        -1 / (2 * Elas)                                  
+			    )
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: z_test
+		lineageTag: a3645afb-74b6-4c50-8d0c-4da668af2e06
+
+	measure 'Current Discount %' = 1 - DIVIDE(sum(uc1_fact_sales_promotion[price_yes]), sum(uc1_fact_sales_promotion[price_yes]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: z_test
+		lineageTag: c2ff7c01-0af7-42b5-b870-064a490e5138
+
+	measure 'Rec Action' =
+			
+			VAR SalesUplift = [sales_uplift uc1]
+			VAR Elas = [Elasticity]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        SalesUplift >= 0, "Keep current discount",
+			        Elas >= -1, "Remove discount - volume not responding",
+			        [Rec Discount %] < [Current Discount %], "Reduce discount",
+			        "Review manually"
+			    )
+		displayFolder: z_test
+		lineageTag: d8ff5cca-ea78-41c0-a7f8-61a0297cf18b
+
+	measure price_yes_pro_uc1 = sum(uc1_fact_sales_promotion[price_yes])
+		displayFolder: z_test
+		lineageTag: c4abecaa-3b6f-4385-adb8-f7a41107f06c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure price_n_pro_uc1 = sum(uc1_fact_sales_promotion[price_no])
+		displayFolder: z_test
+		lineageTag: 95bd8be1-d818-4af9-a745-593d73a630b4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales Lift %' =
+			
+			VAR w_discount = [Sales w/ Discount]
+			VAR wo_discount = [Sales w/o Discount]
+			RETURN
+			IF(
+			    ISBLANK(w_discount) || ISBLANK(wo_discount),BLANK(),
+			    DIVIDE(w_discount , wo_discount,0)-1)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: core_kpi
+		lineageTag: d0e80a3a-1a79-4112-93a4-014f182511f1
+
+	measure 'Price Discount Current' =
+			
+			VAR baseno = AVERAGE(fact_final_zara_product_adjusted[baseline_price_no])
+			VAR priceno = AVERAGE(fact_final_zara_product_adjusted[price_no])
+			
+			RETURN
+			IF(ISBLANK(baseno) || ISBLANK(priceno), BLANK(),
+			DIVIDE(
+			    AVERAGE(fact_final_zara_product_adjusted[baseline_price_yes]) - AVERAGE(fact_final_zara_product_adjusted[price_yes]),
+			    AVERAGE(fact_final_zara_product_adjusted[baseline_price_yes]),
+			    0
+			))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: core_kpi
+		lineageTag: efacc195-e954-4b94-af2a-b44312be9609
+
+	measure 'Price Discount Rec' =
+			if(ISBLANK([Price Discount Current]),BLANK(),
+			                        AVERAGE(fact_final_zara_product_adjusted[baseline_price_yes]) * (1 - [Discount Rec]))
+		displayFolder: core_kpi
+		lineageTag: 4dd0528c-709d-4328-bd03-cfcb870dac46
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Price Discount Diff' =
+			IF(ISBLANK([Price Discount Current]),BLANK(),
+			            [Price Discount Rec] - AVERAGE(fact_final_zara_product_adjusted[price_yes]))
+		displayFolder: core_kpi
+		lineageTag: f317c6a2-a268-4698-89b3-2d68052ff804
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Vol Lift %' = ```
+			
+			VAR w_Discount = [Vol w/ Discount]
+			VAR wo_Discount = [Vol w/o Discount]
+			RETURN
+			IF(
+			    ISBLANK(w_Discount) || ISBLANK(wo_Discount),BLANK(),
+			    DIVIDE(w_Discount,wo_Discount,0)-1)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: core_kpi
+		lineageTag: 4eab4dd6-78ae-465e-b6ca-083b2d641204
+
+	measure 'Discount Rec' = ```
+			
+			VAR RevLift = [Sales Lift %]
+			VAR VolLift = [Vol Lift %]
+			VAR CurrentDiscount = [Price Discount Current]
+			VAR TargetLift = DIVIDE('zt_target_sales_lift %'[Target Sales Lift % Value], 100, 0)
+			VAR AdjustmentStrength = 'zt_discount_sensitivity'[Discount Sensitivity Value]
+			
+			VAR CombinedLift = DIVIDE(VolLift + RevLift, 2)
+			VAR LiftGap = TargetLift - CombinedLift
+			
+			VAR RecommendedDiscount = MAX(0, CurrentDiscount - (LiftGap * AdjustmentStrength))
+			VAR GentleDiscount = MAX(0, CurrentDiscount - (ABS(RevLift) * 0.5 * AdjustmentStrength)) -- vol > 0, cus still buying
+			
+			--- Both metrics meeting target --  Everything fine → no change
+			--- Rev ok, Vol slightly negative, Combined still ok -- Rev is covering the vol loss → monitor but no change
+			--- Rev failing, Vol positive -- Customers buying more but revenue suffering → cut carefully
+			--- Both negative but Combined still acceptable -- Within acceptable range → monitor but no change
+			--- Combined below target -- Both failing badly → aggressive cut scaled by strength
+			--- Fallback
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        RevLift >= TargetLift && VolLift >= TargetLift,CurrentDiscount,
+			        RevLift >= TargetLift && VolLift < 0 && CombinedLift >= TargetLift,CurrentDiscount,
+			        RevLift < TargetLift && VolLift >= 0,GentleDiscount,
+			        RevLift < TargetLift && VolLift < 0 && CombinedLift >= TargetLift,CurrentDiscount,    
+			        CombinedLift < TargetLift,RecommendedDiscount,
+			        CurrentDiscount
+			    )
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: core_kpi
+		lineageTag: e4ef2983-9627-4949-8f76-1ef92abe35eb
+
+	measure 'Discount Rec Act' =
+			
+			
+			VAR RevLift = [Sales Lift %]
+			VAR VolLift = [Vol Lift %]
+			VAR combinelift = DIVIDE(RevLift + VolLift, 2)
+			VAR targetlift = DIVIDE('zt_target_sales_lift %'[Target Sales Lift % Value],100,0)
+			
+			VAR TargetLabel = FORMAT(targetlift,"0%")
+			VAR CombinedLiftLabel = FORMAT(combinelift,"0.00%")
+			VAR Suffix = " (" & CombinedLiftLabel & " vs " & TargetLabel & ")"
+			-- Both meeting target → keep
+			-- Rev ok, Vol negative but combined still above target → monitor
+			-- Rev below target, Vol positive → gentle cut
+			-- Rev & Vol both negative but Combined still above target → monitor
+			-- Combined below target → aggressive cut
+			return
+			IF(ISBLANK([Price Discount Current]),BLANK(),
+			    SWITCH(TRUE(),
+			        RevLift >= targetlift &&  VolLift >= targetlift , "🟢 Keep", --& Suffix
+			        RevLift >= targetlift && VolLift < 0 && combinelift >= targetlift , "🟡 Monitor",
+			        RevLift < targetlift && VolLift > 0 , "🟠 Gentle Cut" ,
+			        RevLift < 0 && VolLift < 0 &&  combinelift >= targetlift , "🟡 Monitor",
+			        combinelift < targetlift, "🔴 Aggressive Cut" ,
+			        "🟢 Keep"
+			))
+		displayFolder: core_kpi
+		lineageTag: 7db5a8ba-c96f-4c4d-8811-5fb723de623b
+
+	measure 'Discount current status' = ```
+			
+			VAR RevLift = [Sales Lift %]
+			VAR VolLift = [Vol Lift %]
+			
+			VAR CurrentSituation = 
+			    SWITCH(
+			        TRUE(),
+			        RevLift >= 0 && VolLift >= 0,   "Both Positive",
+			        RevLift < 0  && VolLift >= 0,   "Rev Negative, Vol Positive",
+			        RevLift >= 0 && VolLift < 0,    "Rev Positive, Vol Negative",
+			        RevLift < 0  && VolLift < 0,    "Both Negative"
+			    )
+			VAR Action2 = 
+			    SWITCH(
+			        TRUE(),
+			        RevLift >= 0 && VolLift >= 0,   "Keep Discount",
+			        RevLift < 0  && VolLift >= 0,   "Gentle Cut — Discount Too Deep",
+			        RevLift >= 0 && VolLift < 0,    "Review Pricing — Low Demand",
+			        RevLift < 0  && VolLift < 0,    "Aggressive Cut — Discount Not Working"
+			    )
+			
+			RETURN IF(ISBLANK([Price Discount Current]),BLANK(), CurrentSituation)
+			    // CurrentSituation & " → " & Action2
+			```
+		displayFolder: core_kpi
+		lineageTag: ec9303ec-1d50-4fc2-a53a-ab23cea26a2a
+
+	measure 'z Flag Scenario' =
+			
+			VAR slt = SELECTEDVALUE('zt_scenario_filter'[Scenario])
+			
+			RETURN
+			IF(
+			    ISBLANK(slt)
+			        || [Discount current status] = slt,
+			    1,
+			    0
+			)
+		formatString: 0
+		displayFolder: core_kpi
+		lineageTag: 9abcd2d6-9e93-41e1-bcc6-6c095f852369
+
+	measure 'Sales Lift Bar' =
+			
+			CALCULATE([Sales Lift %], ALLSELECTED(uc1_dim_term[terms]))
+		displayFolder: core_kpi
+		lineageTag: 08fe2f56-a692-4a27-9562-15dd68973d36
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Variance From Avg Sales' =
+			
+			VAR CurrentVal = [Sales Lift %]
+			VAR AvgVal = [Sales Lift Avg %]
+			RETURN
+			IF(
+			    ISBLANK(CurrentVal),
+			    BLANK(),
+			    CurrentVal - AvgVal
+			)
+		displayFolder: core_kpi
+		lineageTag: 39a2c7ee-71cf-4cf5-83aa-7439a0f28058
+
+	measure 'Sales Lift Color' = ```
+			
+			VAR CurrVal = [Sales Lift %]
+			VAR slt = SELECTEDVALUE('zt_view_by_product_attribute'[View by Order])
+			VAR  AvgVal = SWITCH(TRUE(), 
+			                slt = 0 , CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_term[terms]),[Sales Lift %])),
+			                slt = 1,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_section[section]),[Sales Lift %])),
+			                slt = 2,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_season[season]),[Sales Lift %])),
+			                slt = 3,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_material[material]),[Sales Lift %])),
+			                slt = 4,CALCULATE(AVERAGEX(ALLSELECTED('zt_discount_bucket'[discount_bucket]),[Sales Lift %])))
+			RETURN
+			IF(
+			    ISBLANK(CurrVal),
+			    BLANK(),
+			    IF(CurrVal >= AvgVal, "#89C9A0", "#EFB5B9")
+			)
+			```
+		displayFolder: core_kpi
+		lineageTag: 69671149-2d49-43ae-a684-760798d1d19c
+
+	measure 'Vol Lift Color' = ```
+			
+			VAR CurrVal = [Vol Lift %]
+			VAR slt = SELECTEDVALUE('zt_view_by_product_attribute'[View by Order])
+			VAR  AvgVal = SWITCH(TRUE(), 
+			                slt = 0 , CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_term[terms]),[Vol Lift %])),
+			                slt = 1,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_section[section]),[Vol Lift %])),
+			                slt = 2,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_season[season]),[Vol Lift %])),
+			                slt = 3,CALCULATE(AVERAGEX(ALLSELECTED(uc1_dim_material[material]),[Vol Lift %])),
+			                slt = 4,CALCULATE(AVERAGEX(ALLSELECTED(zt_discount_bucket[discount_bucket]),[Vol Lift %])))
+			RETURN
+			IF(
+			    ISBLANK(CurrVal),
+			    BLANK(),
+			    IF(CurrVal >= AvgVal, "#89C9A0", "#EFB5B9")
+			)
+			```
+		displayFolder: core_kpi
+		lineageTag: 87b9793f-a0c3-417f-8a48-bb482773294a
+
+	measure 'Sales Lift Avg %' = ```
+			
+			 VAR slt = SELECTEDVALUE('zt_view_by_metrics'[by metrics Fields])
+			 RETURN 
+			 SWITCH(
+			    slt,
+			    "material", AVERAGEX(ALLSELECTED(fact_final_zara_product_adjusted[material]), [Sales Lift %]),
+			    "terms", AVERAGEX(ALLSELECTED(fact_final_zara_product_adjusted[terms]), [Sales Lift %]),
+			    "section", AVERAGEX(ALLSELECTED(fact_final_zara_product_adjusted[section]), [Sales Lift %]),
+			    "season", AVERAGEX(ALLSELECTED(fact_final_zara_product_adjusted[season]), [Sales Lift %])
+			)
+			```
+		displayFolder: core_kpi
+		lineageTag: f3d586ff-dd4c-40a5-a3f0-e09d906575a7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Price w/ Discount Avg' = AVERAGE(fact_final_zara_product_adjusted[price_yes])
+		displayFolder: core_kpi
+		lineageTag: 40eaf384-444b-448b-be98-e13959353047
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Price w/o Discount Avg' = AVERAGE(fact_final_zara_product_adjusted[price_no])
+		displayFolder: core_kpi
+		lineageTag: dd527a70-a625-4102-87e8-7887b235ed63
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales Discount Gap' =
+			
+			VAR WithDiscount = [Sales w/ Discount]
+			VAR WithoutDiscount = [Sales w/o Discount]
+			RETURN
+			IF(
+			    ISBLANK(WithDiscount) || ISBLANK(WithoutDiscount),
+			    BLANK(),
+			    WithDiscount - WithoutDiscount
+			)
+		displayFolder: core_kpi
+		lineageTag: e10bfb32-8078-40ef-91d6-f3ea6ce4da57
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rev Lost Per Unit' =
+			
+			
+			VAR PriceWithDiscount = AVERAGE(fact_final_zara_product_adjusted[price_yes])
+			VAR PriceWithoutDiscount = AVERAGE(fact_final_zara_product_adjusted[price_no])
+			
+			RETURN
+			PriceWithDiscount - PriceWithoutDiscount
+		displayFolder: core_kpi
+		lineageTag: c25f050c-06a5-43d2-bbb9-ebb971d57b29
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Discount Bucket Lable' = ```
+			
+			VAR dis_val = [Price Discount Current]
+			RETURN 
+			SWITCH(TRUE(),
+			    dis_val = 0, "No Discount",
+			    dis_val > 0 && dis_val <= 0.10, "0-10%",
+			    dis_val > 0.10 && dis_val <= 0.20, "10-20%",
+			    dis_val > 0.20 && dis_val <= 0.30, "20-30%",
+			    dis_val > 0.30 && dis_val <= 0.40, "30-40%",
+			    dis_val > 0.40 && dis_val <= 0.50, "40-50%",
+			    dis_val > 0.50, "50%+",
+			    "Unknown"
+			)
+			```
+		displayFolder: core_kpi
+		lineageTag: e983ce8f-6d34-4d62-9fc5-1bf68984e3af
+
+	measure 'Vol Discount Gap' =
+			
+			VAR WithDiscount = [Vol w/ Discount]
+			VAR WithoutDiscount = [Vol w/o Discount]
+			RETURN
+			IF(
+			    ISBLANK(WithDiscount) || ISBLANK(WithoutDiscount),
+			    BLANK(),
+			    WithDiscount - WithoutDiscount
+			)
+		formatString: 0
+		displayFolder: core_kpi
+		lineageTag: ee0730b1-f513-4fb6-b256-e09868878e06
+
+	measure 'Vol w/ Discount' = SUM(fact_final_zara_product_adjusted[volume_yes])
+		formatString: 0
+		displayFolder: core_kpi
+		lineageTag: f8de3f5b-e9f3-4563-bcf1-3d213acdff58
+
+	measure 'Vol w/o Discount' = SUM(fact_final_zara_product_adjusted[volume_no])
+		formatString: 0
+		displayFolder: core_kpi
+		lineageTag: 1241b25b-df5d-4a91-8035-493e6857edb0
+
+	measure 'Sales w/ Discount' = SUM(fact_final_zara_product_adjusted[sales_yes])
+		displayFolder: core_kpi
+		lineageTag: c7ddc905-51a8-4311-bb91-961757d4c28f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales w/o Discount' = SUM(fact_final_zara_product_adjusted[sales_no])
+		displayFolder: core_kpi
+		lineageTag: 239c89c7-c43d-400b-8c75-296bebd83da7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 82ffe023-6aa9-4d35-a750-bb87ff54884b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measure = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = c53194ab9ae94d659526bc119ab66bdc
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

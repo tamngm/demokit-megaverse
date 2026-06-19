@@ -1,0 +1,51 @@
+table zt_view_by_product_attribute
+	lineageTag: 0ed7647e-5bfd-4b43-92df-286972ba66ca
+
+	column 'View by'
+		lineageTag: 1fd2486f-cd09-4244-8a77-0ee9830d8d24
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'View by Order'
+
+		relatedColumnDetails
+			groupByColumn: 'View by Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'View by Fields'
+		isHidden
+		lineageTag: 5e777d08-4ec3-4099-9aca-ca48791d4ebd
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'View by Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'View by Order'
+		isHidden
+		formatString: 0
+		lineageTag: 56cd94db-4ad1-41b0-8373-e82848147fd3
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition zt_view_by_product_attribute = calculated
+		mode: import
+		source =
+				{
+				    ("terms", NAMEOF(uc1_dim_term[terms]), 0),
+				    ("section", NAMEOF(uc1_dim_section[section]), 1),
+				    ("season", NAMEOF(uc1_dim_season[season]), 2),
+				    ("material", NAMEOF(uc1_dim_material[material]), 3),
+				    ("discount bucket", NAMEOF(zt_discount_bucket[discount_bucket]), 4)
+				}
+
+	annotation PBI_Id = 470e78e0175e4c29aac1b616d0732973
+
