@@ -1,0 +1,48 @@
+table zt_view_by_metrics
+	lineageTag: c1835159-a66e-4f2f-bc8c-06e67621348e
+
+	column 'by metrics'
+		lineageTag: be02dec2-938c-4e87-8fe7-c2c9914f3e5d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'by metrics Order'
+
+		relatedColumnDetails
+			groupByColumn: 'by metrics Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'by metrics Fields'
+		isHidden
+		lineageTag: 23c158ef-b5af-4188-834b-450aa12928eb
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'by metrics Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'by metrics Order'
+		isHidden
+		formatString: 0
+		lineageTag: 9438872f-635b-4698-83a1-8d848c3ee08a
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition zt_view_by_metrics = calculated
+		mode: import
+		source =
+				{
+				    ("Sales Lift %", NAMEOF('_Measure'[Sales Lift %]), 0),
+				    ("Vol Lift %", NAMEOF('_Measure'[Vol Lift %]), 1)
+				}
+
+	annotation PBI_Id = 1bfca0cce7864e6aa22248631fbda870
+

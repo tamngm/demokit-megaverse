@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "1d784b1a5b12ba470a44",
+      "displayName": "Optimize",
+      "children": [
+        "e5f664ad7592b7b778ac",
+        "b94ab81053bdbaa78084"
+      ]
+    },
+    {
+      "name": "30c2ef48510a9802b630"
+    }
+  ]
+}

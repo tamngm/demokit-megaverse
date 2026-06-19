@@ -1,0 +1,35 @@
+table uc1_dim_section
+	lineageTag: 4e1d25be-42c4-4efc-b191-2c154c6da0af
+
+	column section
+		dataType: string
+		lineageTag: 80edce50-1fcd-4440-8aa4-26aea353155d
+		summarizeBy: none
+		sourceColumn: section
+
+		annotation SummarizationSetBy = Automatic
+
+	column section_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ab4bd38b-b1d6-4a8a-aab5-9f4a86c942a7
+		summarizeBy: none
+		sourceColumn: section_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc1_dim_section = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uc1_dim_section_Table = offybi_mart_Schema{[Name="uc1_dim_section",Kind="Table"]}[Data]
+				in
+				    uc1_dim_section_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,35 @@
+table uc1_dim_term
+	lineageTag: af2c4e69-13ee-4f0c-b1bd-a5f05e4031d7
+
+	column terms
+		dataType: string
+		lineageTag: 8405c16c-0792-417e-b59b-77d29b6759c6
+		summarizeBy: none
+		sourceColumn: terms
+
+		annotation SummarizationSetBy = Automatic
+
+	column term_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ea7dc20-fb42-428a-b894-41a81d373374
+		summarizeBy: none
+		sourceColumn: term_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc1_dim_term = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uc1_dim_term_Table = offybi_mart_Schema{[Name="uc1_dim_term",Kind="Table"]}[Data]
+				in
+				    uc1_dim_term_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

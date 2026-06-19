@@ -1,0 +1,181 @@
+table fact_final_zara_product_adjusted
+	lineageTag: f27f4bd0-1792-40e3-8a44-45ca0b7f07fe
+
+	column terms
+		dataType: string
+		lineageTag: c34dbf2c-f063-4ffa-aeee-e56a188f941d
+		summarizeBy: none
+		sourceColumn: terms
+
+		annotation SummarizationSetBy = Automatic
+
+	column section
+		dataType: string
+		lineageTag: 7a181ad6-d34c-4e42-8f01-c9581995c88b
+		summarizeBy: none
+		sourceColumn: section
+
+		annotation SummarizationSetBy = Automatic
+
+	column season
+		dataType: string
+		lineageTag: f7e438e8-ad4b-4451-b214-b7939990991c
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column material
+		dataType: string
+		lineageTag: e2834edc-c55c-4f0a-b674-fbf8ea4b56a5
+		summarizeBy: none
+		sourceColumn: material
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_no
+		dataType: double
+		lineageTag: 246e2837-6f54-4573-ad78-d1d90462aa0d
+		summarizeBy: sum
+		sourceColumn: sales_no
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sales_yes
+		dataType: double
+		lineageTag: d30444ad-4230-4ab3-be71-46a2d137875f
+		summarizeBy: sum
+		sourceColumn: sales_yes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column volume_no
+		dataType: double
+		formatString: 0
+		lineageTag: f824ed98-da1f-441a-a477-b0f9f38e4123
+		summarizeBy: sum
+		sourceColumn: volume_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column volume_yes
+		dataType: double
+		formatString: 0
+		lineageTag: 3ddbc8c1-5a65-4461-b120-97a8162b57ba
+		summarizeBy: sum
+		sourceColumn: volume_yes
+
+		annotation SummarizationSetBy = Automatic
+
+	column recommendation
+		dataType: string
+		lineageTag: e8c84a18-eb29-407a-8292-6420e6ff27c1
+		summarizeBy: none
+		sourceColumn: recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_no
+		dataType: double
+		lineageTag: 768ce5b8-c17e-4f33-9fad-1ff3899f483b
+		summarizeBy: sum
+		sourceColumn: price_no
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_yes
+		dataType: double
+		lineageTag: ddb15a07-2c08-4b8b-8bf0-f71125841aca
+		summarizeBy: sum
+		sourceColumn: price_yes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column baseline_price_no
+		dataType: double
+		lineageTag: a253eab1-3422-4018-8a89-ffb8de07d238
+		summarizeBy: sum
+		sourceColumn: baseline_price_no
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column baseline_price_yes
+		dataType: double
+		lineageTag: 95178571-9eae-4fa7-8bb2-1f8ad0f1ec21
+		summarizeBy: sum
+		sourceColumn: baseline_price_yes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_rec
+		dataType: string
+		lineageTag: c4bb82d8-d0da-4831-b649-562391f5b5c2
+		summarizeBy: none
+		sourceColumn: discount_rec
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_position
+		dataType: string
+		lineageTag: 2aa53d7e-3e69-4ed1-80e1-d8c3561a86ec
+		summarizeBy: none
+		sourceColumn: current_position
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_bucket_label =
+			
+			VAR basePrice = fact_final_zara_product_adjusted[baseline_price_yes]
+			VAR discPrice = fact_final_zara_product_adjusted[price_yes]
+			VAR disc = DIVIDE(basePrice - discPrice, basePrice, 0)
+			RETURN
+			SWITCH(TRUE(),
+			    disc = 0, "No Discount",
+			    disc > 0 && disc <= 0.10, "0-10%",
+			    disc > 0.10 && disc <= 0.20, "10-20%",
+			    disc > 0.20 && disc <= 0.30, "20-30%",
+			    disc > 0.30 && disc <= 0.40, "30-40%",
+			    disc > 0.40 && disc <= 0.50, "40-50%",
+			    disc > 0.50, "50%+",
+			    "Unknown"
+			)
+		lineageTag: a1d0d045-ed15-494a-9394-2c378a8e0767
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_final_zara_product_adjusted = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uctable = offybi_mart_Schema{[Name="uc1_fact_final_sales_product_adjusted",Kind="Table"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(uctable,{"discount_bucket_label"})
+				in
+				    #"Removed Columns"
+				
+				// let
+				//     Source = Csv.Document(File.Contents("D:\haiduong\github\demokit-megaverse\notebook\final_zara_product_adjusted.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				//     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				//     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"terms", type text}, {"section", type text}, {"season", type text}, {"material", type text}, {"sales_no", type number}, {"sales_yes", type number}, {"volume_no", Int64.Type}, {"volume_yes", Int64.Type}, {"recommendation", type text}, {"price_no", type number}, {"price_yes", type number}, {"baseline_price_no", type number}, {"baseline_price_yes", type number}, {"discount_rec", type text}})
+				// in
+				//     #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

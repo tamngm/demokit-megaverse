@@ -1,0 +1,26 @@
+table 'zt_target_sales_lift %'
+	lineageTag: f8f119a8-9b4d-46ac-bc61-7563d6b6d9a0
+
+	measure 'Target Sales Lift % Value' = SELECTEDVALUE('zt_target_sales_lift %'[Target Sales Lift %], 0)
+		formatString: 0
+		lineageTag: c278fd0d-7b05-495f-b897-84895f72b0c9
+
+	column 'Target Sales Lift %'
+		formatString: 0
+		lineageTag: 07e19373-af71-4803-93bc-6ad201389546
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'zt_target_sales_lift %' = calculated
+		mode: import
+		source = GENERATESERIES(-50, 0, 1)
+
+	annotation PBI_Id = 086c6745703241d28cb8cf793ee7f28f
+

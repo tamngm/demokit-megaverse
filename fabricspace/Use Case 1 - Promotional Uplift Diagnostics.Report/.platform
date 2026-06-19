@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Use Case 1 - Promotional Uplift Diagnostics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "793e753f-9de4-432a-a0f2-51c302adcd77"
+  }
+}

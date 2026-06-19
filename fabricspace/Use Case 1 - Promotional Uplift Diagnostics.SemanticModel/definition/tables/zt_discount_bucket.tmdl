@@ -1,0 +1,26 @@
+table zt_discount_bucket
+	lineageTag: 8453a1c1-a04e-40de-8e38-e5470d6c1d74
+
+	column discount_bucket
+		lineageTag: 3d2638b6-838c-43a2-ae09-fc69d1b8b40b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [discount_bucket]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition zt_discount_bucket = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "discount_bucket", STRING,
+				    {
+				        {"No Discount"}, {"0-10%"}, {"10-20%"}, {"20-30%"}, {"30-40%"}, {"40-50%"},{"50%+"}
+				})
+				
+				
+				```
+
+	annotation PBI_Id = 84b3bf788c7d4083b1b1fca82edf35d4
+

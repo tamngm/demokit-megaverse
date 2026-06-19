@@ -1,0 +1,185 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 753.39220834130015,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 898.13859858820649,
+            "y": 201.8956464960545
+          },
+          "nodeIndex": "uc1_dim_material",
+          "nodeLineageTag": "ac056427-c35f-4bde-8179-7ba4f3f998e0",
+          "size": {
+            "height": 170,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 118,
+            "y": 401.51323331420019
+          },
+          "nodeIndex": "uc1_dim_product",
+          "nodeLineageTag": "901199c3-b810-43bc-a1a1-b955c16d7997",
+          "size": {
+            "height": 375,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 340.97551021699877,
+            "y": 25.086182644858241
+          },
+          "nodeIndex": "uc1_dim_season",
+          "nodeLineageTag": "311ae876-106b-4a41-b230-8621b6d7c687",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 792.12538915333494,
+            "y": 18.155128760744844
+          },
+          "nodeIndex": "uc1_dim_section",
+          "nodeLineageTag": "4e1d25be-42c4-4efc-b191-2c154c6da0af",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 97.359889779614434
+          },
+          "nodeIndex": "uc1_dim_term",
+          "nodeLineageTag": "af2c4e69-13ee-4f0c-b1bd-a5f05e4031d7",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1261.0481118910905,
+            "y": 31.637111821212329
+          },
+          "nodeIndex": "_Measure",
+          "nodeLineageTag": "ba0abb19-6063-4b48-af74-d6ff74e1ab23",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 2113.0481118910902,
+            "y": 354.19294531219373
+          },
+          "nodeIndex": "zt_view_by_product_attribute",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2681.0481118910902,
+            "y": 330.19294531219373
+          },
+          "nodeIndex": "zt_scenario_filter",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1684.4511463476535,
+            "y": 565.34490953327611
+          },
+          "nodeIndex": "zt_discount_bucket",
+          "nodeLineageTag": "8453a1c1-a04e-40de-8e38-e5470d6c1d74",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2965.0481118910902,
+            "y": 318.19294531219373
+          },
+          "nodeIndex": "zt_discount_sensitivity",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2397.0481118910902,
+            "y": 354.19294531219373
+          },
+          "nodeIndex": "zt_view_by_metrics",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1829.0481118910905,
+            "y": 318.19294531219373
+          },
+          "nodeIndex": "zt_target_sales_lift %",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1304.0481118910905,
+            "y": 339.19294531219373
+          },
+          "nodeIndex": "fact_final_zara_product_adjusted",
+          "size": {
+            "height": 300,
+            "width": 326
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 63.287087723234038,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

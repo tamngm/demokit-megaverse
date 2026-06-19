@@ -1,0 +1,140 @@
+table uc1_dim_product
+	lineageTag: 901199c3-b810-43bc-a1a1-b955c16d7997
+
+	column product_id
+		dataType: string
+		lineageTag: 40f053b7-4279-4325-af16-ffa0a970de6b
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_position
+		dataType: string
+		lineageTag: fd2fd238-cef5-4236-bd0a-18bcdb10ce0d
+		summarizeBy: none
+		sourceColumn: product_position
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		lineageTag: 5f6c69ba-f145-42df-9f59-b3a697941c45
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column seasonal
+		dataType: string
+		lineageTag: 05684880-dbbd-4695-9024-12481f999878
+		summarizeBy: none
+		sourceColumn: seasonal
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		lineageTag: f4ee3621-efab-4a10-b9a1-e829f6f2e57f
+		summarizeBy: none
+		sourceColumn: brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column url
+		dataType: string
+		lineageTag: 26313893-7381-4c10-8436-c9ff6d8fc9c8
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: e3918781-5d48-4296-aa3b-5df2f9b1c96b
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: e56080fe-09d9-49a8-8ddf-8fb70e68f18a
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 4553b978-26f0-4065-9351-974a507ec429
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column terms
+		dataType: string
+		lineageTag: a640cfa6-3094-49d4-bafa-19ab64956f3e
+		summarizeBy: none
+		sourceColumn: terms
+
+		annotation SummarizationSetBy = Automatic
+
+	column section
+		dataType: string
+		lineageTag: dc327032-2b6a-48c3-9db1-0788fd79cc52
+		summarizeBy: none
+		sourceColumn: section
+
+		annotation SummarizationSetBy = Automatic
+
+	column season
+		dataType: string
+		lineageTag: 5382cfb2-791a-4f42-bd1a-5d6a4ec7429b
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column material
+		dataType: string
+		lineageTag: 89ee0d03-695d-4c22-bb42-b481abc787c0
+		summarizeBy: none
+		sourceColumn: material
+
+		annotation SummarizationSetBy = Automatic
+
+	column origin
+		dataType: string
+		lineageTag: 52b59ea1-0971-4ace-ab0e-f515b0eadcbb
+		summarizeBy: none
+		sourceColumn: origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column promotion
+		dataType: string
+		lineageTag: bcbe9191-0770-4f25-b28b-4fe33b8adf84
+		summarizeBy: none
+		sourceColumn: promotion
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc1_dim_product = m
+		mode: import
+		source =
+				let
+				    Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_mart_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    uc1_dim_product_Table = offybi_mart_Schema{[Name="uc1_dim_product",Kind="Table"]}[Data]
+				in
+				    uc1_dim_product_Table
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
