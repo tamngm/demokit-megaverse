@@ -10,16 +10,16 @@ profile: 'dbt_demokit_pro'
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
-model-paths: ["dbt_demokit_pro/models"]
-analysis-paths: ["dbt_demokit_pro/analyses"]
-test-paths: ["dbt_demokit_pro/tests"]
-seed-paths: ["dbt_demokit_pro/seeds"]
-macro-paths: ["dbt_demokit_pro/macros"]
-snapshot-paths: ["dbt_demokit_pro/snapshots"]
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
-  - "dbt_demokit_pro/target"
-  - "dbt_demokit_pro/dbt_packages"
+  - "target"
+  - "dbt_packages"
 
 
 # Configuring models
