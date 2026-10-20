@@ -1,0 +1,534 @@
+[0m14:27:38.916327 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C7D54110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C7DAFCD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C7D7E450>]}
+
+
+============================== 14:27:38.957092 | 951cc404-e68f-4744-9ef6-7350febed726 ==============================
+[0m14:27:38.957092 [info ] [MainThread]: Running with dbt=1.11.9
+[0m14:27:38.957092 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt debug --target dev', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m14:27:39.262920 [info ] [MainThread]: dbt version: 1.11.9
+[0m14:27:39.264878 [info ] [MainThread]: python version: 3.11.9
+[0m14:27:39.267870 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m14:27:39.270232 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m14:27:43.814239 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m14:27:43.815214 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m14:27:43.816212 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m14:27:43.824136 [info ] [MainThread]: adapter type: athena
+[0m14:27:43.825135 [info ] [MainThread]: adapter version: 1.10.0
+[0m14:27:43.916477 [info ] [MainThread]: Configuration:
+[0m14:27:43.918059 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m14:27:43.919868 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m14:27:43.920916 [info ] [MainThread]: Required dependencies:
+[0m14:27:43.921867 [debug] [MainThread]: Executing "git --help"
+[0m14:27:44.005145 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m14:27:44.006157 [debug] [MainThread]: STDERR: "b''"
+[0m14:27:44.007156 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m14:27:44.008145 [info ] [MainThread]: Connection:
+[0m14:27:44.008145 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m14:27:44.009147 [info ] [MainThread]:   work_group: None
+[0m14:27:44.010148 [info ] [MainThread]:   skip_workgroup_check: False
+[0m14:27:44.011146 [info ] [MainThread]:   region_name: eu-west-1
+[0m14:27:44.012145 [info ] [MainThread]:   database: awsdatacatalog
+[0m14:27:44.013146 [info ] [MainThread]:   schema: offybi
+[0m14:27:44.014445 [info ] [MainThread]:   poll_interval: 1.0
+[0m14:27:44.015447 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m14:27:44.016447 [info ] [MainThread]:   aws_access_key_id: None
+[0m14:27:44.017943 [info ] [MainThread]:   endpoint_url: None
+[0m14:27:44.019041 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m14:27:44.020040 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m14:27:44.021039 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m14:27:44.022043 [info ] [MainThread]:   debug_query_state: False
+[0m14:27:44.022043 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m14:27:44.023041 [info ] [MainThread]:   lf_tags_database: None
+[0m14:27:44.024040 [info ] [MainThread]:   spark_work_group: None
+[0m14:27:44.025038 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m14:27:44.316493 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m14:27:44.317493 [debug] [MainThread]: Using athena connection "debug"
+[0m14:27:44.317493 [debug] [MainThread]: On debug: select 1 as id
+[0m14:27:44.318675 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m14:27:44.337764 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m14:27:44.338764 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m14:27:44.338764 [debug] [MainThread]: On debug: No close available on handle
+[0m14:27:44.338764 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m14:27:44.339764 [info ] [MainThread]: [31m1 check failed:[0m
+[0m14:27:44.341460 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m14:27:44.342495 [debug] [MainThread]: Command `dbt debug` failed at 14:27:44.342495 after 5.52 seconds
+[0m14:27:44.343495 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m14:27:44.343495 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C01E2190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C5E1D150>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000185C752C910>]}
+[0m14:27:44.344495 [debug] [MainThread]: Flushing usage events
+[0m14:27:46.498868 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:14:46.102593 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B846AE24D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B846A02190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B846A01050>]}
+
+
+============================== 15:14:46.117750 | 0f5d363c-bc8e-426a-99ab-c3b0c2b51b75 ==============================
+[0m15:14:46.117750 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:14:46.117750 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'invocation_command': 'dbt debug --target dev', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:14:46.192822 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:14:46.194820 [info ] [MainThread]: python version: 3.11.9
+[0m15:14:46.195821 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:14:46.197821 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:14:46.849268 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:14:46.850268 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:14:46.852271 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:14:46.853272 [info ] [MainThread]: adapter type: athena
+[0m15:14:46.853272 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:14:46.939247 [info ] [MainThread]: Configuration:
+[0m15:14:46.939247 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:14:46.939247 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:14:46.939247 [info ] [MainThread]: Required dependencies:
+[0m15:14:46.939247 [debug] [MainThread]: Executing "git --help"
+[0m15:14:47.022165 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:14:47.023155 [debug] [MainThread]: STDERR: "b''"
+[0m15:14:47.024152 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:14:47.025221 [info ] [MainThread]: Connection:
+[0m15:14:47.026237 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:14:47.027213 [info ] [MainThread]:   work_group: None
+[0m15:14:47.028217 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:14:47.028217 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:14:47.029228 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:14:47.030216 [info ] [MainThread]:   schema: offybi
+[0m15:14:47.031167 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:14:47.032171 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:14:47.034170 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:14:47.036482 [info ] [MainThread]:   endpoint_url: None
+[0m15:14:47.038481 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:14:47.040007 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:14:47.043029 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:14:47.045915 [info ] [MainThread]:   debug_query_state: False
+[0m15:14:47.047946 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:14:47.048695 [info ] [MainThread]:   lf_tags_database: None
+[0m15:14:47.052647 [info ] [MainThread]:   spark_work_group: None
+[0m15:14:47.055870 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:14:47.352741 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:14:47.352741 [debug] [MainThread]: Using athena connection "debug"
+[0m15:14:47.352741 [debug] [MainThread]: On debug: select 1 as id
+[0m15:14:47.352741 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:14:47.352741 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:14:47.352741 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:14:47.352741 [debug] [MainThread]: On debug: No close available on handle
+[0m15:14:47.352741 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:14:47.352741 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:14:47.366759 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:14:47.366759 [debug] [MainThread]: Command `dbt debug` failed at 15:14:47.366759 after 1.39 seconds
+[0m15:14:47.366759 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:14:47.366759 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B846B10450>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B848DCB710>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002B83FD40490>]}
+[0m15:14:47.366759 [debug] [MainThread]: Flushing usage events
+[0m15:14:49.486700 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:17:08.711883 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBA6C07D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBA6C0690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBA6C1310>]}
+
+
+============================== 15:17:08.719725 | 52497077-f697-4109-870a-8e8966845d19 ==============================
+[0m15:17:08.719725 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:17:08.719725 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt debug --target dev', 'use_colors': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:17:08.743871 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:17:08.743871 [info ] [MainThread]: python version: 3.11.9
+[0m15:17:08.743871 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:17:08.743871 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:17:09.169390 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:17:09.169390 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:17:09.169390 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:17:09.169390 [info ] [MainThread]: adapter type: athena
+[0m15:17:09.179827 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:17:09.256546 [info ] [MainThread]: Configuration:
+[0m15:17:09.256546 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:17:09.256546 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:17:09.256546 [info ] [MainThread]: Required dependencies:
+[0m15:17:09.256546 [debug] [MainThread]: Executing "git --help"
+[0m15:17:09.322992 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:17:09.324033 [debug] [MainThread]: STDERR: "b''"
+[0m15:17:09.325055 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:17:09.325055 [info ] [MainThread]: Connection:
+[0m15:17:09.326051 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:17:09.326051 [info ] [MainThread]:   work_group: None
+[0m15:17:09.327032 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:17:09.327032 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:17:09.328032 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:17:09.328032 [info ] [MainThread]:   schema: offybi
+[0m15:17:09.329032 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:17:09.329032 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:17:09.330032 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:17:09.330651 [info ] [MainThread]:   endpoint_url: None
+[0m15:17:09.330651 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:17:09.331719 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:17:09.331719 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:17:09.332750 [info ] [MainThread]:   debug_query_state: False
+[0m15:17:09.332750 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:17:09.333718 [info ] [MainThread]:   lf_tags_database: None
+[0m15:17:09.333718 [info ] [MainThread]:   spark_work_group: None
+[0m15:17:09.334717 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:17:09.567086 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:17:09.574681 [debug] [MainThread]: Using athena connection "debug"
+[0m15:17:09.574681 [debug] [MainThread]: On debug: select 1 as id
+[0m15:17:09.574681 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:17:09.574681 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:17:09.574681 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:17:09.574681 [debug] [MainThread]: On debug: No close available on handle
+[0m15:17:09.574681 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:17:09.582830 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:17:09.582830 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:17:09.582830 [debug] [MainThread]: Command `dbt debug` failed at 15:17:09.582830 after 0.97 seconds
+[0m15:17:09.582830 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:17:09.585677 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBA6C2B90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBC9913D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000024DBA6C0550>]}
+[0m15:17:09.585677 [debug] [MainThread]: Flushing usage events
+[0m15:17:11.685903 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:21:59.248887 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BDD2C10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BE22E10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BDC55D0>]}
+
+
+============================== 15:21:59.248887 | e1c858bc-6863-45f7-8f80-f8dc80b7c28e ==============================
+[0m15:21:59.248887 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:21:59.248887 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug --target dev', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:21:59.268682 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:21:59.269581 [info ] [MainThread]: python version: 3.11.9
+[0m15:21:59.270196 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:21:59.270196 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:21:59.613420 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:21:59.613420 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:21:59.613420 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:21:59.613420 [info ] [MainThread]: adapter type: athena
+[0m15:21:59.613420 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:21:59.699612 [info ] [MainThread]: Configuration:
+[0m15:21:59.699612 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:21:59.699612 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:21:59.699612 [info ] [MainThread]: Required dependencies:
+[0m15:21:59.699612 [debug] [MainThread]: Executing "git --help"
+[0m15:21:59.764245 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:21:59.765268 [debug] [MainThread]: STDERR: "b''"
+[0m15:21:59.765569 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:21:59.766576 [info ] [MainThread]: Connection:
+[0m15:21:59.767575 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:21:59.767575 [info ] [MainThread]:   work_group: None
+[0m15:21:59.768575 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:21:59.768575 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:21:59.768575 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:21:59.769574 [info ] [MainThread]:   schema: offybi
+[0m15:21:59.769574 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:21:59.770574 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:21:59.770574 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:21:59.771577 [info ] [MainThread]:   endpoint_url: None
+[0m15:21:59.771577 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:21:59.772576 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:21:59.772576 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:21:59.773576 [info ] [MainThread]:   debug_query_state: False
+[0m15:21:59.773576 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:21:59.774576 [info ] [MainThread]:   lf_tags_database: None
+[0m15:21:59.775443 [info ] [MainThread]:   spark_work_group: None
+[0m15:21:59.776311 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:21:59.993816 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:21:59.993816 [debug] [MainThread]: Using athena connection "debug"
+[0m15:21:59.993816 [debug] [MainThread]: On debug: select 1 as id
+[0m15:21:59.993816 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:22:00.009629 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:22:00.017453 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:22:00.018581 [debug] [MainThread]: On debug: No close available on handle
+[0m15:22:00.019537 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:22:00.020453 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:22:00.020453 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:22:00.021450 [debug] [MainThread]: Command `dbt debug` failed at 15:22:00.021450 after 0.86 seconds
+[0m15:22:00.022548 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:22:00.022548 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BE2A9D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BE2AC90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002602BDC7CD0>]}
+[0m15:22:00.023452 [debug] [MainThread]: Flushing usage events
+[0m15:22:02.200501 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:22:06.567119 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162E58F0690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162E56814D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162E58F2950>]}
+
+
+============================== 15:22:06.567119 | 49cb9857-b18f-4247-aea7-ae73f3be07a5 ==============================
+[0m15:22:06.567119 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:22:06.583041 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:22:06.605296 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:22:06.605296 [info ] [MainThread]: python version: 3.11.9
+[0m15:22:06.615948 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:22:06.615948 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:22:06.990050 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:22:06.990050 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:22:06.990050 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:22:06.990050 [info ] [MainThread]: adapter type: athena
+[0m15:22:06.990050 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:22:07.085929 [info ] [MainThread]: Configuration:
+[0m15:22:07.085929 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:22:07.085929 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:22:07.085929 [info ] [MainThread]: Required dependencies:
+[0m15:22:07.090084 [debug] [MainThread]: Executing "git --help"
+[0m15:22:07.142316 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:22:07.142316 [debug] [MainThread]: STDERR: "b''"
+[0m15:22:07.143317 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:22:07.143317 [info ] [MainThread]: Connection:
+[0m15:22:07.144322 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:22:07.144322 [info ] [MainThread]:   work_group: None
+[0m15:22:07.145331 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:22:07.145331 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:22:07.146450 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:22:07.146450 [info ] [MainThread]:   schema: offybi
+[0m15:22:07.147387 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:22:07.148322 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:22:07.148322 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:22:07.149322 [info ] [MainThread]:   endpoint_url: None
+[0m15:22:07.149322 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:22:07.150325 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:22:07.150325 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:22:07.151325 [info ] [MainThread]:   debug_query_state: False
+[0m15:22:07.151325 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:22:07.152328 [info ] [MainThread]:   lf_tags_database: None
+[0m15:22:07.153322 [info ] [MainThread]:   spark_work_group: None
+[0m15:22:07.153740 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:22:07.386263 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:22:07.387257 [debug] [MainThread]: Using athena connection "debug"
+[0m15:22:07.387257 [debug] [MainThread]: On debug: select 1 as id
+[0m15:22:07.387257 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:22:07.394276 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:22:07.394276 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:22:07.395408 [debug] [MainThread]: On debug: No close available on handle
+[0m15:22:07.395408 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:22:07.396417 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:22:07.397275 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:22:07.398275 [debug] [MainThread]: Command `dbt debug` failed at 15:22:07.398275 after 0.93 seconds
+[0m15:22:07.398275 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:22:07.398275 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162DEE12E50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162E7B26D10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000162E58E6110>]}
+[0m15:22:07.399275 [debug] [MainThread]: Flushing usage events
+[0m15:22:09.756221 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:31:25.182210 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259ACF0E610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259B04D1D10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259B07935D0>]}
+
+
+============================== 15:31:25.190295 | bf5201a7-5b7d-4fcf-ac21-ae7c57f4d7be ==============================
+[0m15:31:25.190295 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:31:25.190295 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug --target dev', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:31:25.226645 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:31:25.228655 [info ] [MainThread]: python version: 3.11.9
+[0m15:31:25.231133 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:31:25.232083 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:31:25.630023 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:31:25.632027 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:31:25.632027 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:31:25.633774 [info ] [MainThread]: adapter type: athena
+[0m15:31:25.633774 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:31:25.733587 [info ] [MainThread]: Configuration:
+[0m15:31:25.735598 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:31:25.735598 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:31:25.735598 [info ] [MainThread]: Required dependencies:
+[0m15:31:25.735598 [debug] [MainThread]: Executing "git --help"
+[0m15:31:25.829555 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:31:25.829555 [debug] [MainThread]: STDERR: "b''"
+[0m15:31:25.844528 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:31:25.844528 [info ] [MainThread]: Connection:
+[0m15:31:25.845583 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:31:25.845583 [info ] [MainThread]:   work_group: None
+[0m15:31:25.845583 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:31:25.845583 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:31:25.845583 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:31:25.845583 [info ] [MainThread]:   schema: offybi
+[0m15:31:25.845583 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:31:25.852024 [info ] [MainThread]:   aws_profile_name: None
+[0m15:31:25.852539 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:31:25.853627 [info ] [MainThread]:   endpoint_url: None
+[0m15:31:25.854684 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:31:25.855735 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:31:25.856684 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:31:25.857481 [info ] [MainThread]:   debug_query_state: False
+[0m15:31:25.858280 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:31:25.858870 [info ] [MainThread]:   lf_tags_database: None
+[0m15:31:25.858870 [info ] [MainThread]:   spark_work_group: None
+[0m15:31:25.859911 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:31:26.164023 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:31:26.164023 [debug] [MainThread]: Using athena connection "debug"
+[0m15:31:26.164023 [debug] [MainThread]: On debug: select 1 as id
+[0m15:31:26.164023 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:31:26.179850 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:31:26.179850 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:31:26.179850 [debug] [MainThread]: On debug: No close available on handle
+[0m15:31:26.179850 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:31:26.187030 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:31:26.187030 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:31:26.189726 [debug] [MainThread]: Command `dbt debug` failed at 15:31:26.187030 after 1.15 seconds
+[0m15:31:26.189726 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:31:26.189726 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259B0792B90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259B2BB87D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000259A99FCB10>]}
+[0m15:31:26.189726 [debug] [MainThread]: Flushing usage events
+[0m15:31:28.346294 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:36:36.567669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E6120050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E603E8D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E6150BD0>]}
+
+
+============================== 15:36:36.572442 | a69fa00d-3069-4cdc-92c2-b8b8fc3b2f77 ==============================
+[0m15:36:36.572442 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:36:36.573425 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'invocation_command': 'dbt debug --target dev', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:36:36.590067 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:36:36.591053 [info ] [MainThread]: python version: 3.11.9
+[0m15:36:36.591053 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:36:36.592052 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:36:36.944233 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:36:36.944233 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:36:36.944233 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:36:36.944233 [info ] [MainThread]: adapter type: athena
+[0m15:36:36.944233 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:36:37.047414 [info ] [MainThread]: Configuration:
+[0m15:36:37.047414 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:36:37.047414 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:36:37.047414 [info ] [MainThread]: Required dependencies:
+[0m15:36:37.047414 [debug] [MainThread]: Executing "git --help"
+[0m15:36:37.147514 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:36:37.147514 [debug] [MainThread]: STDERR: "b''"
+[0m15:36:37.147514 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:36:37.147514 [info ] [MainThread]: Connection:
+[0m15:36:37.147514 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:36:37.147514 [info ] [MainThread]:   work_group: None
+[0m15:36:37.147514 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:36:37.147514 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:36:37.147514 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:36:37.147514 [info ] [MainThread]:   schema: offybi
+[0m15:36:37.147514 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:36:37.147514 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:36:37.147514 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:36:37.147514 [info ] [MainThread]:   endpoint_url: None
+[0m15:36:37.147514 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:36:37.159036 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:36:37.159036 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:36:37.160048 [info ] [MainThread]:   debug_query_state: False
+[0m15:36:37.160686 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:36:37.161733 [info ] [MainThread]:   lf_tags_database: None
+[0m15:36:37.161733 [info ] [MainThread]:   spark_work_group: None
+[0m15:36:37.162734 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:36:37.437196 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:36:37.438096 [debug] [MainThread]: Using athena connection "debug"
+[0m15:36:37.438096 [debug] [MainThread]: On debug: select 1 as id
+[0m15:36:37.438096 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:36:37.444599 [error] [MainThread]: dbt.adapters.athena.constants adapter: Got an error when attempting to open a Athena connection due to The config profile (aws_demokit_pro) could not be found
+[0m15:36:37.444599 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Error running SQL: select 1 as id
+[0m15:36:37.445491 [debug] [MainThread]: On debug: No close available on handle
+[0m15:36:37.445491 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:36:37.446492 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:36:37.446492 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Runtime Error
+  The config profile (aws_demokit_pro) could not be found
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:36:37.447490 [debug] [MainThread]: Command `dbt debug` failed at 15:36:37.447490 after 0.99 seconds
+[0m15:36:37.448602 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:36:37.448602 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E5EAA3D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E8594790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000195E6114490>]}
+[0m15:36:37.449529 [debug] [MainThread]: Flushing usage events
+[0m15:36:39.599823 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:47:25.840822 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208F5ED22D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208F5C65090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208F5F011D0>]}
+
+
+============================== 15:47:25.855961 | 76b9aa54-c8db-46bb-b256-84a830dd5961 ==============================
+[0m15:47:25.855961 [info ] [MainThread]: Running with dbt=1.11.9
+[0m15:47:25.855961 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt debug --target dev', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\84393\\Offy_repo\\demokit-megaverse\\logs'}
+[0m15:47:25.877405 [info ] [MainThread]: dbt version: 1.11.9
+[0m15:47:25.877405 [info ] [MainThread]: python version: 3.11.9
+[0m15:47:25.877405 [info ] [MainThread]: python path: C:\Users\84393\Offy_repo\demokit-megaverse\.venv\Scripts\python.exe
+[0m15:47:25.877405 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m15:47:26.341730 [info ] [MainThread]: Using profiles dir at C:\Users\84393\Offy_repo\demokit-megaverse
+[0m15:47:26.341730 [info ] [MainThread]: Using profiles.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\profiles.yml
+[0m15:47:26.341730 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\84393\Offy_repo\demokit-megaverse\dbt_project.yml
+[0m15:47:26.341730 [info ] [MainThread]: adapter type: athena
+[0m15:47:26.341730 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:47:26.443852 [info ] [MainThread]: Configuration:
+[0m15:47:26.443852 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:47:26.443852 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:47:26.443852 [info ] [MainThread]: Required dependencies:
+[0m15:47:26.443852 [debug] [MainThread]: Executing "git --help"
+[0m15:47:26.559460 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:47:26.559460 [debug] [MainThread]: STDERR: "b''"
+[0m15:47:26.559460 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:47:26.559460 [info ] [MainThread]: Connection:
+[0m15:47:26.559460 [info ] [MainThread]:   s3_staging_dir: s3://offy-bi-demo/athena_results/
+[0m15:47:26.559460 [info ] [MainThread]:   work_group: None
+[0m15:47:26.559460 [info ] [MainThread]:   skip_workgroup_check: False
+[0m15:47:26.559460 [info ] [MainThread]:   region_name: eu-west-1
+[0m15:47:26.559460 [info ] [MainThread]:   database: awsdatacatalog
+[0m15:47:26.559460 [info ] [MainThread]:   schema: offybi
+[0m15:47:26.559460 [info ] [MainThread]:   poll_interval: 1.0
+[0m15:47:26.559460 [info ] [MainThread]:   aws_profile_name: aws_demokit_pro
+[0m15:47:26.559460 [info ] [MainThread]:   aws_access_key_id: None
+[0m15:47:26.559460 [info ] [MainThread]:   endpoint_url: None
+[0m15:47:26.559460 [info ] [MainThread]:   s3_data_dir: s3://offy-bi-demo/data/
+[0m15:47:26.559460 [info ] [MainThread]:   s3_data_naming: schema_table_unique
+[0m15:47:26.571814 [info ] [MainThread]:   s3_tmp_table_dir: None
+[0m15:47:26.572820 [info ] [MainThread]:   debug_query_state: False
+[0m15:47:26.572820 [info ] [MainThread]:   seed_s3_upload_args: None
+[0m15:47:26.573821 [info ] [MainThread]:   lf_tags_database: None
+[0m15:47:26.573821 [info ] [MainThread]:   spark_work_group: None
+[0m15:47:26.574821 [info ] [MainThread]: Registered adapter: athena=1.10.0
+[0m15:47:26.827148 [debug] [MainThread]: Acquiring new athena connection 'debug'
+[0m15:47:26.827148 [debug] [MainThread]: Using athena connection "debug"
+[0m15:47:26.827148 [debug] [MainThread]: On debug: select 1 as id
+[0m15:47:26.827148 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:47:29.612786 [debug] [MainThread]: dbt.adapters.athena.constants adapter: Athena query ID ce5a62d6-f061-4357-ae57-afab0bd4088a
+[0m15:47:31.840969 [debug] [MainThread]: SQL status: OK -1 in 5.008 seconds
+[0m15:47:31.841939 [debug] [MainThread]: On debug: Close
+[0m15:47:31.842786 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m15:47:31.842786 [info ] [MainThread]: [32mAll checks passed![0m
+[0m15:47:31.844893 [debug] [MainThread]: Command `dbt debug` succeeded at 15:47:31.843836 after 6.09 seconds
+[0m15:47:31.844893 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:47:31.844893 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208F5E00E50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208EF4D2950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000208EF2107D0>]}
+[0m15:47:31.846182 [debug] [MainThread]: Flushing usage events
+[0m15:47:34.031543 [debug] [MainThread]: An error was encountered while trying to flush usage events

@@ -1,5 +1,8 @@
 {
   "terminal.integrated.env.windows": {
     "PYTHONUTF8": "1"
-  }
+  },
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.envFile": "${workspaceFolder}/.env"
 }
