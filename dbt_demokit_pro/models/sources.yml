@@ -8,3 +8,5 @@ sources:
     tables:
       - name: uc1_zara_product_sales_stg
         description: "Raw Zara product sales data loaded from S3"
+      - name: uc1_zara_product_sales_raw
+        description: "Original Kaggle Zara sales file as uploaded to S3 (before cleaning)"

@@ -3,6 +3,10 @@ dbt_demokit_pro/target/
 dbt_demokit_pro/dbt_packages/
 dbt_demokit_pro/logs/
 
+# Python cache
+__pycache__/
+*.pyc
+
 # Environments
 .env
 .envrc

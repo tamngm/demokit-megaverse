@@ -43,12 +43,16 @@ https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank
 - From external source to S3 storage back and forth during the transformation flow.
 - Link to diagram: https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&dark=auto#G196jzwpBq4qo-QhL-9obHPrfyCV3kgRYI
 
+## Local setup
+1. Clone the repo and open it in VS Code.
+2. Create the venv: `uv venv`
+3. Install dependencies: `uv pip install -r requirements.txt`
+4. Create a `.env` with your AWS and Athena settings (see `src/config.py` for the keys).
+
 ## How to collaborate on Git
 1. Clone repo → `git clone ...`
-2. Read [How to Collaborate on Git](src/docs/git-how-to.md)
+2. Read [How to Collaborate on Git](git-how-to.md), including the visual workflow
 3. Check above for business logic & data models
-
-Visual Git Workflow (src/docs/git-collab-workflow.md)
 
 ## 🚦 Golden Rules
 1. **Never push directly to `main`** — always use a feature branch
