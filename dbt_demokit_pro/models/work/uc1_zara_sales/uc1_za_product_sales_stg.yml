@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: uc1_za_product_sales_stg
+    description: "Cleaned Zara product sales: snake_case columns, derived sales, rows with missing values dropped."
+    columns:
+      - name: product_id
+        description: "Product identifier."
+        data_type: string
+      - name: sales_volume
+        description: "Units sold."
+        data_type: bigint
+      - name: price
+        description: "Unit price."
+        data_type: double
+      - name: sales
+        description: "sales_volume * price."
+        data_type: double
+        tests:
+          - not_null

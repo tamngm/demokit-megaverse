@@ -21,4 +21,4 @@ SELECT DISTINCT
     season,
     material,
     origin 
-FROM {{ source('uc1_zara_sales', 'uc1_zara_product_sales_stg') }}
+FROM {{ ref('uc1_za_product_sales_stg') }}
