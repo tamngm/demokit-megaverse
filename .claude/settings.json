@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/*.env)",
+      "Read(~/.aws/credentials)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.venv/Scripts/python.exe\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\"",
+            "timeout": 20,
+            "onFailure": "block",
+            "statusMessage": "Checking command against project guard"
+          }
+        ]
+      }
+    ]
+  }
+}

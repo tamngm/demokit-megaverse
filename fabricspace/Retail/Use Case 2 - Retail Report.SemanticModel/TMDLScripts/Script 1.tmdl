@@ -1,0 +1,17 @@
+createOrReplace
+
+	ref table _Measures
+
+		measure 'Revenue YoY Bottom 5 Store' =
+				
+				VAR _r = [Revenue YoY %]
+				RETURN
+				    IF ( NOT ISBLANK ( _r ) && RANKX ( FILTER ( ALLSELECTED ( rtl_store[store_location] ), NOT ISBLANK ( [Revenue YoY %] ) ), [Revenue YoY %],, ASC ) <= 5, _r )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: Store
+
+		measure 'Revenue YoY Top 5 Store' =
+				
+				IF ( RANKX ( ALLSELECTED ( rtl_store[store_location] ), [Revenue YoY %],, DESC ) <= 5, [Revenue YoY %] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: Store

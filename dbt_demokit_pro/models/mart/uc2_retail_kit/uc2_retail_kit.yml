@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: dim_rtl_customer
+    description: "Customer dimension: pass-through of rtl_customer."
+
+  - name: dim_rtl_product
+    description: "Product dimension: pass-through of rtl_product."
+
+  - name: dim_rtl_store
+    description: "Store dimension: pass-through of rtl_store."
+
+  - name: fact_rtl_sales
+    description: "Store sales transactions (rtl_sales) with parsed sales date."
+    columns:
+      - name: sales_date_clean
+        description: "sales_date (mm/dd/yyyy string) parsed to date; NULL if unreadable."
+        data_type: date
+
+  - name: fact_rtl_orders_header
+    description: "One row per order: totals, status, lead times."
+    columns:
+      - name: order_id
+
+  - name: fact_rtl_orders_daily
+    description: "Overview KPIs per order date x market x region x country: orders, sales, discount, profit, margin, AOV."
+
+  - name: fact_rtl_ecom_behave
+    description: "E-commerce funnel by purchase date (rtl_ecom_behave_to_order) with parsed purchase date."
+    columns:
+      - name: order_purchased_date_clean
+        description: "order_purchased_date parsed to date; NULL if unreadable."
+        data_type: date

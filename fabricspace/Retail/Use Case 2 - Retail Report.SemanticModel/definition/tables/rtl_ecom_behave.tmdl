@@ -1,0 +1,80 @@
+table rtl_ecom_behave
+	lineageTag: 765c7cc4-1901-4199-aab3-95e9cbac7391
+
+	column order_purchased_date
+		dataType: string
+		lineageTag: 90d8e52e-e52c-42f3-9b51-90febffe9e4a
+		summarizeBy: none
+		sourceColumn: order_purchased_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 19e4b629-d715-4496-965b-35d37cafe75e
+		summarizeBy: sum
+		sourceColumn: order_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column cart_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 4692c3b6-d4cb-4a57-992e-54f7c703ff26
+		summarizeBy: sum
+		sourceColumn: cart_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column view_num
+		dataType: int64
+		formatString: 0
+		lineageTag: fd1629e6-fdde-40c3-8191-258e933a5de8
+		summarizeBy: sum
+		sourceColumn: view_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column remove_dummy
+		dataType: string
+		lineageTag: 057e9c53-ac88-4cc4-8f1d-67cc91b49e52
+		summarizeBy: none
+		sourceColumn: remove_dummy
+
+		annotation SummarizationSetBy = Automatic
+
+	column remove_cart_num
+		dataType: string
+		lineageTag: 55cc370d-f8d7-40e5-8f00-0e810bf0591c
+		summarizeBy: none
+		sourceColumn: remove_cart_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchased_date_clean
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 68423041-9296-47ba-8d3e-204995bd4940
+		summarizeBy: none
+		sourceColumn: order_purchased_date_clean
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition rtl_ecom_behave = m
+		mode: import
+		source =
+				let
+				    Source = AmazonAthena.Databases("athena-bi-demo", null, []),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    rtl_ecom_behave_to_order_Table = offybi_Schema{[Name="fact_rtl_ecom_behave",Kind="Table"]}[Data]
+				in
+				    rtl_ecom_behave_to_order_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

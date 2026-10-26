@@ -10,3 +10,20 @@ sources:
         description: "Raw Zara product sales data loaded from S3"
       - name: uc1_zara_product_sales_raw
         description: "Original Kaggle Zara sales file as uploaded to S3 (before cleaning)"
+
+  - name: uc2_retail_kit
+    description: "Retail kit raw CSV tables uploaded by the team to s3://offy-bi-demo/data/offybi/retail_kit/"
+    schema: offybi
+    tables:
+      - name: rtl_customer
+        description: "Customer master: demographics, type, level, nationality"
+      - name: rtl_ecom_behave_to_order
+        description: "E-commerce funnel by purchase date: views, carts, removals, orders"
+      - name: rtl_order
+        description: "Order lines with location, amounts, discount, profit and fulfilment dates"
+      - name: rtl_product
+        description: "Product master: SKU, name, category, price"
+      - name: rtl_sales
+        description: "Store sales transactions by date and hour, with traffic and gross profit"
+      - name: rtl_store
+        description: "Store master: code, location, manager, country, market"

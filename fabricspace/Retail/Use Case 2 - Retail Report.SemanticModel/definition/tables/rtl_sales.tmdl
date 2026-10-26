@@ -1,0 +1,149 @@
+table rtl_sales
+	lineageTag: a512a3e6-10a2-4f80-85a8-e680cf20599a
+
+	column sales_id
+		dataType: string
+		lineageTag: f32c21ea-e796-45bd-a6d1-f5206df969f0
+		summarizeBy: none
+		sourceColumn: sales_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_date
+		dataType: string
+		lineageTag: fb1432bd-7138-4d16-b938-7ac539a1ad2a
+		summarizeBy: none
+		sourceColumn: sales_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 5787cf05-dea5-4ec8-8edf-f7c760c2ab5d
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 9c2d50dd-145e-48fb-a048-f2aa5d5a70e3
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b545f50-7e75-47ae-8e27-d23d30e801be
+		summarizeBy: sum
+		sourceColumn: transaction
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: a320ee90-5558-40cc-9c25-09c36dd2fd09
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column store_id
+		dataType: string
+		lineageTag: e2120b5f-8c0e-442e-b793-2ed39e8cb89c
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: bce010ff-fb33-4e15-a937-9c6361f94a6a
+		summarizeBy: sum
+		sourceColumn: sales_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 616efb02-8255-4e69-abed-b32c256c3377
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column traffic
+		dataType: int64
+		formatString: 0
+		lineageTag: ba7a208b-21b6-4394-9017-1821216d075a
+		summarizeBy: sum
+		sourceColumn: traffic
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_profit
+		dataType: double
+		lineageTag: 8294e515-ac7e-4168-9ae9-100539ba2b5e
+		summarizeBy: sum
+		sourceColumn: gross_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line revenue; assumes price is the unit price
+	column Revenue = rtl_sales[quantity] * rtl_sales[price]
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 6d0c2b1e-4a3f-4c8e-b2a1-1f0e9d8c7b01
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Band' =
+			SWITCH (
+			    TRUE (),
+			    rtl_sales[price] < 10, "1. <10",
+			    rtl_sales[price] < 25, "2. 10-25",
+			    rtl_sales[price] < 50, "3. 25-50",
+			    rtl_sales[price] < 100, "4. 50-100",
+			    "5. 100+"
+			)
+		dataType: string
+		lineageTag: 6d0c2b1e-4a3f-4c8e-b2a1-1f0e9d8c7b02
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_date_clean
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 941b552a-840f-4553-9c62-8247fd3fdeb3
+		summarizeBy: none
+		sourceColumn: sales_date_clean
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition rtl_sales = m
+		mode: import
+		source =
+				let
+				    Source = AmazonAthena.Databases("athena-bi-demo", null, []),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    rtl_sales_Table = offybi_Schema{[Name="fact_rtl_sales",Kind="Table"]}[Data]
+				in
+				    rtl_sales_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

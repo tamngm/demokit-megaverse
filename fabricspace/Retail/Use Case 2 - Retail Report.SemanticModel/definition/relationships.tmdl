@@ -1,0 +1,20 @@
+relationship 42679e08-3897-4646-9494-2e7b14e1fb24
+	fromColumn: rtl_sales.sales_date_clean
+	toColumn: dim_date.Date
+
+relationship AutoDetected_eab6b7fc-d1a1-4304-8a92-c969765a7670
+	fromColumn: rtl_sales.customer_id
+	toColumn: rtl_customer.customer_id
+
+relationship AutoDetected_ee9fb60b-69c5-44fb-93af-2ae5cff89e7d
+	fromColumn: rtl_sales.product_id
+	toColumn: rtl_product.product_id
+
+relationship AutoDetected_8c0a7e65-7735-4308-aa29-f6ae5bcf92b9
+	fromColumn: rtl_sales.store_id
+	toColumn: rtl_store.store_id
+
+relationship 5b0e7c1a-2d3f-4a6b-8c9d-0e1f2a3b4c01
+	fromColumn: rtl_ecom_behave.order_purchased_date_clean
+	toColumn: dim_date.Date
+

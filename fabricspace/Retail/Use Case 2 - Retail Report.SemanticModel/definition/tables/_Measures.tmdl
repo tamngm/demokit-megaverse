@@ -1,0 +1,448 @@
+table _Measures
+	lineageTag: 0a1b2c3d-2222-4a00-9000-000000000001
+
+	/// Assumes rtl_sales[price] is the unit price
+	measure Revenue = SUM ( rtl_sales[Revenue] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 2561cce5-0b29-488e-916c-1db8a926ba09
+
+	measure 'Gross Profit' = SUM ( rtl_sales[gross_profit] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 12c1c561-d25c-4271-ad83-072007deed89
+
+	measure 'GP %' = DIVIDE ( [Gross Profit], [Revenue] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: d6e43670-2fec-49e6-9f3b-27a8ba97aa3e
+
+	measure Units = SUM ( rtl_sales[quantity] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: f98d46e7-74f4-4e81-b844-03c63b6dc3ce
+
+	/// Assumes rtl_sales[transaction] holds a transaction count per line
+	measure Transactions = SUM ( rtl_sales[transaction] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: ef1c138c-fc97-47da-a330-cf92a2cba6fa
+
+	measure 'Avg Basket Value' = DIVIDE ( [Revenue], [Transactions] )
+		formatString: #,0.00
+		displayFolder: Sales
+		lineageTag: 2ea4d019-e899-450f-a366-3c6e7e6a2a85
+
+	measure 'Units per Txn' = DIVIDE ( [Units], [Transactions] )
+		formatString: 0.00
+		displayFolder: Sales
+		lineageTag: 70ff3546-4ad1-415a-867c-05cf85204af3
+
+	measure Traffic = SUM ( rtl_sales[traffic] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: fd42f5d9-4056-49f6-9aa8-f827596b3b18
+
+	measure 'Conversion %' = DIVIDE ( [Transactions], [Traffic] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: a8831e9f-72b3-4ed0-b2ba-13c2c17e4288
+
+	measure 'Avg Selling Price' = DIVIDE ( [Revenue], [Units] )
+		formatString: #,0.00
+		displayFolder: Sales
+		lineageTag: 146f2acb-7d7c-4378-a763-314686df8490
+
+	measure 'Revenue PY' = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: 518f3df0-8f13-4860-96a7-01e3d0d1473e
+
+	measure 'Revenue YoY %' = DIVIDE ( [Revenue] - [Revenue PY], [Revenue PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: da9e8ee3-7bd4-4338-a321-ac30cf7ee2d3
+
+	measure 'Revenue YTD' = TOTALYTD ( [Revenue], dim_date[Date] )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: 6b87da79-b1e9-47ad-be9c-3dff39884900
+
+	measure 'GP PY' = CALCULATE ( [Gross Profit], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: 7f0e2610-6e21-45a7-b4ac-d6a096324af1
+
+	measure 'GP YoY %' = DIVIDE ( [Gross Profit] - [GP PY], [GP PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: ebc06d1b-73c4-4410-b640-b0b407573cdb
+
+	measure 'GP % PY' = CALCULATE ( [GP %], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 463ac9f7-0097-4de5-bbb0-b77b7d196f88
+
+	measure 'Transactions PY' = CALCULATE ( [Transactions], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: 554d9e53-507b-44be-954f-c306c729b27b
+
+	measure 'Txn YoY %' = DIVIDE ( [Transactions] - [Transactions PY], [Transactions PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 9f1b2ee1-bab6-4f0d-815d-65e4fa31b084
+
+	measure 'Customers PY' = CALCULATE ( [Active Customers], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: d3ece7df-9afd-4513-8301-6b6ec005337d
+
+	measure 'Customers YoY %' = DIVIDE ( [Active Customers] - [Customers PY], [Customers PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 978e7ed3-00ee-4d59-a6d2-c266a0e2addf
+
+	measure 'Conversion PY' = CALCULATE ( [Conversion %], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 16dec412-e734-4972-a3b3-3c28c0743707
+
+	measure 'Active Customers' = DISTINCTCOUNT ( rtl_sales[customer_id] )
+		formatString: #,0
+		displayFolder: Customer
+		lineageTag: 536d6e61-f6ae-47d3-81cc-ca316089dceb
+
+	measure 'Revenue per Customer' = DIVIDE ( [Revenue], [Active Customers] )
+		formatString: #,0.00
+		displayFolder: Customer
+		lineageTag: e7c671c6-9a55-428e-abe9-f604b64e7573
+
+	measure 'Purchase Frequency' = DIVIDE ( [Transactions], [Active Customers] )
+		formatString: 0.00
+		displayFolder: Customer
+		lineageTag: a3ffa1fd-c573-4de0-a66a-17c34efbac8a
+
+	measure 'SKU Count' = DISTINCTCOUNT ( rtl_sales[product_id] )
+		formatString: #,0
+		displayFolder: Product
+		lineageTag: 4dfc70d5-dbd0-472a-8fee-4a91e32bf69e
+
+	measure 'Revenue Share %' = DIVIDE ( [Revenue], CALCULATE ( [Revenue], ALLSELECTED ( rtl_product ) ) )
+		formatString: 0.0%
+		displayFolder: Product
+		lineageTag: 68d41452-e6f1-4736-b1c3-48b23da2deda
+
+	/// Cumulative revenue share by product, largest first (Pareto line)
+	measure 'Pareto Cum %' =
+			VAR _cur = [Revenue]
+			VAR _tbl = ADDCOLUMNS ( ALLSELECTED ( rtl_product[product_name] ), "@r", [Revenue] )
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _cur ),
+			        DIVIDE ( SUMX ( FILTER ( _tbl, [@r] >= _cur ), [@r] ), SUMX ( _tbl, [@r] ) )
+			    )
+		formatString: 0%
+		displayFolder: Product
+		lineageTag: 93a3fa59-afc7-404e-bf1b-6ad78633465e
+
+	measure 'Revenue Top 10 Product' = IF ( RANKX ( ALLSELECTED ( rtl_product[product_name] ), [Revenue],, DESC ) <= 10, [Revenue] )
+		formatString: #,0
+		displayFolder: Product
+		lineageTag: b46ec396-c7e0-4601-a3c1-4b398e562d11
+
+	measure 'Units Bottom 10 Product' =
+			VAR _u = [Units]
+			RETURN
+			    IF ( NOT ISBLANK ( _u ) && RANKX ( FILTER ( ALLSELECTED ( rtl_product[product_name] ), NOT ISBLANK ( [Units] ) ), [Units],, ASC ) <= 10, _u )
+		formatString: #,0
+		displayFolder: Product
+		lineageTag: f7a56054-c774-4ba1-b698-6efb28e93512
+
+	measure 'Revenue Top 5 Store' = IF ( RANKX ( ALLSELECTED ( rtl_store[store_location] ), [Revenue],, DESC ) <= 5, [Revenue] )
+		formatString: #,0
+		displayFolder: Store
+		lineageTag: a713c914-b65c-462e-a229-4ff5b778095f
+
+	measure 'Revenue Bottom 5 Store' =
+			VAR _r = [Revenue]
+			RETURN
+			    IF ( NOT ISBLANK ( _r ) && RANKX ( FILTER ( ALLSELECTED ( rtl_store[store_location] ), NOT ISBLANK ( [Revenue] ) ), [Revenue],, ASC ) <= 5, _r )
+		formatString: #,0
+		displayFolder: Store
+		lineageTag: 68c794e6-8d8b-4f90-a49f-c20ad268a2bb
+
+	measure Views = SUM ( rtl_ecom_behave[view_num] )
+		formatString: #,0
+		displayFolder: Ecom
+		lineageTag: ab4f4b2a-a1d2-487c-9e7d-786c60f385ba
+
+	measure Carts = SUM ( rtl_ecom_behave[cart_num] )
+		formatString: #,0
+		displayFolder: Ecom
+		lineageTag: 74d0f801-69a0-490e-aa1b-d08642df8772
+
+	measure 'Cart Removes' = SUMX ( rtl_ecom_behave, IFERROR ( VALUE ( rtl_ecom_behave[remove_cart_num] ), 0 ) )
+		formatString: #,0
+		displayFolder: Ecom
+		lineageTag: 967c08a7-dfa6-4c64-af78-ca0f72414e4e
+
+	measure 'Online Orders' = SUM ( rtl_ecom_behave[order_num] )
+		formatString: #,0
+		displayFolder: Ecom
+		lineageTag: 276e2875-f0da-4d9e-bcd1-3ee3ebf167d9
+
+	measure 'View to Cart %' = DIVIDE ( [Carts], [Views] )
+		formatString: 0.0%
+		displayFolder: Ecom
+		lineageTag: a2e7aa20-e184-4d41-af44-0bac3e210f49
+
+	measure 'Cart to Order %' = DIVIDE ( [Online Orders], [Carts] )
+		formatString: 0.0%
+		displayFolder: Ecom
+		lineageTag: 9d57079e-5ee7-4d38-b049-9cf183ae8b0c
+
+	measure 'View to Order %' = DIVIDE ( [Online Orders], [Views] )
+		formatString: 0.00%
+		displayFolder: Ecom
+		lineageTag: d69093d8-ef18-4542-938c-90644a3526fc
+
+	measure 'Cart Abandonment %' = 1 - [Cart to Order %]
+		formatString: 0.0%
+		displayFolder: Ecom
+		lineageTag: 9cc48183-bf24-4524-8d5d-577feaa98ac0
+
+	measure 'Revenue YoY Label' = VAR _d = [Revenue YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+		displayFolder: Labels
+		lineageTag: 5e7703d9-ee53-42bf-9166-8542c950a850
+
+	measure 'GP YoY Label' = VAR _d = [GP YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+		displayFolder: Labels
+		lineageTag: dd81ac3c-ce7c-4a4f-b609-5eef65d0325b
+
+	measure 'GP % YoY Label' = VAR _d = [GP %] - [GP % PY] RETURN IF ( ISBLANK ( [GP % PY] ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ) * 100, "0.0" ) & " pts vs PY" )
+		displayFolder: Labels
+		lineageTag: e1e63e1f-cbd9-4357-a4df-679b96fde0ad
+
+	measure 'Txn YoY Label' = VAR _d = [Txn YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+		displayFolder: Labels
+		lineageTag: bac60bf9-3c97-492e-80a0-7446862e0343
+
+	measure 'Customers YoY Label' = VAR _d = [Customers YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+		displayFolder: Labels
+		lineageTag: 7ccd0a58-1739-454e-aac7-47e90dc57fae
+
+	measure 'Conversion YoY Label' = VAR _d = [Conversion %] - [Conversion PY] RETURN IF ( ISBLANK ( [Conversion PY] ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ) * 100, "0.0" ) & " pts vs PY" )
+		displayFolder: Labels
+		lineageTag: d5056e43-620a-4f78-9249-251d4e305625
+
+	measure 'Revenue YoY Color' = IF ( [Revenue YoY %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 59d08f1b-b752-4a02-9f0a-31aae5023b82
+
+	measure 'GP YoY Color' = IF ( [GP YoY %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 82720e20-14f9-4ed6-81c9-e8c14de05fd8
+
+	measure 'GP % YoY Color' = IF ( [GP %] < [GP % PY], "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 88747e7d-5139-4a87-9f30-72923e118911
+
+	measure 'Txn YoY Color' = IF ( [Txn YoY %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: ff7e3364-538a-4a84-9804-108893066e04
+
+	measure 'Customers YoY Color' = IF ( [Customers YoY %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 20c93bf7-7939-4216-8ce0-9647654b9108
+
+	measure 'Conversion YoY Color' = IF ( [Conversion %] < [Conversion PY], "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 557fbe6a-ac33-4a53-8dc2-347e98148a82
+
+	measure 'Data As Of' = "Data through " & FORMAT ( CALCULATE ( MAX ( rtl_sales[sales_date_clean] ), REMOVEFILTERS () ), "dd MMM yyyy" )
+		displayFolder: Labels
+		lineageTag: a96f4bd4-6b6f-4100-b7fc-70160e079061
+
+	/// Latest sales date in the current selection; MoM compares its month with the month before
+	measure 'Last Sales Date' = MAX ( rtl_sales[sales_date_clean] )
+		formatString: Short Date
+		displayFolder: Time\MoM
+		lineageTag: 4606b2d1-2c7d-4b9e-b570-72fa7450d2c5
+
+	measure 'Revenue CM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Revenue], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -1 ) + 1, EOMONTH ( _d, 0 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: a82d73e6-5fab-4409-b698-fed49a18d349
+
+	measure 'Revenue PM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Revenue], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -2 ) + 1, EOMONTH ( _d, -1 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: 214b1983-8cc7-4504-8afe-32f805df7cce
+
+	measure 'Revenue MoM %' = DIVIDE ( [Revenue CM] - [Revenue PM], [Revenue PM] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time\MoM
+		lineageTag: 0ce7035e-7d56-4485-977e-40caebdd131a
+
+	measure 'GP CM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Gross Profit], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -1 ) + 1, EOMONTH ( _d, 0 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: 28c13fbb-bcd3-4a50-ab0e-77c4f1c1ca85
+
+	measure 'GP PM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Gross Profit], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -2 ) + 1, EOMONTH ( _d, -1 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: af342ab4-977e-4a85-bed4-73ee1244f1b7
+
+	measure 'GP MoM %' = DIVIDE ( [GP CM] - [GP PM], [GP PM] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time\MoM
+		lineageTag: d3fc9bee-ce69-4fb7-90ae-39fe6c812a13
+
+	measure 'GP % CM' = DIVIDE ( [GP CM], [Revenue CM] )
+		formatString: 0.0%
+		displayFolder: Time\MoM
+		lineageTag: 8f7e7fb2-eb38-43a5-a414-bddbfb78c49d
+
+	measure 'GP % PM' = DIVIDE ( [GP PM], [Revenue PM] )
+		formatString: 0.0%
+		displayFolder: Time\MoM
+		lineageTag: 590283bb-2a69-4996-b41b-9ca9be0d1e33
+
+	measure 'Transactions CM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Transactions], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -1 ) + 1, EOMONTH ( _d, 0 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: f0f11662-6d2a-407a-b7be-567acde5f2c4
+
+	measure 'Transactions PM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Transactions], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -2 ) + 1, EOMONTH ( _d, -1 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: 957096a5-2817-4e6c-a96f-b7c95c19336c
+
+	measure 'Txn MoM %' = DIVIDE ( [Transactions CM] - [Transactions PM], [Transactions PM] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time\MoM
+		lineageTag: 1759d16a-1b6a-470e-9c2b-406aaf459bb7
+
+	measure 'Customers CM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Active Customers], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -1 ) + 1, EOMONTH ( _d, 0 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: 3154f83a-64a9-4f03-8d13-2328d68395ea
+
+	measure 'Customers PM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Active Customers], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -2 ) + 1, EOMONTH ( _d, -1 ) ) )
+		formatString: #,0
+		displayFolder: Time\MoM
+		lineageTag: cc503820-dc4f-4644-890b-40cff1441454
+
+	measure 'Customers MoM %' = DIVIDE ( [Customers CM] - [Customers PM], [Customers PM] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time\MoM
+		lineageTag: 277b459f-c9d8-4440-ab8a-aa237d60d8a6
+
+	measure 'Conversion CM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Conversion %], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -1 ) + 1, EOMONTH ( _d, 0 ) ) )
+		formatString: 0.0%
+		displayFolder: Time\MoM
+		lineageTag: 0b85c1b7-cfff-4f22-85e6-08910b974a1e
+
+	measure 'Conversion PM' = VAR _d = [Last Sales Date] RETURN CALCULATE ( [Conversion %], DATESBETWEEN ( dim_date[Date], EOMONTH ( _d, -2 ) + 1, EOMONTH ( _d, -1 ) ) )
+		formatString: 0.0%
+		displayFolder: Time\MoM
+		lineageTag: 0ea4f5dd-c3c0-4a4f-9d20-9ef204a38473
+
+	measure 'Revenue MoM Label' = VAR _d = [Revenue MoM %] RETURN IF ( ISBLANK ( _d ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: 3b5c11ff-209d-4c79-94c3-d0954b007b1a
+
+	measure 'GP MoM Label' = VAR _d = [GP MoM %] RETURN IF ( ISBLANK ( _d ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: c21119f6-c5fc-444a-b0c4-046ccf39e924
+
+	measure 'GP % MoM Label' = VAR _d = [GP % CM] - [GP % PM] RETURN IF ( ISBLANK ( [GP % PM] ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ) * 100, "0.0" ) & " pts MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: 9f86f2a9-00f9-41b0-bb2c-b8a1cb26320b
+
+	measure 'Txn MoM Label' = VAR _d = [Txn MoM %] RETURN IF ( ISBLANK ( _d ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: c10eb92f-b450-415c-9939-51ab4b574c84
+
+	measure 'Customers MoM Label' = VAR _d = [Customers MoM %] RETURN IF ( ISBLANK ( _d ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: 031abd57-6691-4b5f-9184-4d573c366332
+
+	measure 'Conversion MoM Label' = VAR _d = [Conversion CM] - [Conversion PM] RETURN IF ( ISBLANK ( [Conversion PM] ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ) * 100, "0.0" ) & " pts MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+		displayFolder: Labels
+		lineageTag: b1f98459-5798-4ee8-8290-d4a269c37481
+
+	measure 'Revenue MoM Color' = IF ( [Revenue MoM %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 391cb570-dc5b-4767-b8fc-6d39f751cc6f
+
+	measure 'GP MoM Color' = IF ( [GP MoM %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: cbff8c9b-9ec0-4c7c-9210-2a113d1b7aa7
+
+	measure 'GP % MoM Color' = IF ( [GP % CM] < [GP % PM], "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 0a23f9ad-54a2-421a-9433-b4f25ff9186d
+
+	measure 'Txn MoM Color' = IF ( [Txn MoM %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 65e4ed39-18b7-43b4-babc-d87908726c5c
+
+	measure 'Customers MoM Color' = IF ( [Customers MoM %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: ad075a17-6204-4eb0-b8e4-e2d91a7e8bba
+
+	measure 'Conversion MoM Color' = IF ( [Conversion CM] < [Conversion PM], "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: 04612d8d-d38a-4785-be7d-4e405031b552
+
+	measure 'Revenue YoY Bottom 5 Store' =
+			
+			VAR _r = [Revenue YoY %]
+			RETURN
+			    IF ( NOT ISBLANK ( _r ) && RANKX ( FILTER ( ALLSELECTED ( rtl_store[store_location] ), NOT ISBLANK ( [Revenue YoY %] ) ), [Revenue YoY %],, ASC ) <= 5, _r )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Store
+		lineageTag: 399758a9-a8ea-46b9-a636-7269f0734592
+
+	measure 'Revenue YoY Top 5 Store' =
+			
+			IF ( RANKX ( ALLSELECTED ( rtl_store[store_location] ), [Revenue YoY %],, DESC ) <= 5, [Revenue YoY %] )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Store
+		lineageTag: 817f909e-9de2-44d0-8a4e-3072fedf7f4a
+
+	measure 'Traffic PY' = CALCULATE ( [Traffic], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: dd447f01-6bea-4658-9d3d-efdd3aac5ff5
+
+	measure 'Traffic YoY %' = DIVIDE ( [Traffic] - [Traffic PY], [Traffic PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 733edf9c-5c0a-48a7-b6bf-8678adfeb53a
+
+	measure 'Traffic YoY Color' = IF ( [Traffic YoY %] < 0, "#DD3C57", "#1F49BF" )
+		displayFolder: Labels
+		lineageTag: a602db55-0573-4469-86bc-4b03cc107e0f
+
+	measure 'Traffic YoY Label' = VAR _d = [Traffic YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+		displayFolder: Labels
+		lineageTag: ec3c4b28-d539-45fd-9283-6eb5b3552e45
+
+	column _x
+		dataType: int64
+		isHidden
+		lineageTag: 0a1b2c3d-2222-4a00-9000-000000000002
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [_x]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW ( "_x", 0 )
+

@@ -1,0 +1,8 @@
+order_status,status_group,is_final,sort_order,delivery_result
+Approved,In progress,0,1,
+Processing,In progress,0,2,
+Shipped,In transit,0,3,
+Advance delivery,Delivered,1,4,Early
+Delivery on time,Delivered,1,5,On time
+Late delivery,Delivered,1,6,Late
+Canceled,Canceled,1,7,

@@ -1,0 +1,117 @@
+table dim_date
+	lineageTag: 0a1b2c3d-1111-4a00-9000-000000000001
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000002
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000003
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000004
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000005
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: string
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000006
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthNo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000007
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonthNo]
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000008
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month]
+		sortByColumn: YearMonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekdayNo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000009
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekdayNo]
+
+		annotation SummarizationSetBy = User
+
+	column Weekday
+		dataType: string
+		lineageTag: 0a1b2c3d-1111-4a00-9000-000000000010
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Weekday]
+		sortByColumn: WeekdayNo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = calculated
+		mode: import
+		source =
+				VAR _min = MIN ( MIN ( rtl_sales[sales_date_clean] ), MIN ( rtl_ecom_behave[order_purchased_date_clean] ) )
+				VAR _max = MAX ( MAX ( rtl_sales[sales_date_clean] ), MAX ( rtl_ecom_behave[order_purchased_date_clean] ) )
+				RETURN
+				    ADDCOLUMNS (
+				        CALENDAR ( DATE ( YEAR ( _min ), 1, 1 ), DATE ( YEAR ( _max ), 12, 31 ) ),
+				        "Year", YEAR ( [Date] ),
+				        "Quarter", "Q" & QUARTER ( [Date] ),
+				        "MonthNo", MONTH ( [Date] ),
+				        "Month", FORMAT ( [Date], "MMM" ),
+				        "YearMonthNo", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				        "Year Month", FORMAT ( [Date], "YYYY-MM" ),
+				        "WeekdayNo", WEEKDAY ( [Date], 2 ),
+				        "Weekday", FORMAT ( [Date], "ddd" )
+				    )
+
+	annotation PBI_Id = dim_date
+
