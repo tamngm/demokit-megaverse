@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 979.81206942440213,
+            "y": 486.79003934243974
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "0a1b2c3d-2222-4a00-9000-000000000001",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 576.13989904003847,
+            "y": 148.09756392885012
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "0a1b2c3d-1111-4a00-9000-000000000001",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 128.70714607045147,
+            "y": 927.58007868487948
+          },
+          "nodeIndex": "rtl_customer",
+          "nodeLineageTag": "2a67c264-2860-4ec2-9b75-373e1d02722b",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 502.76119068986816
+          },
+          "nodeIndex": "rtl_product",
+          "nodeLineageTag": "b6a235bd-1344-4cbc-a12b-9718884fcf47",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 393.4233573935532,
+            "y": 506.25963356762384
+          },
+          "nodeIndex": "rtl_sales",
+          "nodeLineageTag": "a512a3e6-10a2-4f80-85a8-e680cf20599a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 624.07015967785583,
+            "y": 862.73342443094
+          },
+          "nodeIndex": "rtl_store",
+          "nodeLineageTag": "2e6a145d-45f3-4499-90d6-9b6f70c78d90",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 984.81206942440213,
+            "y": 47
+          },
+          "nodeIndex": "rtl_ecom_behave",
+          "nodeLineageTag": "765c7cc4-1901-4199-aab3-95e9cbac7391",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.95554390096882,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

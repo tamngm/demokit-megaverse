@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS `offybi`.`rtl_order`;
+DROP TABLE IF EXISTS `offybi`.`rtl_sales`;
+DROP TABLE IF EXISTS `offybi`.`rtl_customer`;
+DROP TABLE IF EXISTS `offybi`.`rtl_product`;
+DROP TABLE IF EXISTS `offybi`.`rtl_ecom_behave_to_order`;
+
 CREATE EXTERNAL TABLE IF NOT EXISTS `offybi`.`rtl_customer` (
   `customer_id` string,
   `name` string,
@@ -26,7 +32,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `offybi`.`rtl_ecom_behave_to_order` (
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
 WITH SERDEPROPERTIES ('field.delim' = ',')
 STORED AS INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat' OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
-LOCATION 's3://offy-bi-demo/data/offybi/retail_kit/ecom_behave_to_order/'
+LOCATION 's3://offy-bi-demo/data/offybi/retail_kit/ecom_behavior/'
 TBLPROPERTIES ('classification' = 'csv', 'skip.header.line.count' = '1');
 
 CREATE EXTERNAL TABLE IF NOT EXISTS `offybi`.`rtl_order` (
@@ -46,11 +52,11 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `offybi`.`rtl_order` (
   `order_item_quantity` int,
   `order_profit_per_order` DECIMAL(18,2),
   `order_item_profit_ratio` DECIMAL(18,2),
-  `order_purchased_date` date,
-  `order_approved_at` date,
-  `order_shipped_at` date,
-  `order_delivery_date` date,
-  `order_estimated_delivery_date` date,
+  `order_purchased_date` string,
+  `order_approved_at` string,
+  `order_shipped_at` string,
+  `order_delivery_date` string,
+  `order_estimated_delivery_date` string,
   `order_status` string,
   `product_id` string
 )
@@ -75,7 +81,7 @@ TBLPROPERTIES ('classification' = 'csv', 'skip.header.line.count' = '1');
 
 CREATE EXTERNAL TABLE IF NOT EXISTS `offybi`.`rtl_sales` (
   `sales_id` string,
-  `sales_date` date,
+  `sales_date` string,
   `product_id` string,
   `customer_id` string,
   `transaction` int,

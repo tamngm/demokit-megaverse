@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Use Case 2 - Retail Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7f7a2a93-04ae-4611-bb48-b93086b7092c"
+  }
+}

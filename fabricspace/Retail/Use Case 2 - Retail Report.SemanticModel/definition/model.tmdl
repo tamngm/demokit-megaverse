@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["rtl_customer","rtl_ecom_behave","rtl_product","rtl_sales","rtl_store"]
+
+annotation PBI_ProTooling = ["DevMode","TMDLView_Desktop"]
+
+ref table rtl_customer
+ref table rtl_ecom_behave
+ref table rtl_product
+ref table rtl_sales
+ref table rtl_store
+ref table _Measures
+ref table dim_date
+
+ref cultureInfo en-US
+

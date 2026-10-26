@@ -1,0 +1,90 @@
+table rtl_customer
+	lineageTag: 2a67c264-2860-4ec2-9b75-373e1d02722b
+
+	column customer_id
+		dataType: string
+		lineageTag: b237c0f3-983b-49ef-97c8-066a395ac369
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 6917d5be-97b3-4526-981c-e7a31ef4fc63
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: bcb5728a-6e2b-4914-92aa-5a389472dc7d
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column age
+		dataType: string
+		lineageTag: 55890661-37c7-48e9-820e-40335894178b
+		summarizeBy: none
+		sourceColumn: age
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 8aef5670-f1f5-4163-87d1-606577b3318d
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column social_media_flag
+		dataType: string
+		lineageTag: 21f50d6c-65ad-41bb-89d8-b4bf140cb199
+		summarizeBy: none
+		sourceColumn: social_media_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_type
+		dataType: string
+		lineageTag: b281ce1c-f4e4-4cf1-8e24-897d13db4063
+		summarizeBy: none
+		sourceColumn: customer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_level
+		dataType: string
+		lineageTag: 00067983-9b92-4a0e-832a-88ec4d46b04a
+		summarizeBy: none
+		sourceColumn: customer_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_nationality
+		dataType: string
+		lineageTag: 3af430e5-bd70-4acc-b238-ff95c9899d1d
+		summarizeBy: none
+		sourceColumn: country_nationality
+
+		annotation SummarizationSetBy = Automatic
+
+	partition rtl_customer = m
+		mode: import
+		source =
+				let
+				    Source = AmazonAthena.Databases("athena-bi-demo", null, []),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    rtl_customer_Table = offybi_Schema{[Name="dim_rtl_customer",Kind="Table"]}[Data]
+				in
+				    rtl_customer_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

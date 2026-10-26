@@ -1,0 +1,35 @@
+createOrReplace
+
+	ref table _Measures
+
+		measure 'Transactions MoM %' = DIVIDE ( [Transactions CM] - [Transactions PM], [Transactions PM] )
+			formatString: +0.0%;-0.0%;0.0%
+			displayFolder: Time\MoM
+			lineageTag: 1759d16a-1b6a-470e-9c2b-406aaf459bb7
+
+		measure 'Transactions MoM Color' = IF ( [Transactions MoM %] < 0, "#DD3C57", "#1F49BF" )
+			displayFolder: Labels
+			lineageTag: 65e4ed39-18b7-43b4-babc-d87908726c5c
+
+		measure 'Transactions MoM Label' = VAR _d = [Transactions MoM %] RETURN IF ( ISBLANK ( _d ), "No prior-month data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " MoM · " & FORMAT ( [Last Sales Date], "MMM yyyy" ) )
+			displayFolder: Labels
+			lineageTag: c10eb92f-b450-415c-9939-51ab4b574c84
+
+		measure 'Transactions YoY %' = DIVIDE ( [Transactions] - [Transactions PY], [Transactions PY] )
+			formatString: +0.0%;-0.0%;0.0%
+			displayFolder: Time
+			lineageTag: 9f1b2ee1-bab6-4f0d-815d-65e4fa31b084
+
+		measure 'Transactions YoY Color' = IF ( [Transactions YoY %] < 0, "#DD3C57", "#1F49BF" )
+			displayFolder: Labels
+			lineageTag: ff7e3364-538a-4a84-9804-108893066e04
+
+		measure 'Transactions YoY Label' = VAR _d = [Transactions YoY %] RETURN IF ( ISBLANK ( _d ), "No prior-year data", IF ( _d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( _d ), "0.0%" ) & " vs PY" )
+			displayFolder: Labels
+			lineageTag: bac60bf9-3c97-492e-80a0-7446862e0343
+
+		measure 'Units per Transactions' = DIVIDE ( [Units], [Transactions] )
+			formatString: 0.00
+			displayFolder: Sales
+			lineageTag: 70ff3546-4ad1-415a-867c-05cf85204af3
+

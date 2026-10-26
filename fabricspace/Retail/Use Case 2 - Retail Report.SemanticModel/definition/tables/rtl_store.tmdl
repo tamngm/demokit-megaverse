@@ -1,0 +1,74 @@
+table rtl_store
+	lineageTag: 2e6a145d-45f3-4499-90d6-9b6f70c78d90
+
+	column store_id
+		dataType: string
+		lineageTag: 0034b743-2876-418f-aa46-ec81d1a558a0
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_code
+		dataType: string
+		lineageTag: 2e136452-1e3c-496f-bd37-92d7f5a5a5b6
+		summarizeBy: none
+		sourceColumn: store_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_location
+		dataType: string
+		lineageTag: 0889550f-6c1f-400b-b56b-0222d6cdc8d6
+		summarizeBy: none
+		sourceColumn: store_location
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_manager
+		dataType: string
+		lineageTag: 0393fa1d-e92e-43b5-a6b9-1dbd7515d22b
+		summarizeBy: none
+		sourceColumn: store_manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_phone
+		dataType: string
+		lineageTag: 6626876b-c2d9-40eb-af57-622b40aee810
+		summarizeBy: none
+		sourceColumn: store_phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_country
+		dataType: string
+		lineageTag: 3136ba23-1332-49dd-b642-83afed622739
+		summarizeBy: none
+		sourceColumn: store_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_market
+		dataType: string
+		lineageTag: 2491967f-3e3c-4f85-8cf6-a116908f16fa
+		summarizeBy: none
+		sourceColumn: store_market
+
+		annotation SummarizationSetBy = Automatic
+
+	partition rtl_store = m
+		mode: import
+		source =
+				let
+				    Source = AmazonAthena.Databases("athena-bi-demo", null, []),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    rtl_store_Table = offybi_Schema{[Name="dim_rtl_store",Kind="Table"]}[Data]
+				in
+				    rtl_store_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,9 @@
+createOrReplace
+
+	ref table _Measures
+
+		measure 'Txn YoY %' = DIVIDE ( [Transactions] - [Transactions PY], [Transactions PY] )
+			formatString: +0.0%;-0.0%;0.0%
+			displayFolder: Time
+			lineageTag: 9f1b2ee1-bab6-4f0d-815d-65e4fa31b084
+

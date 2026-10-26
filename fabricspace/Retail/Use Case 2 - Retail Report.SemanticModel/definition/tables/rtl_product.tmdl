@@ -1,0 +1,60 @@
+table rtl_product
+	lineageTag: b6a235bd-1344-4cbc-a12b-9718884fcf47
+
+	column product_id
+		dataType: string
+		lineageTag: cbf405dd-846d-460f-8737-67e21bdfbee4
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sku
+		dataType: string
+		lineageTag: dfcaf557-5df9-4409-8920-1aed255fdca1
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 88ca75a0-d8d1-422b-ac11-9148a19f33b1
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		lineageTag: e9d9cbb6-b8fb-487a-b37f-158a9470394c
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: a8cddcbd-511a-4666-8b62-11d90063bae9
+		summarizeBy: none
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition rtl_product = m
+		mode: import
+		source =
+				let
+				    Source = AmazonAthena.Databases("athena-bi-demo", null, []),
+				    AwsDataCatalog_Database = Source{[Name="AwsDataCatalog",Kind="Database"]}[Data],
+				    offybi_Schema = AwsDataCatalog_Database{[Name="offybi_mart",Kind="Schema"]}[Data],
+				    rtl_product_Table = offybi_Schema{[Name="dim_rtl_product",Kind="Table"]}[Data]
+				in
+				    rtl_product_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
