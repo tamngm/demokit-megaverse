@@ -1,1 +1,0 @@
-SELECT '{"rowcount":20250,"data_scanned_in_bytes":500230}';

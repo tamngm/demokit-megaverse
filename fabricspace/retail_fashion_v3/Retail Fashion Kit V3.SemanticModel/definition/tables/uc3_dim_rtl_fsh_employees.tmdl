@@ -1,0 +1,50 @@
+table uc3_dim_rtl_fsh_employees
+	lineageTag: a332156e-ad34-4743-819d-220c3bb04149
+
+	column employee_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 85c6bb6b-0837-4306-ae5e-e8eb5ad7ee16
+		summarizeBy: none
+		sourceColumn: employee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7559516d-bd69-46f3-962f-739f884371b2
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_name
+		dataType: string
+		lineageTag: b360811a-ef6e-4a54-9616-31301c9028c4
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_position
+		dataType: string
+		lineageTag: 597859cc-7586-4e3d-8351-87b3acd6df8e
+		summarizeBy: none
+		sourceColumn: employee_position
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc3_dim_rtl_fsh_employees = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_dim_rtl_fsh_employees", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

@@ -32,7 +32,13 @@ models:
   dbt_demokit_pro:
     work:
       +materialized: view
-      +schema: offybi              # reads from offybi (your default)
+      +schema: work              # reads from offybi (your default)
     mart:
       +materialized: table
       +schema: mart         # ← writes dim/fact here
+
+seeds:
+  dbt_demokit_pro:
+    referential:                      # every CSV in seeds/referential/
+      +s3_data_dir: s3://offy-bi-demo/data/offybi/referential/
+      +s3_data_naming: table          # -> referential/<seed name>/

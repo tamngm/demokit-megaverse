@@ -1,0 +1,55 @@
+# 1. Khai báo thông tin App & Tenant
+$tenantId = "officiencevn.onmicrosoft.com"
+$clientId = 
+$clientSecret =
+$siteSearchName = "BI-Demokit"
+
+# 2. Lấy Access Token từ Azure AD
+$tokenBody = @{
+    grant_type    = "client_credentials"
+    client_id     = $clientId
+    client_secret = $clientSecret
+    scope         = "https://graph.microsoft.com/.default"
+}
+$tokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$tenantId/oauth2/v2.0/token" -Method Post -Body $tokenBody
+$headers = @{
+    Authorization = "Bearer $($tokenResponse.access_token)"
+    "Content-Type"  = "application/json"
+}
+
+# 3. Tìm chính xác Site ID của site BI-Demokit
+$searchUri = "https://graph.microsoft.com/v1.0/sites?search=$siteSearchName"
+$searchResponse = Invoke-RestMethod -Uri $searchUri -Headers $headers -Method Get
+
+# Lọc đúng site BI-Demokit trong danh sách kết quả
+$targetSite = $searchResponse.value | Where-Object { $_.webUrl -like "*/sites/BI-Demokit*" }
+
+if (-not $targetSite) {
+    Write-Host ">>> KHÔNG TÌM THẤY SITE BI-Demokit! Vui lòng kiểm tra lại tên Site." -ForegroundColor Red
+    return
+}
+
+$siteId = $targetSite.id
+Write-Host ">>> Đã tìm thấy Site ID: $siteId" -ForegroundColor Cyan
+
+# 4. Gán quyền Read cho App bi-sharepoint-connector
+$permissionPayload = @{
+    roles = @("read")
+    grantedToIdentities = @(
+        @{
+            application = @{
+                id = $clientId
+                displayName = "bi-sharepoint-connector"
+            }
+        }
+    )
+} | ConvertTo-Json -Depth 5
+
+$addPermissionUri = "https://graph.microsoft.com/v1.0/sites/$siteId/permissions"
+$result = Invoke-RestMethod -Uri $addPermissionUri -Headers $headers -Method Post -Body $permissionPayload
+
+# 5. Thông báo kết quả
+Write-Host "`n==========================================" -ForegroundColor Green
+Write-Host ">>> THÀNH CÔNG! Đã gán quyền Read cho App!" -ForegroundColor Green
+Write-Host "==========================================" -ForegroundColor Green
+$result | Select-Object id, roles

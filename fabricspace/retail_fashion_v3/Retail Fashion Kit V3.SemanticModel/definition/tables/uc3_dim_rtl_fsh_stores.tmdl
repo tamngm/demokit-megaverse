@@ -1,0 +1,86 @@
+table uc3_dim_rtl_fsh_stores
+	lineageTag: 05eacad8-b902-42f8-866d-e90d6beaef13
+
+	column store_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 264e72b5-76e1-4b41-b099-01d1a18e9092
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 90f416fd-0b9f-48e7-bdbd-e21059b550d8
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: ee853386-959b-49ee-b73c-7c00ab92c381
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_name
+		dataType: string
+		lineageTag: 6112e618-50db-4d3c-beac-ea3ecc237c35
+		summarizeBy: none
+		sourceColumn: store_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_employees
+		dataType: int64
+		formatString: 0
+		lineageTag: d15fa891-ea14-4ddb-952f-066d54522391
+		summarizeBy: sum
+		sourceColumn: number_of_employees
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip_code
+		dataType: string
+		lineageTag: ae98ca6c-b934-414b-b2e8-cbacf2d12f02
+		summarizeBy: none
+		sourceColumn: zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 8f78689a-d077-4e28-8349-9017740362dc
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: ee8fab08-c16f-4743-b2bb-53326992c539
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc3_dim_rtl_fsh_stores = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_dim_rtl_fsh_stores", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

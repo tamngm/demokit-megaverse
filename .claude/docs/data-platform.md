@@ -21,7 +21,7 @@ An Athena `LOCATION` is always a folder of files with one schema, never a single
 | Layer | Folder | Athena database | Notes |
 |---|---|---|---|
 | sources | `models/sources.yml` | `offybi` | source name = use case |
-| work | `models/work/<uc>/` | `offybi_offybi` (project `+schema: offybi` is prefixed) | uc1: `uc1_za_product_sales_stg` (view). uc2: `rtl_orders_wk` (Parquet table, partitioned by `order_month`, partition column last) |
+| work | `models/work/<uc>/` | `offybi_work` (project `+schema: offybi` is prefixed) | uc1: `uc1_za_product_sales_stg` (view). uc2: `rtl_orders_wk` (Parquet table, partitioned by `order_month`, partition column last) |
 | mart | `models/mart/<uc>/` | `offybi_mart` | one `.sql` per model + one shared `<uc>.yml` |
 | seeds | `seeds/` | `offybi` | `rtl_order_status_map.csv`: order_status → status_group, is_final, sort_order, delivery_result |
 

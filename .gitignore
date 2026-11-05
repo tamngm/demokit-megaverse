@@ -21,6 +21,8 @@ data_cache/
 credentials/
 # power BI
 bireport/
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
 
 # data folder
 data/
@@ -35,3 +37,7 @@ image/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+
+notebook/*
+/target/
+/logs/

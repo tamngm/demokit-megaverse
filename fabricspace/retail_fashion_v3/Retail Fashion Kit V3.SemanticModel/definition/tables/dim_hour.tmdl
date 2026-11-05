@@ -1,0 +1,58 @@
+table dim_hour
+	lineageTag: 675a7ddd-ff54-4101-a2d5-1fc58e6f8d4d
+
+	column hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f0598df4-141c-4323-aa6f-db0a964b87fd
+		summarizeBy: none
+		sourceColumn: hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column am_pm
+		dataType: string
+		lineageTag: e463fbe9-91fa-470f-aef7-98207a4cb9b5
+		summarizeBy: none
+		sourceColumn: am_pm
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_part
+		dataType: string
+		lineageTag: 6c9d53d3-a886-4736-b56f-67474296df5f
+		summarizeBy: none
+		sourceColumn: day_part
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_hour
+		dataType: string
+		lineageTag: dce88fd4-8b78-490f-955b-d2da0b2b2d5f
+		summarizeBy: none
+		sourceColumn: start_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_hour
+		dataType: string
+		lineageTag: f5577d46-bd47-4877-83cd-7ee9c6606368
+		summarizeBy: none
+		sourceColumn: end_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_hour = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "dim_time", Kind = "Table"]}[Data],
+				  #"Grouped rows" = Table.Group(#"Navigation 3", {"hour", "am_pm", "day_part"}, {{"start_hour", each List.Min([hour_label]), type nullable text}, {"end_hour", each List.Max([hour_label]), type nullable text}})
+				in
+				  #"Grouped rows"
+
+	annotation PBI_ResultType = Table
+

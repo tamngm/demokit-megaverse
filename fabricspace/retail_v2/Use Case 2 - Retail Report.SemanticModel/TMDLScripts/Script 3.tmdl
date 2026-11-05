@@ -1,0 +1,56 @@
+createOrReplace
+
+	ref table _Measures
+
+		measure 'Avg Basket Value' = DIVIDE ( [Revenue], [Transactions] )
+			formatString: #,0.00
+			displayFolder: Sales
+			lineageTag: 2ea4d019-e899-450f-a366-3c6e7e6a2a85
+
+		measure 'Avg Selling Price' = DIVIDE ( [Revenue], [Units] )
+			formatString: #,0.00
+			displayFolder: Sales
+			lineageTag: 146f2acb-7d7c-4378-a763-314686df8490
+
+		measure 'Conversion %' = DIVIDE ( [Transactions], [Traffic] )
+			formatString: 0.0%
+			displayFolder: Sales
+			lineageTag: a8831e9f-72b3-4ed0-b2ba-13c2c17e4288
+
+		measure 'Gross Profit' = SUM ( rtl_sales[gross_profit] )
+			formatString: #,0
+			displayFolder: Sales
+			lineageTag: 12c1c561-d25c-4271-ad83-072007deed89
+
+		measure 'Gross Profit %' = DIVIDE ( [Gross Profit], [Revenue] )
+			formatString: 0.0%
+			displayFolder: Sales
+			lineageTag: d6e43670-2fec-49e6-9f3b-27a8ba97aa3e
+
+		/// Assumes rtl_sales[price] is the unit price
+		measure Revenue = SUM ( rtl_sales[Revenue] )
+			formatString: #,0
+			displayFolder: Sales
+			lineageTag: 2561cce5-0b29-488e-916c-1db8a926ba09
+
+		measure Traffic = SUM ( rtl_sales[traffic] )
+			formatString: #,0
+			displayFolder: Sales
+			lineageTag: fd42f5d9-4056-49f6-9aa8-f827596b3b18
+
+		/// Assumes rtl_sales[transaction] holds a transaction count per line
+		measure Transactions = SUM ( rtl_sales[transaction] )
+			formatString: #,0
+			displayFolder: Sales
+			lineageTag: ef1c138c-fc97-47da-a330-cf92a2cba6fa
+
+		measure Units = SUM ( rtl_sales[quantity] )
+			formatString: #,0
+			displayFolder: Sales
+			lineageTag: f98d46e7-74f4-4e81-b844-03c63b6dc3ce
+
+		measure 'Units per Txn' = DIVIDE ( [Units], [Transactions] )
+			formatString: 0.00
+			displayFolder: Sales
+			lineageTag: 70ff3546-4ad1-415a-867c-05cf85204af3
+

@@ -1,0 +1,145 @@
+table uc3_fact_rtl_fsh_sales_hourly
+	lineageTag: 7edcb602-fe58-445a-b601-b0b840395e62
+
+	column business_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c65f64a0-9fff-4550-a401-7f10977aa432
+		summarizeBy: none
+		sourceColumn: business_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column business_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e01d970-6017-4714-b842-f75cd26b09ab
+		summarizeBy: none
+		sourceColumn: business_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 331e65f2-bc3b-4cb2-9c5f-3cbd52740e37
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_type
+		dataType: string
+		lineageTag: 0fa8b949-5ce2-4a30-955f-d50c3931bae3
+		summarizeBy: none
+		sourceColumn: transaction_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: 991ae984-e537-4129-bc30-b781f9f9d210
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency_code_local
+		dataType: string
+		lineageTag: b68f03b0-64d4-4206-976b-0c5fce51ea8e
+		summarizeBy: none
+		sourceColumn: currency_code_local
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_count
+		dataType: int64
+		formatString: 0
+		lineageTag: b985b500-9293-4234-9517-25612829f7a9
+		summarizeBy: sum
+		sourceColumn: line_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 225fecaa-17a8-4341-b6ae-9c1602b671c3
+		summarizeBy: sum
+		sourceColumn: invoice_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 853e4f67-2034-4aed-923c-faea49735463
+		summarizeBy: sum
+		sourceColumn: customer_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 09655c81-a2b5-4efa-8c97-ce7720db9770
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_total_local
+		dataType: double
+		lineageTag: 33b2b79d-5432-4eba-8720-be2b7a0f1af9
+		summarizeBy: sum
+		sourceColumn: line_total_local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gross_amount_eur
+		dataType: double
+		lineageTag: 507f1bf6-78f1-468c-9caf-679b943a5099
+		summarizeBy: sum
+		sourceColumn: gross_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_amount_eur
+		dataType: double
+		lineageTag: 27f87e51-6539-4f24-b7c3-0f4a947af388
+		summarizeBy: sum
+		sourceColumn: discount_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column line_total_eur
+		dataType: double
+		lineageTag: bc8db046-0839-4c0b-b6e2-a046e5ca0350
+		summarizeBy: sum
+		sourceColumn: line_total_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc3_fact_rtl_fsh_sales_hourly = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_fact_rtl_fsh_sales_hourly", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,72 @@
+table uc3_dim_rtl_fsh_discounts
+	lineageTag: 8557c85a-5361-4408-9a51-5c7b639657c8
+
+	column start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d1b1706e-806d-4d2d-9461-575e3680adde
+		summarizeBy: none
+		sourceColumn: start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: edabb391-caac-427f-ae74-37d2a42f9d74
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column discounts
+		dataType: double
+		lineageTag: 80afe5d4-694c-49ab-8777-9f5a4f59698b
+		summarizeBy: sum
+		sourceColumn: discounts
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_description
+		dataType: string
+		lineageTag: 78bcd694-fe5c-4a57-9682-e4f154596e52
+		summarizeBy: none
+		sourceColumn: discount_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: db9a7950-f770-4802-9528-65a247ee7478
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_category
+		dataType: string
+		lineageTag: ccbe72c3-e12c-4354-8863-7e8bec8a0d27
+		summarizeBy: none
+		sourceColumn: sub_category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc3_dim_rtl_fsh_discounts = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_dim_rtl_fsh_discounts", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

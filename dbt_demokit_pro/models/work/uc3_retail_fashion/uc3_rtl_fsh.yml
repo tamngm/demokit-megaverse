@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: uc3_rtl_fsh_transactions_wk
+    description: "Cleaned invoice lines, one row per invoice x line; incremental Parquet table partitioned by business_date"
+  - name: uc3_rtl_fsh_products_wk
+    description: "One row per SKU with color and size, joined to the product master; production cost in USD and EUR"

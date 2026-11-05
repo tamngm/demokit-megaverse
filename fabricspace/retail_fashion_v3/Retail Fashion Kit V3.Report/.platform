@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Retail Fashion Kit V3"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "92fc8308-523c-44c8-bba0-dd5204e85942"
+  }
+}
