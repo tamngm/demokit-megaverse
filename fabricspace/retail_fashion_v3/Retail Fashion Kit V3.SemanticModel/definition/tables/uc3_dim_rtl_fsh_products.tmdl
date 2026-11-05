@@ -1,0 +1,121 @@
+table uc3_dim_rtl_fsh_products
+	lineageTag: 6239e603-4faa-4976-a27c-a2510fefb6d5
+
+	column sku
+		dataType: string
+		lineageTag: 45b06a6f-782d-4f3b-a238-023564e6c7fe
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 06bc54e0-c37f-4778-a286-c86f113163e7
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: ca2bc2d9-411b-47c5-bfb9-0c242cf78c80
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_category
+		dataType: string
+		lineageTag: 2b759d68-700b-46b8-83db-b23b14fb3ef5
+		summarizeBy: none
+		sourceColumn: sub_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column color
+		dataType: string
+		lineageTag: 08dd295a-0489-4251-88ec-4060feeb6d2e
+		summarizeBy: none
+		sourceColumn: color
+
+		annotation SummarizationSetBy = Automatic
+
+	column size
+		dataType: string
+		lineageTag: 5aa16676-3d1e-4281-bd2f-8fce5c791d0b
+		summarizeBy: none
+		sourceColumn: size
+
+		annotation SummarizationSetBy = Automatic
+
+	column production_cost_eur
+		dataType: double
+		lineageTag: cd8b4917-2b56-492e-b447-efd85f08dc80
+		summarizeBy: none
+		sourceColumn: production_cost_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue_eur
+		dataType: double
+		lineageTag: 16e68785-a132-4737-81c2-d496d8d8c2d4
+		summarizeBy: none
+		sourceColumn: revenue_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margin_eur
+		dataType: double
+		lineageTag: ecf94a04-f1a8-4bcc-9982-302ee7a724a6
+		summarizeBy: none
+		sourceColumn: margin_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column margin_pct
+		dataType: double
+		lineageTag: 91f538d7-8571-43f9-a31a-089698fe80fa
+		summarizeBy: none
+		sourceColumn: margin_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product_quadrant
+		dataType: string
+		lineageTag: ea2bbcc8-189e-45a4-981d-d7bf16ccea1a
+		summarizeBy: none
+		sourceColumn: product_quadrant
+
+		annotation SummarizationSetBy = Automatic
+
+	column color_hex
+		dataType: string
+		lineageTag: 4f46007a-6854-42f1-aecd-0e238e7843cf
+		summarizeBy: none
+		sourceColumn: color_hex
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc3_dim_rtl_fsh_products = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_dim_rtl_fsh_products", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

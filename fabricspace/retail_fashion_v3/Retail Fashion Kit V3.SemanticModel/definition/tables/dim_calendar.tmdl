@@ -1,0 +1,282 @@
+table dim_calendar
+	lineageTag: 78a5f0cb-2ed1-4550-ae87-02835d05f1e9
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 98b8b93b-5bd6-4512-a49a-fc8099cc3bf7
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: d32703e5-3793-43d6-8956-f6a01d5b3225
+		summarizeBy: sum
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3188bf27-f408-4131-aa48-65a821b6036a
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: dc1b24db-2e76-4dec-bb85-f16256464c8b
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_desc
+		dataType: string
+		lineageTag: 827c0b78-6b34-4460-906e-14c85885444d
+		summarizeBy: none
+		sourceColumn: quarter_desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 130fd574-a8de-4792-a4e0-9e7489f3b358
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 45e0f2dd-f7e6-434c-9135-19b3320b9bc5
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_short
+		dataType: string
+		lineageTag: 615b71b5-2de1-4fa1-bf90-bf04459d9ad1
+		summarizeBy: none
+		sourceColumn: month_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: string
+		lineageTag: 3041ffe9-227e-42a6-93a9-ef3c010ad243
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3d7c5996-ba70-4cc1-8c9f-49931726a8cd
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column iso_year
+		dataType: int64
+		formatString: 0
+		lineageTag: d6991713-7b9c-4252-b634-8718914039e0
+		summarizeBy: sum
+		sourceColumn: iso_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 39ccf2d9-ddfe-45d5-b9f1-51b19d3f01d3
+		summarizeBy: sum
+		sourceColumn: iso_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 54d0c37c-eaf2-4aab-ba23-2b7c4c427671
+		summarizeBy: sum
+		sourceColumn: day_of_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 969b2b46-06eb-4e26-8413-06e994f53f82
+		summarizeBy: sum
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: de866357-bba3-4adf-818a-78b2858a6cf2
+		summarizeBy: none
+		sourceColumn: day_name
+		sortByColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_short
+		dataType: string
+		lineageTag: 418cf1c7-b1c5-482f-964c-a594c3e35fb0
+		summarizeBy: none
+		sourceColumn: day_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_year
+		dataType: int64
+		formatString: 0
+		lineageTag: cdfc7585-1ab3-4a52-8592-e5a670d5b4e8
+		summarizeBy: sum
+		sourceColumn: day_of_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: int64
+		formatString: 0
+		lineageTag: faa698ee-b3cc-4383-b332-a33b27cbf5f2
+		summarizeBy: sum
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column prev_day
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c6b36e81-4d3a-44ea-a27e-c24d05cf19ba
+		summarizeBy: none
+		sourceColumn: prev_day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column same_day_prev_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 11f10101-3b39-433b-9dae-a75145ee4f57
+		summarizeBy: none
+		sourceColumn: same_day_prev_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column same_day_prev_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0f9a409b-81d0-4cb1-a44e-581f54a7a085
+		summarizeBy: none
+		sourceColumn: same_day_prev_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column same_day_prev_quarter
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 220e73cd-7c2c-4830-b9f4-08e3eda929aa
+		summarizeBy: none
+		sourceColumn: same_day_prev_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column same_day_prev_year
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 108676a3-bf39-49a7-b225-8ead7df48f96
+		summarizeBy: none
+		sourceColumn: same_day_prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column same_weekday_prev_year
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 946a29b9-dacb-404f-ad2d-a4a96ced09d7
+		summarizeBy: none
+		sourceColumn: same_weekday_prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column prev_month_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8b4f9192-f73c-435c-80ba-60c359f93d13
+		summarizeBy: none
+		sourceColumn: prev_month_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column prev_year_month
+		dataType: string
+		lineageTag: d3a78c93-6105-47ec-934a-e8e9850538b0
+		summarizeBy: none
+		sourceColumn: prev_year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column prev_quarter_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: df22de37-e30d-486a-a93d-9e92ab7ca50f
+		summarizeBy: none
+		sourceColumn: prev_quarter_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column prev_year
+		dataType: int64
+		formatString: 0
+		lineageTag: a2b1769b-ec33-4060-9813-cf8c112370c6
+		summarizeBy: sum
+		sourceColumn: prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendar = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "dim_calendar", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

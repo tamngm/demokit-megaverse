@@ -1,0 +1,516 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ee6621d8bca9c945a12e",
+  "position": {
+    "x": 0,
+    "y": 136.83741648106903,
+    "z": 20002,
+    "height": 897.99554565701555,
+    "width": 1920,
+    "tabOrder": 20002
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "1. Executive Overview: are we growing, and why?",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Are we growing?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Net Revenue, GM %, # Invoices, Units, AOV, UPT, Return Rate % and Avg Discount %, each compared year on year and month on month. The years compared cover the same months, and the prior year stops where the data ends.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Is growth sustained over time?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Monthly Net Revenue against the prior year, with a YoY % trend line.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Is margin holding?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Monthly GM % with its month-on-month change.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Does growth come from orders, basket size or price?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " The growth-drivers card splits YoY change into invoices, UPT and average unit price.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "What do discounts and returns cost us?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A bridge chart from Gross to Net Revenue, showing what discounts and returns take off.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Where does revenue come from?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue by store country, and the category mix.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "2. Store Panel: which stores and teams perform?",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Which stores lead or lag?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A ranking by revenue, GM %, AOV, return rate, revenue per employee and invoices per employee.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Is staffing productive?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue and invoices per employee for each store.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Do staff sell in stores other than their own?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Cross-store revenue share. It can be measured, but the data has no cases, so it shows 0.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Does a store beat its country?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A quadrant of revenue YoY vs. GM %, each compared with the country average.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "What sells in each store?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue by sub-category.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How do customers pay?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Payment mix by country.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Do managers or sellers drive sales?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue by employee position.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "When should stores be staffed?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Golden-hour heatmaps by weekday × hour and by store × hour.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Who are the top sellers in a store?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " The Seller Detail drill-through: a leaderboard, AOV, return rate and revenue share per seller.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "3. Product Perspective: what makes money?",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Where is revenue and margin within the hierarchy?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A Category → Sub Category → Product matrix with revenue, units and GM %.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Which products are Stars, Volume Drivers, Niche or Dogs?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A profitability scatter of units vs. margin %.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Which price points sell, by category?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue in each price band.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Which sizes and colours perform?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Heatmaps by size × sub-category and by colour × country.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Where do returns concentrate?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Return rate by sub-category, size and colour.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "4. Customer Relationship: who are our customers, and who are we losing?",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How healthy is the customer base?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Customers, active customers, repeat rate, average lifetime value and purchase frequency.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "What share is active, inactive or churned?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A customer status split.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How recent, frequent and valuable are customers?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Recency, frequency and monetary bands, with top 20% / next 30% / bottom 50% for value.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Who buys?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Revenue by gender × age range, and by job title.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Which valuable customers are at risk?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " A churn watchlist of top-20% customers who haven’t bought in over 90 days.",
+                    "textStyle": {
+                      "fontSize": "18pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

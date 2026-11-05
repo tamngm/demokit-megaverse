@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: uc3_dim_rtl_fsh_customers
+    description: "One row per customer: attributes, age range and RFM (recency, frequency, monetary in EUR)"
+  - name: uc3_dim_rtl_fsh_discounts
+    description: "Discount campaigns by period and product category / sub-category"
+  - name: uc3_dim_rtl_fsh_employees
+    description: "One row per employee with store and position"
+  - name: uc3_dim_rtl_fsh_products
+    description: "One row per SKU: category, color, size, production cost, revenue, margin and product quadrant"
+  - name: uc3_dim_rtl_fsh_stores
+    description: "One row per store: country, city, coordinates"
+  - name: uc3_fact_rtl_fsh_transactions
+    description: "Transaction lines from the work table (detail / drill-through)"
+  - name: uc3_fact_rtl_fsh_sales_monthly
+    description: "Monthly sales per store x sku x transaction type x currency (business_month = month start)"
+  - name: uc3_fact_rtl_fsh_sales_hourly
+    description: "Hourly sales per store x transaction type x payment method x currency"
+  - name: uc3_fact_rtl_fsh_sales_employee
+    description: "Daily sales per store x employee x transaction type x currency"

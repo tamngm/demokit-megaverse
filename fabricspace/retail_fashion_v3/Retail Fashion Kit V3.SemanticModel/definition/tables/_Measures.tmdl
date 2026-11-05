@@ -1,0 +1,871 @@
+table _Measures
+	lineageTag: 59d3e0c9-5b92-4489-8d2f-fde093cf46f7
+
+	measure 'Gross Sales EUR' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_monthly[gross_amount_eur]), uc3_fact_rtl_fsh_sales_monthly[transaction_type] <> "Return")
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: ac014776-1741-4972-ade8-88d3b09effd9
+
+	measure 'Discounts EUR' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_monthly[discount_amount_eur]), uc3_fact_rtl_fsh_sales_monthly[transaction_type] <> "Return")
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: fb8cfafc-54e0-4f02-aa92-f66dec690b6e
+
+	measure 'Sales EUR' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_monthly[line_total_eur]), uc3_fact_rtl_fsh_sales_monthly[transaction_type] <> "Return")
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: 08152ada-33c1-4aec-944f-00c0554c845a
+
+	measure 'Returns EUR' = CALCULATE(SUMX(uc3_fact_rtl_fsh_sales_monthly, ABS(uc3_fact_rtl_fsh_sales_monthly[line_total_eur])), uc3_fact_rtl_fsh_sales_monthly[transaction_type] = "Return")
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: 4a3747ae-ae61-4af6-b29c-0cef425ad566
+
+	measure 'Net Revenue EUR' = [Sales EUR] - [Returns EUR]
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: 45f0b2f2-eccf-47f3-975f-4acce3a58662
+
+	measure 'Units Sold' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_monthly[quantity]), uc3_fact_rtl_fsh_sales_monthly[transaction_type] <> "Return")
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: d3ababf6-986b-45b1-a570-b1af06a65492
+
+	measure 'Units Returned' = CALCULATE(SUMX(uc3_fact_rtl_fsh_sales_monthly, ABS(uc3_fact_rtl_fsh_sales_monthly[quantity])), uc3_fact_rtl_fsh_sales_monthly[transaction_type] = "Return")
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 558d9492-dbd9-465b-8c85-0037b5b26a30
+
+	measure 'COGS EUR' =
+			CALCULATE(SUMX(uc3_fact_rtl_fsh_sales_monthly, uc3_fact_rtl_fsh_sales_monthly[quantity] * RELATED(uc3_dim_rtl_fsh_products[production_cost_eur])), uc3_fact_rtl_fsh_sales_monthly[transaction_type] <> "Return")
+			- CALCULATE(SUMX(uc3_fact_rtl_fsh_sales_monthly, ABS(uc3_fact_rtl_fsh_sales_monthly[quantity]) * RELATED(uc3_dim_rtl_fsh_products[production_cost_eur])), uc3_fact_rtl_fsh_sales_monthly[transaction_type] = "Return")
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: 254a3051-ac8f-411b-b295-45037135a38a
+
+	measure 'Gross Margin EUR' = [Net Revenue EUR] - [COGS EUR]
+		formatString: €#,0
+		displayFolder: Sales
+		lineageTag: 7cb3236c-ea8a-4fac-ad6b-c1e6b6f6df4b
+
+	measure 'Gross Margin %' = DIVIDE([Gross Margin EUR], [Net Revenue EUR])
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 3f811271-e5aa-46c5-b50f-ec5cc2b6fcbe
+
+	measure 'Return Rate %' = DIVIDE([Returns EUR], [Sales EUR])
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 9ef56895-7407-4ecf-b87a-b92336d334d3
+
+	measure 'Unit Return Rate %' = DIVIDE([Units Returned], [Units Sold])
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: ea595b6c-6c88-4638-84c0-9bd689f3d6a8
+
+	measure 'Avg Discount %' = DIVIDE([Discounts EUR], [Gross Sales EUR])
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 96d52ab0-bb8d-4027-bb50-454a89abcc3b
+
+	measure 'Avg Unit Price EUR' = DIVIDE([Sales EUR], [Units Sold])
+		formatString: €#,0.00
+		displayFolder: Sales
+		lineageTag: 9f74be95-709c-4ccb-a05d-4292ff7cabf7
+
+	measure 'Data End Date' = EOMONTH(CALCULATE(MAX(uc3_fact_rtl_fsh_sales_monthly[business_month]), REMOVEFILTERS()), 0)
+		formatString: dd mmm yyyy
+		displayFolder: Time
+		lineageTag: a60dd2b1-0894-43b7-8694-1992678e6aaa
+
+	measure 'Bridge Gross Sales' = [Gross Sales EUR]
+		formatString: €#,0
+		displayFolder: Bridge
+		lineageTag: 66f38b2f-ed19-4852-bdc5-667dd9b5a848
+
+	measure 'Bridge Discounts' = -[Discounts EUR]
+		formatString: €#,0
+		displayFolder: Bridge
+		lineageTag: 80f31702-95cf-458b-b151-a411197e8447
+
+	measure 'Bridge Returns' = -[Returns EUR]
+		formatString: €#,0
+		displayFolder: Bridge
+		lineageTag: 788c0e63-251f-4cfb-8de1-65eb4cc64f6f
+
+	measure 'Bridge Net Revenue' = [Net Revenue EUR]
+		formatString: €#,0
+		displayFolder: Bridge
+		lineageTag: 1e5e7544-3c71-4b9f-9f8f-c1c5a9180d0d
+
+	measure 'Net Revenue EUR PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Net Revenue EUR], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: €#,0
+		displayFolder: Time
+		lineageTag: 5bf060d3-8e22-4284-bdd7-67f517883783
+
+	measure 'Net Revenue EUR PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Net Revenue EUR], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: €#,0
+		displayFolder: Time
+		lineageTag: e0099ebd-81f2-4693-ab0e-9e69ea28ba20
+
+	measure 'Net Revenue EUR YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Net Revenue EUR], p)
+			VAR b = CALCULATE([Net Revenue EUR], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: b30f98c1-0eb0-496e-b19f-d9cb40f2c008
+
+	measure 'Net Revenue EUR MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Net Revenue EUR], p)
+			VAR b = CALCULATE([Net Revenue EUR], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: f1d8d4aa-1c35-4eb3-87d3-6cde87543584
+
+	measure 'Net Revenue EUR Monthly YoY %' = DIVIDE([Net Revenue EUR] - [Net Revenue EUR PY], [Net Revenue EUR PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 75a3dff7-00a0-48e7-8f04-0e0008ff9e22
+
+	measure 'Net Revenue EUR Monthly MoM %' = DIVIDE([Net Revenue EUR] - [Net Revenue EUR PM], [Net Revenue EUR PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 40519f8d-b7ba-4f81-bff1-86176f17a378
+
+	measure 'Net Revenue EUR Evolution Label' =
+			VAR y = [Net Revenue EUR YoY %]
+			VAR mo = [Net Revenue EUR MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 935e8199-e2a8-4f10-99f8-9428abcc5786
+
+	measure 'Gross Margin % PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Gross Margin %], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 6b6a8878-96b3-4024-acc7-eb2b78fea892
+
+	measure 'Gross Margin % PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Gross Margin %], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: c8afee66-8737-4fde-bc31-95ddfbc7e663
+
+	measure 'Gross Margin % YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Gross Margin %], p)
+			VAR b = CALCULATE([Gross Margin %], SAMEPERIODLASTYEAR(p))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: e55a92da-e1b3-48f7-a5b4-da4b371c61b4
+
+	measure 'Gross Margin % MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Gross Margin %], p)
+			VAR b = CALCULATE([Gross Margin %], DATEADD(p, -1, MONTH))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: e824e770-25bd-4285-9477-ce9c9a4eb622
+
+	measure 'Gross Margin % Monthly YoY %' = IF(NOT ISBLANK([Gross Margin % PY]), [Gross Margin %] - [Gross Margin % PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: b543619a-6de9-4cf0-84ba-5b3142d1a78a
+
+	measure 'Gross Margin % Monthly MoM %' = IF(NOT ISBLANK([Gross Margin % PM]), [Gross Margin %] - [Gross Margin % PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 17382286-63ea-4dbd-8e2b-85fe8b88f8d3
+
+	measure 'Gross Margin % Evolution Label' =
+			VAR y = [Gross Margin % YoY %]
+			VAR mo = [Gross Margin % MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y) * 100, "0.0") & " pts" & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo) * 100, "0.0") & " pts" & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 8c166386-decb-4e03-a61c-955f2eb58f0d
+
+	measure '# Invoices PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([# Invoices], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: c5603840-8569-483e-aa35-1a8027bc382f
+
+	measure '# Invoices PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([# Invoices], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: ff344ec6-2f78-4d5c-ad9a-413ebdc34fd0
+
+	measure '# Invoices YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([# Invoices], p)
+			VAR b = CALCULATE([# Invoices], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 0ef4ddf3-00f6-4e3e-9057-4fd613d461ac
+
+	measure '# Invoices MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([# Invoices], p)
+			VAR b = CALCULATE([# Invoices], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: fb6847a3-ce8d-48e3-a51c-91dd4b5316a8
+
+	measure '# Invoices Monthly YoY %' = DIVIDE([# Invoices] - [# Invoices PY], [# Invoices PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 89920234-eb04-41bc-9393-fdae9ddb6111
+
+	measure '# Invoices Monthly MoM %' = DIVIDE([# Invoices] - [# Invoices PM], [# Invoices PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 584730bf-2e3e-4c4c-b371-a07dcd6bded4
+
+	measure '# Invoices Evolution Label' =
+			VAR y = [# Invoices YoY %]
+			VAR mo = [# Invoices MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 3df2bcaf-d0a8-42a1-99ba-71b769cc4fda
+
+	measure 'Units Sold PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Units Sold], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: de3448e7-3208-4e42-88b4-ea06b8f890c3
+
+	measure 'Units Sold PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Units Sold], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: #,0
+		displayFolder: Time
+		lineageTag: 9d881f7e-df5f-4ab1-adcb-f1b3df0f211e
+
+	measure 'Units Sold YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Units Sold], p)
+			VAR b = CALCULATE([Units Sold], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 2ff9fa2c-bb47-4e76-9d5d-e2b386e0aa41
+
+	measure 'Units Sold MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Units Sold], p)
+			VAR b = CALCULATE([Units Sold], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 5417fa80-9144-4203-8a48-a2e910e5e438
+
+	measure 'Units Sold Monthly YoY %' = DIVIDE([Units Sold] - [Units Sold PY], [Units Sold PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: d422435d-6fa9-40d1-8eb6-6c6e892938de
+
+	measure 'Units Sold Monthly MoM %' = DIVIDE([Units Sold] - [Units Sold PM], [Units Sold PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 1b150901-1b38-4c1b-bd1e-b793427d1e75
+
+	measure 'Units Sold Evolution Label' =
+			VAR y = [Units Sold YoY %]
+			VAR mo = [Units Sold MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 24eb1761-91a9-49c8-a177-5adcd0db5d74
+
+	measure 'AOV EUR PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([AOV EUR], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: €#,0.00
+		displayFolder: Time
+		lineageTag: 773d6d17-b825-4a0e-841c-014702dbf6ff
+
+	measure 'AOV EUR PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([AOV EUR], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: €#,0.00
+		displayFolder: Time
+		lineageTag: fb11b631-ff9d-4d8e-9e46-6861a6cbbfd4
+
+	measure 'AOV EUR YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([AOV EUR], p)
+			VAR b = CALCULATE([AOV EUR], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: ed4ce033-31ab-4cb3-9345-149f055522a2
+
+	measure 'AOV EUR MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([AOV EUR], p)
+			VAR b = CALCULATE([AOV EUR], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: f547b213-f03b-4b0c-83d2-8de5b9a4702c
+
+	measure 'AOV EUR Monthly YoY %' = DIVIDE([AOV EUR] - [AOV EUR PY], [AOV EUR PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 849579f3-cfcf-4e5d-ba6b-21c3feeb2f93
+
+	measure 'AOV EUR Monthly MoM %' = DIVIDE([AOV EUR] - [AOV EUR PM], [AOV EUR PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 7b0f8de7-ba26-40ec-b1d9-1bebd838f32a
+
+	measure 'AOV EUR Evolution Label' =
+			VAR y = [AOV EUR YoY %]
+			VAR mo = [AOV EUR MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 70bc7291-c3a4-4b4e-872d-e7ae1fbe204c
+
+	measure 'UPT PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([UPT], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: #,0.00
+		displayFolder: Time
+		lineageTag: 49b1e9f3-a127-4bb5-a019-b9f634960c40
+
+	measure 'UPT PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([UPT], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: #,0.00
+		displayFolder: Time
+		lineageTag: 725491d9-fb81-4964-95f2-f2f63a567255
+
+	measure 'UPT YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([UPT], p)
+			VAR b = CALCULATE([UPT], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 021c62af-3c18-430f-b38b-4e1ef7a646dd
+
+	measure 'UPT MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([UPT], p)
+			VAR b = CALCULATE([UPT], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: cce1b011-7731-435c-b371-2af2b2d78d0a
+
+	measure 'UPT Monthly YoY %' = DIVIDE([UPT] - [UPT PY], [UPT PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 2626cedc-87ed-487d-a06f-b8c52d68361b
+
+	measure 'UPT Monthly MoM %' = DIVIDE([UPT] - [UPT PM], [UPT PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 8ab2ec31-ad6d-422e-bbc6-1b6796597cd6
+
+	measure 'UPT Evolution Label' =
+			VAR y = [UPT YoY %]
+			VAR mo = [UPT MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 15eeac26-163f-40d4-a64e-bd834f85139e
+
+	measure 'Return Rate % PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Return Rate %], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 30249964-4133-4e1e-8ef6-7b3727c4da62
+
+	measure 'Return Rate % PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Return Rate %], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: b8f27f7d-2d18-42cc-b3ce-334de1639506
+
+	measure 'Return Rate % YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Return Rate %], p)
+			VAR b = CALCULATE([Return Rate %], SAMEPERIODLASTYEAR(p))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: af2c519d-5612-4275-9b53-92f05564a3e0
+
+	measure 'Return Rate % MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Return Rate %], p)
+			VAR b = CALCULATE([Return Rate %], DATEADD(p, -1, MONTH))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 497072a9-8295-451d-8020-1a4077e0ee6b
+
+	measure 'Return Rate % Monthly YoY %' = IF(NOT ISBLANK([Return Rate % PY]), [Return Rate %] - [Return Rate % PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: c3c9349c-fcc6-48a4-a2c5-751798d54ead
+
+	measure 'Return Rate % Monthly MoM %' = IF(NOT ISBLANK([Return Rate % PM]), [Return Rate %] - [Return Rate % PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 3d406b37-cc27-4bc6-b701-b42f08b123b9
+
+	measure 'Return Rate % Evolution Label' =
+			VAR y = [Return Rate % YoY %]
+			VAR mo = [Return Rate % MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y) * 100, "0.0") & " pts" & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo) * 100, "0.0") & " pts" & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: e8a4e681-615b-48ae-9010-48a675ec74ac
+
+	measure 'Avg Discount % PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Avg Discount %], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 81b693de-56de-478a-a14c-011af0fd8ec8
+
+	measure 'Avg Discount % PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Avg Discount %], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 3ae786db-3879-41a3-b26f-674d8b3d50cf
+
+	measure 'Avg Discount % YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Avg Discount %], p)
+			VAR b = CALCULATE([Avg Discount %], SAMEPERIODLASTYEAR(p))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 458555cf-1306-4727-aede-3274e926ea9c
+
+	measure 'Avg Discount % MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Avg Discount %], p)
+			VAR b = CALCULATE([Avg Discount %], DATEADD(p, -1, MONTH))
+			RETURN IF(NOT ISBLANK(b), c - b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 985fdc64-25f6-48cc-b6c2-8d73c8605fc1
+
+	measure 'Avg Discount % Monthly YoY %' = IF(NOT ISBLANK([Avg Discount % PY]), [Avg Discount %] - [Avg Discount % PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 32c7a763-eee5-4f39-9f46-2f027358c125
+
+	measure 'Avg Discount % Monthly MoM %' = IF(NOT ISBLANK([Avg Discount % PM]), [Avg Discount %] - [Avg Discount % PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: a0d61e7d-aaa7-4828-a749-f0a8398eba19
+
+	measure 'Avg Discount % Evolution Label' =
+			VAR y = [Avg Discount % YoY %]
+			VAR mo = [Avg Discount % MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y) * 100, "0.0") & " pts" & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo) * 100, "0.0") & " pts" & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: aca1d630-e1c7-41d9-8b35-d87ade65b78b
+
+	measure 'Basket Avg Unit Price EUR PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Basket Avg Unit Price EUR], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: €#,0.00
+		displayFolder: Time
+		lineageTag: b2841f01-55e1-491c-98d6-a1cfe78ab1c8
+
+	measure 'Basket Avg Unit Price EUR PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Basket Avg Unit Price EUR], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: €#,0.00
+		displayFolder: Time
+		lineageTag: bdfeb070-6291-4810-8c16-5e915db0f712
+
+	measure 'Basket Avg Unit Price EUR YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Basket Avg Unit Price EUR], p)
+			VAR b = CALCULATE([Basket Avg Unit Price EUR], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 60b955de-6a87-4889-9598-7d35c0ea96b8
+
+	measure 'Basket Avg Unit Price EUR MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Basket Avg Unit Price EUR], p)
+			VAR b = CALCULATE([Basket Avg Unit Price EUR], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 9cd7f7ce-9027-4eaa-8ed2-e918e3a462e8
+
+	measure 'Basket Avg Unit Price EUR Monthly YoY %' = DIVIDE([Basket Avg Unit Price EUR] - [Basket Avg Unit Price EUR PY], [Basket Avg Unit Price EUR PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 3db20d9b-2a08-478f-a966-274be7bb0d21
+
+	measure 'Basket Avg Unit Price EUR Monthly MoM %' = DIVIDE([Basket Avg Unit Price EUR] - [Basket Avg Unit Price EUR PM], [Basket Avg Unit Price EUR PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 76934823-f202-4fa9-8eff-a7eef6cba888
+
+	measure 'Basket Avg Unit Price EUR Evolution Label' =
+			VAR y = [Basket Avg Unit Price EUR YoY %]
+			VAR mo = [Basket Avg Unit Price EUR MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 57d4d81c-9f39-45fe-8f51-c3db2c5bd727
+
+	measure 'Gross Margin EUR PY' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Gross Margin EUR], SAMEPERIODLASTYEAR(dim_calendar[date])))
+		formatString: €#,0
+		displayFolder: Time
+		lineageTag: 3f935bf3-0893-4a70-8fba-502d97544960
+
+	measure 'Gross Margin EUR PM' = IF(MIN(dim_calendar[date]) <= [Data End Date], CALCULATE([Gross Margin EUR], DATEADD(dim_calendar[date], -1, MONTH)))
+		formatString: €#,0
+		displayFolder: Time
+		lineageTag: a7c03368-3bc1-42be-9bd6-024775b75cd5
+
+	measure 'Gross Margin EUR YoY %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), YEAR(dim_calendar[date]) = YEAR(e) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Gross Margin EUR], p)
+			VAR b = CALCULATE([Gross Margin EUR], SAMEPERIODLASTYEAR(p))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: a96cc9e8-c0a2-4315-ab31-897e9b634826
+
+	measure 'Gross Margin EUR MoM %' =
+			VAR e = MIN(MAX(dim_calendar[date]), [Data End Date])
+			VAR p = FILTER(VALUES(dim_calendar[date]), dim_calendar[date] >= DATE(YEAR(e), MONTH(e), 1) && dim_calendar[date] <= e)
+			VAR c = CALCULATE([Gross Margin EUR], p)
+			VAR b = CALCULATE([Gross Margin EUR], DATEADD(p, -1, MONTH))
+			RETURN DIVIDE(c - b, b)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 21faf4d3-4a74-4b4c-b8e7-7cc5bdb98e9e
+
+	measure 'Gross Margin EUR Monthly YoY %' = DIVIDE([Gross Margin EUR] - [Gross Margin EUR PY], [Gross Margin EUR PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: ad0f0abd-8ea3-4f00-aa3c-19c3cf06730c
+
+	measure 'Gross Margin EUR Monthly MoM %' = DIVIDE([Gross Margin EUR] - [Gross Margin EUR PM], [Gross Margin EUR PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time
+		lineageTag: 962565af-25ef-472c-927d-6553b1bb8637
+
+	measure 'Gross Margin EUR Evolution Label' =
+			VAR y = [Gross Margin EUR YoY %]
+			VAR mo = [Gross Margin EUR MoM %]
+			VAR ty = IF(ISBLANK(y), "YoY n/a", IF(y >= 0, "▲ +", "▼ -") & FORMAT(ABS(y), "0.0%") & " YoY")
+			VAR tm = IF(ISBLANK(mo), "MoM n/a", IF(mo >= 0, "▲ +", "▼ -") & FORMAT(ABS(mo), "0.0%") & " MoM")
+			RETURN ty & "  ·  " & tm
+		displayFolder: Time
+		lineageTag: 4236d84a-67a7-402b-a9f5-8c3438171894
+
+	measure Employees = SUM(uc3_dim_rtl_fsh_stores[number_of_employees])
+		formatString: #,0
+		displayFolder: Store
+		lineageTag: 356f1d1d-0bb8-4d76-8721-14a21aea0a2e
+
+	measure 'Revenue per Employee EUR' = DIVIDE([Net Revenue EUR], [Employees])
+		formatString: €#,0
+		displayFolder: Store
+		lineageTag: 60c3a2dc-8a84-4068-8334-afe463fa700b
+
+	measure 'GM % vs Country Avg (pts)' =
+			VAR c = CALCULATE([Gross Margin %], REMOVEFILTERS(uc3_dim_rtl_fsh_stores), VALUES(uc3_dim_rtl_fsh_stores[country]))
+			RETURN IF(NOT ISBLANK([Gross Margin %]), [Gross Margin %] - c)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Store
+		lineageTag: 0b7c0930-7bf2-43ad-99f4-2b0b3bdedbc3
+
+	measure 'Revenue YoY vs Country Avg (pts)' =
+			VAR c = CALCULATE([Net Revenue EUR YoY %], REMOVEFILTERS(uc3_dim_rtl_fsh_stores), VALUES(uc3_dim_rtl_fsh_stores[country]))
+			RETURN IF(NOT ISBLANK([Net Revenue EUR YoY %]), [Net Revenue EUR YoY %] - c)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Store
+		lineageTag: 52873980-ad6a-4e7d-9144-801c650480b0
+
+	measure 'Price < €25' = SUMX(FILTER(VALUES(uc3_dim_rtl_fsh_products[sku]), VAR u = DIVIDE([Sales EUR], [Units Sold]) RETURN u >= 0 && u < 25), [Net Revenue EUR])
+		formatString: €#,0
+		displayFolder: Price bands
+		lineageTag: 212c351a-22cf-4522-9c79-f169f03fe56f
+
+	measure 'Price €25–50' = SUMX(FILTER(VALUES(uc3_dim_rtl_fsh_products[sku]), VAR u = DIVIDE([Sales EUR], [Units Sold]) RETURN u >= 25 && u < 50), [Net Revenue EUR])
+		formatString: €#,0
+		displayFolder: Price bands
+		lineageTag: 598662a6-7d99-4679-9d4d-63a7f3b4d446
+
+	measure 'Price €50–100' = SUMX(FILTER(VALUES(uc3_dim_rtl_fsh_products[sku]), VAR u = DIVIDE([Sales EUR], [Units Sold]) RETURN u >= 50 && u < 100), [Net Revenue EUR])
+		formatString: €#,0
+		displayFolder: Price bands
+		lineageTag: bdb7a01c-80cb-474a-bdb7-f0082c3b8380
+
+	measure 'Price €100–200' = SUMX(FILTER(VALUES(uc3_dim_rtl_fsh_products[sku]), VAR u = DIVIDE([Sales EUR], [Units Sold]) RETURN u >= 100 && u < 200), [Net Revenue EUR])
+		formatString: €#,0
+		displayFolder: Price bands
+		lineageTag: 56a9d0bb-615d-41cf-b832-6312fd8fcf90
+
+	measure 'Price €200+' = SUMX(FILTER(VALUES(uc3_dim_rtl_fsh_products[sku]), VAR u = DIVIDE([Sales EUR], [Units Sold]) RETURN u >= 200 && u < 1000000000), [Net Revenue EUR])
+		formatString: €#,0
+		displayFolder: Price bands
+		lineageTag: e4c03a53-875b-44d8-921b-98e6bd035a92
+
+	measure '# Invoices' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_hourly[invoice_count]), uc3_fact_rtl_fsh_sales_hourly[transaction_type] <> "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_hourly[business_date]))
+		formatString: #,0
+		displayFolder: Baskets
+		lineageTag: 32b20085-bb27-477c-b06a-ac2d9212f8f2
+
+	measure 'Basket Sales EUR' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_hourly[line_total_eur]), uc3_fact_rtl_fsh_sales_hourly[transaction_type] <> "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_hourly[business_date]))
+		formatString: €#,0
+		displayFolder: Baskets
+		lineageTag: 2649309b-bf7a-42f7-a487-56d00cd0fcf6
+
+	measure 'Basket Units' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_hourly[quantity]), uc3_fact_rtl_fsh_sales_hourly[transaction_type] <> "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_hourly[business_date]))
+		formatString: #,0
+		displayFolder: Baskets
+		lineageTag: 1ab184aa-8e56-4bcf-99de-9767e2505575
+
+	measure 'AOV EUR' = DIVIDE([Basket Sales EUR], [# Invoices])
+		formatString: €#,0.00
+		displayFolder: Baskets
+		lineageTag: 67e6315c-30a5-43e7-a8db-6ce2e407e57f
+
+	measure UPT = DIVIDE([Basket Units], [# Invoices])
+		formatString: #,0.00
+		displayFolder: Baskets
+		lineageTag: 2411dc66-c41d-47a1-a63b-d6becb04305e
+
+	measure 'Basket Avg Unit Price EUR' = DIVIDE([Basket Sales EUR], [Basket Units])
+		formatString: €#,0.00
+		displayFolder: Baskets
+		lineageTag: 107cd1e0-c1c8-442e-9db4-5c13972486d2
+
+	measure 'Invoices per Employee' = DIVIDE([# Invoices], SUM(uc3_dim_rtl_fsh_stores[number_of_employees]))
+		formatString: #,0.00
+		displayFolder: Baskets
+		lineageTag: 3d79044e-9c43-4288-85ce-01013913e95b
+
+	measure 'Payment Share %' = DIVIDE([Basket Sales EUR], CALCULATE([Basket Sales EUR], REMOVEFILTERS(uc3_fact_rtl_fsh_sales_hourly[payment_method])))
+		formatString: 0.0%
+		displayFolder: Baskets
+		lineageTag: f28b8fb8-a91c-43db-9779-587a853b3f0c
+
+	measure 'Seller Sales EUR' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_employee[line_total_eur]), uc3_fact_rtl_fsh_sales_employee[transaction_type] <> "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_employee[business_date]))
+		formatString: €#,0
+		displayFolder: Staff
+		lineageTag: da1618fb-1147-4c61-882e-60ea34a4153b
+
+	measure 'Seller Returns EUR' = CALCULATE(SUMX(uc3_fact_rtl_fsh_sales_employee, ABS(uc3_fact_rtl_fsh_sales_employee[line_total_eur])), uc3_fact_rtl_fsh_sales_employee[transaction_type] = "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_employee[business_date]))
+		formatString: €#,0
+		displayFolder: Staff
+		lineageTag: 30b0aede-ae29-47c2-9213-7f9b090a9221
+
+	measure 'Seller Revenue EUR' = [Seller Sales EUR] - [Seller Returns EUR]
+		formatString: €#,0
+		displayFolder: Staff
+		lineageTag: 8212d464-3f1d-4bc9-a68a-cbb11f32940d
+
+	measure 'Seller Invoices' = CALCULATE(SUM(uc3_fact_rtl_fsh_sales_employee[invoice_count]), uc3_fact_rtl_fsh_sales_employee[transaction_type] <> "Return", TREATAS(VALUES(dim_calendar[date]), uc3_fact_rtl_fsh_sales_employee[business_date]))
+		formatString: #,0
+		displayFolder: Staff
+		lineageTag: 86513fe4-4d2e-4491-af2b-879959c6403b
+
+	measure 'Seller AOV EUR' = DIVIDE([Seller Sales EUR], [Seller Invoices])
+		formatString: €#,0.00
+		displayFolder: Staff
+		lineageTag: a91ff9fc-52d7-4167-a633-447544abcf59
+
+	measure 'Seller Return Rate %' = DIVIDE([Seller Returns EUR], [Seller Sales EUR])
+		formatString: 0.0%
+		displayFolder: Staff
+		lineageTag: 92eae8ac-0ccf-45a3-840b-f48f81e2b686
+
+	measure 'Seller Revenue Share %' = DIVIDE([Seller Revenue EUR], CALCULATE([Seller Revenue EUR], REMOVEFILTERS(uc3_dim_rtl_fsh_employees)))
+		formatString: 0.0%
+		displayFolder: Staff
+		lineageTag: f2b99a5c-f518-4a14-8507-bf19da9514b8
+
+	measure 'Cross-store Revenue EUR' =
+			SUMX(
+			    FILTER(SUMMARIZE(uc3_fact_rtl_fsh_sales_employee, uc3_fact_rtl_fsh_sales_employee[store_id], uc3_dim_rtl_fsh_employees[store_id]), uc3_fact_rtl_fsh_sales_employee[store_id] <> uc3_dim_rtl_fsh_employees[store_id]),
+			    [Seller Revenue EUR])
+		formatString: €#,0
+		displayFolder: Staff
+		lineageTag: 514aef09-cca0-4f1a-bcf6-2daac9eef204
+
+	measure 'Cross-store Share %' = DIVIDE(COALESCE([Cross-store Revenue EUR], 0), [Seller Revenue EUR])
+		formatString: 0.0%
+		displayFolder: Staff
+		lineageTag: f3697b93-8a4a-45ba-b217-21374b6aa2df
+
+	measure Customers = COUNTROWS(uc3_dim_rtl_fsh_customers)
+		formatString: #,0
+		displayFolder: Customer
+		lineageTag: 82949d1a-10e3-4708-9ab9-5a3cd6b70f0c
+
+	measure 'Active Customers' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0))
+		formatString: #,0
+		displayFolder: Customer
+		lineageTag: 1d322a2e-55b0-4601-b796-f368bb3eae9f
+
+	measure 'Repeat Rate %' = DIVIDE(COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] >= 2)), [Active Customers])
+		formatString: 0.0%
+		displayFolder: Customer
+		lineageTag: 27e530fe-ddd0-40cf-b34c-67725b28d58a
+
+	measure 'Avg CLV EUR' = AVERAGEX(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0), uc3_dim_rtl_fsh_customers[monetary_eur])
+		formatString: €#,0
+		displayFolder: Customer
+		lineageTag: de8a8afc-3813-44d8-abbf-8c0b67fcd7a6
+
+	measure 'Avg Purchase Frequency' = AVERAGEX(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0), uc3_dim_rtl_fsh_customers[frequency])
+		formatString: #,0.00
+		displayFolder: Customer
+		lineageTag: 6828c989-f6f6-4793-b587-aad09cbb272c
+
+	measure 'Customer Revenue EUR' = SUM(uc3_dim_rtl_fsh_customers[monetary_eur])
+		formatString: €#,0
+		displayFolder: Customer
+		lineageTag: 4fedf8ae-6062-4eeb-ae25-6dcf4fe8374f
+
+	measure 'Customer Revenue Share %' = DIVIDE([Customer Revenue EUR], CALCULATE([Customer Revenue EUR], REMOVEFILTERS(uc3_dim_rtl_fsh_customers)))
+		formatString: 0.0%
+		displayFolder: Customer
+		lineageTag: bb6292e9-317e-4a19-a290-d399730aed9d
+
+	measure 'Recency 0–30d' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0 && uc3_dim_rtl_fsh_customers[recency_days] <= 30)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: b4755b1e-7132-4fca-829c-7fb41af2a5e1
+
+	measure 'Recency 31–90d' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0 && uc3_dim_rtl_fsh_customers[recency_days] > 30 && uc3_dim_rtl_fsh_customers[recency_days] <= 90)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: ef0f98ac-0143-462d-8a33-f31b03272627
+
+	measure 'Recency 91–180d' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0 && uc3_dim_rtl_fsh_customers[recency_days] > 90 && uc3_dim_rtl_fsh_customers[recency_days] <= 180)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: d6d99f05-0bae-43ec-b3d4-9a146f57ebb8
+
+	measure 'Recency 181–365d' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0 && uc3_dim_rtl_fsh_customers[recency_days] > 180 && uc3_dim_rtl_fsh_customers[recency_days] <= 365)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 37ba0883-9dbd-412b-89d4-b51ad8393e91
+
+	measure 'Recency 365d+' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] > 0 && uc3_dim_rtl_fsh_customers[recency_days] > 365)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: f0135aa3-5c25-4498-9491-ac69e61e0a39
+
+	measure 'Frequency 1' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] = 1)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 8433d4af-a6d9-49f2-9588-78c79b633674
+
+	measure 'Frequency 2' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] = 2)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 05a094fd-747e-4dd2-9fbb-b914052d64f8
+
+	measure 'Frequency 3–5' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] >= 3 && uc3_dim_rtl_fsh_customers[frequency] <= 5)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: d7e9c769-5a07-49a4-9d69-f83e3de3a96f
+
+	measure 'Frequency 6+' = COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[frequency] >= 6)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: bc9eea7c-3edc-4943-ad91-d53cb0a48f9b
+
+	measure 'CLV P80' = PERCENTILEX.INC(FILTER(ALL(uc3_dim_rtl_fsh_customers), uc3_dim_rtl_fsh_customers[monetary_eur] > 0), uc3_dim_rtl_fsh_customers[monetary_eur], 0.8)
+		formatString: €#,0
+		displayFolder: Customer RFM
+		lineageTag: 17463b8b-7105-492e-a941-b12d00fe8a77
+
+	measure 'CLV P50' = PERCENTILEX.INC(FILTER(ALL(uc3_dim_rtl_fsh_customers), uc3_dim_rtl_fsh_customers[monetary_eur] > 0), uc3_dim_rtl_fsh_customers[monetary_eur], 0.5)
+		formatString: €#,0
+		displayFolder: Customer RFM
+		lineageTag: e1c8f92b-dda6-4087-92fc-c479749ff7a0
+
+	measure 'Monetary Top 20%' = VAR t = [CLV P80] RETURN COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[monetary_eur] >= t)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 2edf5265-0a73-4bb1-b140-94e5b7d1f5d1
+
+	measure 'Monetary Next 30%' = VAR t = [CLV P80] VAR b = [CLV P50] RETURN COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[monetary_eur] >= b && uc3_dim_rtl_fsh_customers[monetary_eur] < t)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 0a26fec5-5f6f-421f-a191-a1468dfab8f1
+
+	measure 'Monetary Bottom 50%' = VAR b = [CLV P50] RETURN COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[monetary_eur] > 0 && uc3_dim_rtl_fsh_customers[monetary_eur] < b)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 93071411-88af-407c-847a-72e57ff04be9
+
+	measure 'High-value Churn Risk' = VAR t = [CLV P80] RETURN COUNTROWS(FILTER(uc3_dim_rtl_fsh_customers, uc3_dim_rtl_fsh_customers[recency_days] > 90 && uc3_dim_rtl_fsh_customers[monetary_eur] >= t)) + 0
+		formatString: #,0
+		displayFolder: Customer RFM
+		lineageTag: 691351b8-b35f-4291-a926-98954fa96d9f
+
+	measure 'Churn Lifetime Value EUR' = IF(HASONEVALUE(uc3_dim_rtl_fsh_customers[customer_id]) && MAX(uc3_dim_rtl_fsh_customers[recency_days]) > 90, MAX(uc3_dim_rtl_fsh_customers[monetary_eur]))
+		formatString: €#,0
+		displayFolder: Churn
+		lineageTag: 87f6ebf1-5c83-4ce2-924c-b75bbe0a09d3
+
+	measure 'Churn Days Inactive' = IF(HASONEVALUE(uc3_dim_rtl_fsh_customers[customer_id]) && MAX(uc3_dim_rtl_fsh_customers[recency_days]) > 90, MAX(uc3_dim_rtl_fsh_customers[recency_days]))
+		formatString: #,0
+		displayFolder: Churn
+		lineageTag: d0847a3c-950c-45c2-ae0d-4181810d3060
+
+	measure 'Churn Purchases' = IF(HASONEVALUE(uc3_dim_rtl_fsh_customers[customer_id]) && MAX(uc3_dim_rtl_fsh_customers[recency_days]) > 90, MAX(uc3_dim_rtl_fsh_customers[frequency]))
+		formatString: #,0
+		displayFolder: Churn
+		lineageTag: 1e9c13fd-b91a-40db-931e-8fa1709a1f39
+
+	measure 'Churn Last Purchase' = IF(HASONEVALUE(uc3_dim_rtl_fsh_customers[customer_id]) && MAX(uc3_dim_rtl_fsh_customers[recency_days]) > 90, MAX(uc3_dim_rtl_fsh_customers[last_purchase_date]))
+		formatString: dd mmm yyyy
+		displayFolder: Churn
+		lineageTag: 1e873a80-2458-49f1-9854-fe267ed97be3
+
+	measure 'Product Code Hex' = SELECTEDVALUE(uc3_dim_rtl_fsh_products[color_hex])
+		lineageTag: ad96d1b5-ebf2-4daa-a69a-9fef2358bf19
+
+	column Value
+		dataType: string
+		isHidden
+		lineageTag: 96f4d2c7-433e-488b-9407-6c0033464b31
+		summarizeBy: none
+		sourceColumn: Value
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Value = text], {})
+

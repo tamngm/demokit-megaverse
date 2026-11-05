@@ -22,4 +22,7 @@ ATHENA_WORKGROUP = os.getenv('ATHENA_WORKGROUP')
 S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
 S3_BUCKET_PRODUCT_REVIEW_PATH = os.getenv('S3_BUCKET_PRODUCT_REVIEW_PATH')
 
-# print(S3_BUCKET_NAME)
+MS_TENANT_ID = os.getenv('MS_TENANT_ID')
+MS_CLIENT_ID = os.getenv('MS_CLIENT_ID')
+MS_CLIENT_SECRET = os.getenv('MS_CLIENT_SECRET')     # only for --mode app
+SP_SITE_URL = os.getenv('SP_SITE_URL')               # e.g. https://<tenant>.sharepoint.com/sites/<site>

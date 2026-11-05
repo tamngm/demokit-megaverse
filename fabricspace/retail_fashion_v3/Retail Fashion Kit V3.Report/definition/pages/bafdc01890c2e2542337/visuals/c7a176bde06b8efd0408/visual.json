@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "c7a176bde06b8efd0408",
+  "position": {
+    "x": 774.10585295676537,
+    "y": 664.31680169607034,
+    "z": 20000,
+    "height": 376,
+    "width": 400,
+    "tabOrder": 20000
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc3_dim_rtl_fsh_products"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "uc3_dim_rtl_fsh_products.category",
+              "nativeQueryRef": "category",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Net Revenue EUR"
+                }
+              },
+              "queryRef": "_Measures.Net Revenue EUR",
+              "nativeQueryRef": "Net Revenue EUR"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Sales mix by category'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Share of net revenue'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

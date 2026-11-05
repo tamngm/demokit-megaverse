@@ -27,3 +27,33 @@ sources:
         description: "Store sales transactions by date and hour, with traffic and gross profit"
       - name: rtl_store
         description: "Store master: code, location, manager, country, market"
+
+  - name: uc3_retail_fashion
+    description: "Retail fashion Parquet tables converted from SharePoint CSVs, in s3://offy-bi-demo/data/offybi/retail_fashion/"
+    schema: offybi
+    tables:
+      - name: uc3_rtl_fsh_customers
+        description: "Customer master: name, contact, city, country, gender, date of birth, job title"
+      - name: uc3_rtl_fsh_discounts
+        description: "Discount campaigns by period and product category / sub-category"
+      - name: uc3_rtl_fsh_employees
+        description: "Employees per store with position (Manager, Seller)"
+      - name: uc3_rtl_fsh_products
+        description: "Product master: category, sub-category, multilingual descriptions, color, sizes, production cost"
+      - name: uc3_rtl_fsh_stores
+        description: "Store master: country, city, name, employees, zip code, coordinates"
+      - name: uc3_rtl_fsh_transactions
+        description: "Timely sales and returns per date x store x product x currency (aggregated from invoice lines); 3 yearly files"
+
+  - name: referential
+    schema: offybi
+    tables:
+      - name: ref_calendar
+        description: calendar table for generic usage
+      - name: ref_time
+        description: time table to minute
+      - name: ref_exchange_rates
+        description: exchange_rates
+      
+      - name: ref_color_codes
+        description: hex codes for color of products

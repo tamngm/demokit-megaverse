@@ -1,0 +1,28 @@
+relationship AutoDetected_d99ba77d-88a2-4ced-bffd-625a64029679
+	fromColumn: uc3_fact_rtl_fsh_sales_employee.employee_id
+	toColumn: uc3_dim_rtl_fsh_employees.employee_id
+
+relationship AutoDetected_c35196bd-1820-4fba-9aa8-f2965df9d848
+	fromColumn: uc3_fact_rtl_fsh_sales_hourly.store_id
+	toColumn: uc3_dim_rtl_fsh_stores.store_id
+
+relationship AutoDetected_f397d4e2-199c-4377-ba60-fc3316cd47ff
+	fromColumn: uc3_fact_rtl_fsh_sales_monthly.store_id
+	toColumn: uc3_dim_rtl_fsh_stores.store_id
+
+relationship AutoDetected_a3b33c43-b1eb-4176-8dbb-a10a5fe7376a
+	fromColumn: uc3_fact_rtl_fsh_sales_monthly.sku
+	toColumn: uc3_dim_rtl_fsh_products.sku
+
+relationship f72a2aec-d260-1c99-1330-6be45ebf249d
+	fromColumn: uc3_fact_rtl_fsh_sales_monthly.business_month
+	toColumn: dim_calendar.date
+
+relationship 6a45ca27-bd65-4499-7fe2-571e2ddd481a
+	fromColumn: uc3_fact_rtl_fsh_sales_hourly.business_hour
+	toColumn: dim_hour.hour
+
+relationship 87ee953d-1232-dde8-cc8e-90dfe4ae89a2
+	fromColumn: uc3_fact_rtl_fsh_sales_employee.store_id
+	toColumn: uc3_dim_rtl_fsh_stores.store_id
+

@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Officience Dashboard Template</title>
+<style>
+:root{--blue:#1F49BF;--ink:#0F1219;--slate:#5F6368;--grey:#A0A0A0;--canvas:#F7F7F7;--line:#E3E3E3;--red:#DD3C57}
+*{box-sizing:border-box;margin:0;padding:0}html{overflow-x:hidden}
+body{font-family:"Segoe UI",Lato,Arial,sans-serif;background:var(--canvas);color:var(--ink);width:1920px;min-height:1080px;font-size:14px}
+header{background:#fff;height:94px;border-bottom:2px solid #E6E6E6;display:flex;align-items:center;padding:0 30px}
+.logo{display:flex;align-items:center;gap:6px;color:var(--blue);font-size:24px;padding-right:28px;border-right:1px solid #DDD;height:52px}
+.ttl{padding-left:20px;flex:1}.ttl h1{font-size:32px}.ttl p{color:var(--slate);font-size:15px}
+.f{margin-left:20px;width:186px}.f label{font-size:11px;font-weight:600;color:var(--slate);display:block;margin-bottom:6px}
+.f div{border:1px solid #CCC;height:28px;padding:3px 10px;font-size:15px;display:flex;justify-content:space-between}.f div:after{content:"▾";color:#888;font-size:11px;padding-top:3px}
+nav{padding:14px 28px 0;display:flex;gap:30px;font-size:15px;color:var(--slate)}nav b{color:var(--ink);border-bottom:2px solid var(--blue);padding-bottom:4px;font-weight:600}
+main{padding:20px 28px;display:grid;gap:22px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card,.p{background:#fff;border:1px solid var(--line);border-radius:5px}
+.card{height:132px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;position:relative}
+.card:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;background:var(--blue)}
+.card small{font-size:15px;color:var(--slate)}.card strong{display:block;font-size:44px;line-height:1.2}
+.d{font-size:14px;color:var(--slate)}.d i{font-style:normal;font-weight:600;margin-right:20px}.up i{color:var(--blue)}.bad i{color:var(--red)}
+.p{padding:12px 16px}.p h3{font-size:18px}.p>p,.hd p{font-size:13px;color:var(--slate)}
+.hd{display:flex;justify-content:space-between}.lg{font-size:13px;color:var(--slate);display:flex;gap:14px;align-self:flex-start;padding-top:4px}
+.lg span:before{content:"";display:inline-block;width:12px;height:12px;background:var(--c);margin-right:6px;vertical-align:-1px}
+.lg .ln:before{height:3px;width:16px;vertical-align:3px}.lg .dash:before{height:0;background:none;border-top:2px dashed var(--c)}
+svg text{font-size:13px;fill:var(--slate)}
+.r2{display:grid;grid-template-columns:1144fr 690fr;gap:26px}.r3{display:grid;grid-template-columns:894fr 938fr;gap:26px}
+.seg{display:flex;align-items:center;gap:40px;padding:30px 6px 0 30px}.seg ul{list-style:none;flex:1;font-size:15px}
+.seg li{display:flex;justify-content:space-between;margin:0 0 30px}.seg li span:before{content:"";display:inline-block;width:11px;height:11px;background:var(--c);margin-right:12px}
+.r4{display:grid;grid-template-columns:700fr 1132fr;gap:26px}
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
+th,td{padding:10px 16px;text-align:right}th:first-child,td:first-child{text-align:left}
+th{background:#F5F5F5;font-weight:600;border-bottom:2px solid var(--blue)}td{border-bottom:1px solid #E6E6E6}
+tr:last-child td{background:#EEF1FA;font-weight:700;border:0}.pos{color:var(--blue)}.neg{color:var(--red)}
+footer{display:flex;justify-content:space-between;padding:0 28px 12px;font-size:13px;color:var(--grey)}
+</style></head><body>
+<header>
+ <div class="logo"><svg width="48" height="48" viewBox="-24 -24 48 48"><circle r="23" fill="#1F49BF"/><g fill="#fff"><ellipse ry="9" rx="4.5" cy="-9"/><ellipse ry="9" rx="4.5" cy="-9" transform="rotate(72)"/><ellipse ry="9" rx="4.5" cy="-9" transform="rotate(144)"/><ellipse ry="9" rx="4.5" cy="-9" transform="rotate(216)"/><ellipse ry="9" rx="4.5" cy="-9" transform="rotate(288)"/></g><circle r="3" fill="#1F49BF"/></svg>officience</div>
+ <div class="ttl"><h1>Dashboard template of Officience</h1><p>FY2026 performance against target and prior year</p></div>
+ <div class="f"><label>YEAR</label><div>FY2026</div></div>
+ <div class="f"><label>REGION</label><div>All regions</div></div>
+ <div class="f"><label>SEGMENT</label><div>All segments</div></div>
+</header>
+<nav><b>Overview</b><span>Sales</span><span>Customers</span><span>Finance</span><span>Delivery</span></nav>
+<main>
+ <div class="kpis" id="kpis"></div>
+ <div class="r2">
+  <div class="p"><div class="hd"><div><h3>Revenue vs Target</h3><p>Monthly, $K</p></div>
+   <div class="lg"><span class="ln" style="--c:#1F49BF">Actual FY26</span><span class="ln dash" style="--c:#0F1219">Target</span><span class="ln" style="--c:#A0A0A0">Prior year</span></div></div>
+   <div id="line"></div></div>
+  <div class="p"><h3>Revenue by Segment</h3><p>Share of total</p>
+   <div class="seg"><div id="donut" style="width:240px"></div><ul id="segl"></ul></div></div>
+ </div>
+ <div class="r3">
+  <div class="p"><div class="hd"><div><h3>Revenue by Region</h3><p>Actual vs prior year, $M</p></div>
+   <div class="lg" style="margin-right:120px"><span style="--c:#1F49BF">FY26</span><span style="--c:#C5CEEC">FY25</span></div></div>
+   <div id="region"></div></div>
+  <div class="p"><h3>Top Products</h3><p>Revenue, $K · highlight = above target</p><div id="prod"></div></div>
+ </div>
+ <div class="r4">
+  <div class="p"><h3>Cost Variance by Department</h3><p>Actual vs budget, % (negative = overspend)</p><div id="var"></div></div>
+  <div class="p"><h3>P&amp;L Statement</h3><p>YTD Oct 2026, $K</p><table id="pl"></table></div>
+ </div>
+</main>
+<footer><span>Sample data for illustration only</span><span>Officience BI theme · Data refreshed 21 Oct 2026 06:00</span></footer>
+<script>
+/* ---- DATA ---- */
+const KPI=[ // label, value, delta, good?, sparkline
+ ['Revenue','$12.48M','▲ +8.4%',1,[10,13,15,16,18,19,22,29,31,34,38]],
+ ['Gross Margin','38.2%','▲ +1.6 pts',1,[30,31,34,40,40,42,41,42,40,44,47]],
+ ['New Customers','1,284','▲ +12.1%',1,[20,23,19,22,26,30,29,30,37,40,40]],
+ ['Avg. Deal Size','$9.7K','▼ -3.2%',0,[10,13,15,18,21,24,24,27,30,32,35]]];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const ACTUAL=[820,870,940,910,1010,1060,1090,1120,1180,1240];           // Jan–Oct, $K
+const TARGET=MONTHS.map((m,i)=>850+i*400/11);                            // 850 → 1250
+const PRIOR=[755,800,865,838,930,975,1000,1032,1090,1142,1100,1180];
+const SEGMENTS=[['Enterprise',46,'#1F49BF'],['Mid-market',27,'#FD941D'],['SMB',17,'#A0A0A0'],['Public sector',10,'#DD3C57']];
+const REGIONS=[['APAC',4.1,3.7],['Europe',3.6,3.4],['N. America',2.8,2.7],['LATAM',1.2,1.0],['MEA',0.8,0.85]]; // FY26, FY25 $M
+const PRODUCTS=[['Data Platform',3120,1],['BI Managed Service',2480,1],['Cloud Migration',2140,0],['Analytics Training',1630,1],['AI Assistants',1210,0],['Support Plus',890,0]]; // 1 = above target
+const DEPT_VAR=[['Delivery',4.2],['Sales',-3.1],['Marketing',1.5],['R&amp;D',-6.4],['G&amp;A',2.2],['IT',-1.2]]; // % vs budget
+const PL=[ // line item, actual YTD, budget YTD, prior year ($K) ; cost=1 flips variance sign
+ ['Net revenue',10320,9980,9654,0],['Cost of services',6380,6190,6050,1],['Gross profit',3940,3790,3604,0],['Operating expenses',2020,2090,1880,1],['EBITDA',1920,1700,1724,0]];
+
+/* ---- RENDER ---- */
+const C={blue:'#1F49BF',grey:'#A0A0A0',tint:'#8FA4DF',tint2:'#C5CEEC',grid:'#E8E8E8',ink:'#0F1219'};
+const T=(x,y,s,a='middle',e='')=>`<text x="${x}" y="${y}" text-anchor="${a}" ${e}>${s}</text>`;
+const L=(x1,y1,x2,y2,c=C.grid,e='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" ${e}/>`;
+const put=(id,w,h,b)=>document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%">${b}</svg>`;
+function spark(d){const w=120,h=48,mn=Math.min(...d),mx=Math.max(...d),X=i=>i*w/(d.length-1),Y=v=>h-(v-mn)/(mx-mn)*(h-6);
+ const p=d.map((v,i)=>X(i)+','+Y(v)).join(' ');
+ return `<svg viewBox="-4 -4 ${w+8} ${h+4}" width="128" height="54"><polygon points="0,${h} ${p} ${w},${h}" fill="#E8ECF8"/><polyline points="${p}" fill="none" stroke="${C.tint}" stroke-width="2"/><circle cx="${w}" cy="${Y(d.at(-1))}" r="4" fill="${C.blue}"/></svg>`}
+document.getElementById('kpis').innerHTML=KPI.map(([l,v,d,g,s])=>`<div class="card"><div><small>${l}</small><strong>${v}</strong><span class="d ${g?'up':'bad'}"><i>${d}</i>vs prior year</span></div>${spark(s)}</div>`).join('');
+
+{const X=i=>68+i*92,Y=v=>320-(v-700)*0.44,P=a=>a.map((v,i)=>X(i)+','+Y(v)).join(' ');let g='';
+ for(let v=700;v<=1300;v+=100)g+=L(48,Y(v),1110,Y(v))+T(36,Y(v)+4,v,'end');
+ MONTHS.forEach((m,i)=>g+=T(X(i),336,m));
+ const n=ACTUAL.length-1;
+ g+=`<polygon points="${X(0)},320 ${P(ACTUAL)} ${X(n)},320" fill="#EEF1FA"/>`+L(X(n),Y(ACTUAL[n]),X(n),320,'#DDE3F3');
+ g+=`<polyline points="${P(PRIOR)}" fill="none" stroke="${C.grey}" stroke-width="2.5"/><polyline points="${P(TARGET)}" fill="none" stroke="${C.ink}" stroke-width="2" stroke-dasharray="7 5"/><polyline points="${P(ACTUAL)}" fill="none" stroke="${C.blue}" stroke-width="3.5"/>`;
+ g+=`<circle cx="${X(n)}" cy="${Y(ACTUAL[n])}" r="4" fill="${C.blue}"/>`+T(X(n),Y(ACTUAL[n])-20,'$1.24M','middle','style="font-weight:700;fill:#0F1219;font-size:15px"');
+ put('line',1110,345,g)}
+
+{let o=0,g='';const r=95,c=2*Math.PI*r;
+ SEGMENTS.forEach(([,p,col])=>{g+=`<circle r="${r}" fill="none" stroke="${col}" stroke-width="34" stroke-dasharray="${p/100*c-3} ${c}" stroke-dashoffset="${-o/100*c}" transform="rotate(-90)"/>`;o+=p});
+ document.getElementById('donut').innerHTML=`<svg viewBox="-120 -120 240 240" width="100%">${g}<text y="-4" text-anchor="middle" style="font-size:26px;font-weight:700;fill:#0F1219">$12.48M</text><text y="22" text-anchor="middle">Total</text></svg>`;
+ document.getElementById('segl').innerHTML=SEGMENTS.map(([n,p,col])=>`<li><span style="--c:${col}">${n}</span><b>${p}%</b></li>`).join('')}
+
+{const Y=v=>228-v*42.5;let g='';
+ for(let v=0;v<=4;v++)g+=L(40,Y(v),860,Y(v))+T(26,Y(v)+5,v,'end');
+ REGIONS.forEach(([n,a,b],i)=>{const x=70+i*160;
+  g+=`<rect x="${x}" y="${Y(a)}" width="54" height="${a*42.5}" fill="${C.blue}"/><rect x="${x+58}" y="${Y(b)}" width="54" height="${b*42.5}" fill="${C.tint2}"/>`+T(x+27,Y(a)-5,a.toFixed(1),'middle','style="fill:#0F1219"')+T(x+56,246,n)});
+ put('region',870,252,g)}
+
+{let g='';PRODUCTS.forEach(([n,v,hi],i)=>{const y=22+i*35.5,w=v*0.218;
+  g+=T(146,y+15,n,'end','style="fill:#0F1219;font-size:15px"')+`<rect x="152" y="${y}" width="${w}" height="22" fill="${hi?C.blue:C.grey}"/>`+T(160+w,y+16,v.toLocaleString('en-US'),'start','style="fill:#0F1219"')});
+ put('prod',910,240,g)}
+
+const n=v=>v.toLocaleString('en-US'),sg=v=>(v>0?'+':'')+v,pct=v=>sg(+v.toFixed(1)).replace(/(\.\d)?$/,m=>m||'.0')+'%';
+{const Z=x=>480+x*43;let g='';
+ for(let v=-8;v<=6;v+=2)g+=L(Z(v),10,Z(v),318,v?C.grid:'#999')+T(Z(v),340,String(v).replace('-','−'));
+ DEPT_VAR.forEach(([k,v],i)=>{const y=22+i*50,x=Math.min(Z(0),Z(v));
+  g+=T(110,y+19,k,'end','style="fill:#0F1219;font-size:15px"')+`<rect x="${x}" y="${y}" width="${Math.abs(v)*43}" height="28" fill="${v>0?C.blue:'#DD3C57'}"/>`+T(v>0?Z(v)+10:Z(v)-10,y+19,sg(v)+'%',v>0?'start':'end','style="fill:#0F1219"')});
+ put('var',800,350,g)}
+
+{const cl=(v,last)=>last?'':`class="${v>=0?'pos':'neg'}"`;
+ document.getElementById('pl').innerHTML='<tr><th>Line item</th><th>Actual YTD</th><th>Budget YTD</th><th>Var $</th><th>Var %</th><th>Prior Year</th><th>YoY %</th></tr>'+
+ PL.map(([k,a,b,p,cost],i)=>{const s=cost?-1:1,vd=(a-b)*s,vp=vd/b*100,yy=(a-p)/p*100*s,last=i==PL.length-1;
+  return `<tr><td>${k}</td><td>${n(a)}</td><td>${n(b)}</td><td ${cl(vd,last)}>${sg(vd)}</td><td ${cl(vp,last)}>${pct(vp)}</td><td>${n(p)}</td><td ${cl(yy,last)}>${pct(yy)}</td></tr>`}).join('')}
+const fit=()=>document.body.style.zoom=Math.min(1,innerWidth/1920);fit();onresize=fit; // scale 1920px canvas to window
+</script></body></html>

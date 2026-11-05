@@ -1,0 +1,136 @@
+table uc3_fact_rtl_fsh_sales_monthly
+	lineageTag: 5ee7d482-ee60-4610-991b-0fc2abc55c8f
+
+	column business_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ed1d7532-a010-4b1a-95cc-be576abfd2cf
+		summarizeBy: none
+		sourceColumn: business_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column store_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 754cbd42-0839-4521-86b9-4479e063d8ae
+		summarizeBy: none
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sku
+		dataType: string
+		lineageTag: 8f8ef849-d69b-4fe3-995a-1d054c3ae752
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_type
+		dataType: string
+		lineageTag: b4e1fb80-1b30-4ca8-8a50-a6c92148d1f9
+		summarizeBy: none
+		sourceColumn: transaction_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency_code_local
+		dataType: string
+		lineageTag: 362e6884-0df0-461f-b506-12e19dbf3ac3
+		summarizeBy: none
+		sourceColumn: currency_code_local
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_count
+		dataType: int64
+		formatString: 0
+		lineageTag: ed64b906-9278-45e5-ad9c-f2f5b7feb074
+		summarizeBy: sum
+		sourceColumn: line_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoice_count
+		dataType: int64
+		formatString: 0
+		lineageTag: ab1ba6e1-218f-4a4a-915b-d16399c9810f
+		summarizeBy: sum
+		sourceColumn: invoice_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 70b1a378-5c83-451b-826c-95f4bc2ee9c3
+		summarizeBy: sum
+		sourceColumn: customer_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: a2edc3c3-a233-49f5-a9f3-d809cd658d69
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_total_local
+		dataType: double
+		lineageTag: 3e492cc4-510c-4e25-bc77-e8f14eb15ee7
+		summarizeBy: sum
+		sourceColumn: line_total_local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gross_amount_eur
+		dataType: double
+		lineageTag: fa40d5c1-e7ee-4729-bc0a-903865ca3498
+		summarizeBy: sum
+		sourceColumn: gross_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_amount_eur
+		dataType: double
+		lineageTag: 9523eba3-454f-42c7-8943-46a35f031701
+		summarizeBy: sum
+		sourceColumn: discount_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column line_total_eur
+		dataType: double
+		lineageTag: 54a74408-6ab5-419f-be78-d49d5d7961e3
+		summarizeBy: sum
+		sourceColumn: line_total_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc3_fact_rtl_fsh_sales_monthly = m
+		mode: import
+		source =
+				let
+				  Source = AmazonAthena.Databases("aws-bi-demo", null, []),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc3_fact_rtl_fsh_sales_monthly", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

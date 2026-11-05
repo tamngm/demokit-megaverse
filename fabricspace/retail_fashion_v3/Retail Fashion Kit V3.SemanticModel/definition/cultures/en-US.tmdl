@@ -1,0 +1,761 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "uc3_fact_rtl_fsh_sales_monthly.invoices_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "# Invoices YoY %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.upt_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "UPT YoY %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.basket_avg_unit_price_eur_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Basket Avg Unit Price EUR YoY %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.net_revenue_eur_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Net Revenue EUR YoY %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.bridge_gross_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Bridge Gross Sales"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.bridge_discounts": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Bridge Discounts"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.bridge_returns": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Bridge Returns"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.bridge_net_revenue": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Bridge Net Revenue"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.price__25": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Price < €25"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.price_2550": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Price €25–50"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.price_50100": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Price €50–100"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.price_100200": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Price €100–200"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_fact_rtl_fsh_sales_monthly.price_200": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_fact_rtl_fsh_sales_monthly",
+			          "ConceptualProperty": "Price €200+"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.monetary_top_20": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Monetary Top 20%"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.monetary_next_30": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Monetary Next 30%"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.monetary_bottom_50": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Monetary Bottom 50%"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.frequency_6": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Frequency 6+"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.frequency_35": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Frequency 3–5"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.frequency_2": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Frequency 2"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.frequency_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Frequency 1"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.recency_030d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Recency 0–30d"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.recency_3190d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Recency 31–90d"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.recency_91180d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Recency 91–180d"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.recency_181365d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Recency 181–365d"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "uc3_dim_rtl_fsh_customers.recency_365d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "uc3_dim_rtl_fsh_customers",
+			          "ConceptualProperty": "Recency 365d+"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.invoices_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Invoices YoY %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.upt_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "UPT YoY %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Basket size (UPT)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.basket_avg_unit_price_eur_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Basket Avg Unit Price EUR YoY %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg unit price": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.net_revenue_eur_yoy_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Net Revenue EUR YoY %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Net revenue": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.bridge_gross_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Bridge Gross Sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Gross sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.bridge_discounts": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Bridge Discounts"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "− Discounts": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.bridge_returns": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Bridge Returns"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "− Returns": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.bridge_net_revenue": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Bridge Net Revenue"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Net revenue": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.price__25": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Price < €25"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "< €25": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.price_2550": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Price €25–50"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "€25–50": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.price_50100": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Price €50–100"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "€50–100": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.price_100200": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Price €100–200"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "€100–200": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.price_200": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Price €200+"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "€200+": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.monetary_top_20": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Monetary Top 20%"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Top 20%": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.monetary_next_30": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Monetary Next 30%"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Next 30%": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.monetary_bottom_50": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Monetary Bottom 50%"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bottom 50%": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.recency_030d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Recency 0–30d"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "0–30d": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.recency_3190d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Recency 31–90d"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "31–90d": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.recency_91180d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Recency 91–180d"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "91–180d": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.recency_181365d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Recency 181–365d"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "181–365d": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.recency_365d": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Recency 365d+"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "365d+": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.frequency_6": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Frequency 6+"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "6+": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.frequency_35": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Frequency 3–5"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "3–5": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.frequency_2": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Frequency 2"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "2": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.frequency_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Frequency 1"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "1": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+
