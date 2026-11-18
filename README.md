@@ -54,6 +54,9 @@ https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank
 2. Read [How to Collaborate on Git](git-how-to.md), including the visual workflow
 3. Check above for business logic & data models
 
+## Go with the Pipeline
+Must read to know how to use this backbone pipeline `docs\go-with-pipeline.md`
+
 ## 🚦 Golden Rules
 1. **Never push directly to `main`** — always use a feature branch
 2. **One PR = One logical change** — keep reviews fast
