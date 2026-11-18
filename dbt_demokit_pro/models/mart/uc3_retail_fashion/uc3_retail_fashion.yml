@@ -3,19 +3,240 @@ version: 2
 models:
   - name: uc3_dim_rtl_fsh_customers
     description: "One row per customer: attributes, age range and RFM (recency, frequency, monetary in EUR)"
+    columns:
+      - name: customer_id
+        description: "Customer key; joins to the fact tables"
+      - name: customer_name
+        description: "Customer full name"
+      - name: customer_email
+        description: "Customer email address"
+      - name: customer_phone_number
+        description: "Customer telephone number"
+      - name: resident_city
+        description: "City where the customer lives"
+      - name: resident_country
+        description: "Country where the customer lives"
+      - name: gender
+        description: "Customer gender"
+      - name: age_range
+        description: "Age band derived from date_of_birth (age_range macro)"
+      - name: job_title
+        description: "Customer job title"
+      - name: first_purchase_date
+        description: "Date of the first sale (returns excluded); NULL if never purchased"
+      - name: last_purchase_date
+        description: "Date of the last sale (returns excluded); NULL if never purchased"
+      - name: recency_days
+        description: "RFM recency: days from last_purchase_date to the latest business_date in the transactions"
+      - name: frequency
+        description: "RFM frequency: number of distinct sale invoices (returns excluded)"
+      - name: monetary_eur
+        description: "RFM monetary: net spend in EUR (sales minus returns)"
+      - name: customer_status
+        description: "Active (<= 90 days since last purchase), Inactive (<= 365), Churned (> 365), Never Purchased"
+
   - name: uc3_dim_rtl_fsh_discounts
     description: "Discount campaigns by period and product category / sub-category"
+    columns:
+      - name: start_date
+        description: "First day of the discount campaign"
+      - name: end_date
+        description: "Last day of the discount campaign"
+      - name: discounts
+        description: "Discount rate of the campaign (2 decimals)"
+      - name: discount_description
+        description: "Campaign description"
+      - name: category
+        description: "Product category the discount applies to; 'All' when blank"
+      - name: sub_category
+        description: "Product sub-category the discount applies to; 'All' when blank"
+
   - name: uc3_dim_rtl_fsh_employees
     description: "One row per employee with store and position"
+    columns:
+      - name: employee_id
+        description: "Employee key; joins to uc3_fact_rtl_fsh_sales_employee"
+      - name: store_id
+        description: "Store the employee works in"
+      - name: employee_name
+        description: "Employee full name"
+      - name: employee_position
+        description: "Job position in the store"
+
   - name: uc3_dim_rtl_fsh_products
     description: "One row per SKU: category, color, size, production cost, revenue, margin and product quadrant"
+    columns:
+      - name: sku
+        description: "SKU key (upper-case, trimmed); joins to the fact tables"
+      - name: product_id
+        description: "Product the SKU belongs to (several SKUs per product)"
+      - name: category
+        description: "Product category"
+      - name: sub_category
+        description: "Product sub-category"
+      - name: color
+        description: "Color from the product master, else from sales lines, else parsed from the SKU"
+      - name: size
+        description: "Size from sales lines, else parsed from the SKU"
+      - name: production_cost_eur
+        description: "Unit production cost converted from USD to EUR"
+      - name: revenue_eur
+        description: "Net revenue in EUR (sales minus returns), all periods, at product_id level: repeated on each SKU of the product, do not sum across SKUs"
+      - name: margin_eur
+        description: "revenue_eur minus net quantity x production_cost_eur, at product_id level (repeated per SKU)"
+      - name: margin_pct
+        description: "margin_eur / revenue_eur as a ratio (0.25 = 25%), 4 decimals"
+      - name: product_quadrant
+        description: "Revenue vs margin % split at the medians: Stars, Volume Drivers, Niche, Dogs; 'No sales' when revenue <= 0"
+      - name: color_hex
+        description: "Hex code of the color from the ref_color_codes seed, for Power BI formatting"
+
   - name: uc3_dim_rtl_fsh_stores
     description: "One row per store: country, city, coordinates"
+    columns:
+      - name: store_id
+        description: "Store key; joins to the fact tables"
+      - name: country
+        description: "Store country"
+      - name: city
+        description: "Store city"
+      - name: store_name
+        description: "Store name"
+      - name: number_of_employees
+        description: "Number of employees in the store"
+      - name: zip_code
+        description: "Store postal code"
+      - name: latitude
+        description: "Store latitude (map visuals)"
+      - name: longitude
+        description: "Store longitude (map visuals)"
+
   - name: uc3_fact_rtl_fsh_transactions
     description: "Transaction lines from the work table (detail / drill-through)"
+    columns:
+      - name: business_date
+        description: "Transaction date (2023-01-01 to 2024-12-31)"
+      - name: business_hour
+        description: "Hour of the transaction (0-23)"
+      - name: store_id
+        description: "Store key"
+      - name: customer_id
+        description: "Customer key"
+      - name: sku
+        description: "SKU key"
+      - name: employee_id
+        description: "Employee key"
+      - name: transaction_type
+        description: "Sale or Return; 'Unknown' when blank"
+      - name: is_return
+        description: "1 if transaction_type is Return, else 0"
+      - name: currency_code_local
+        description: "ISO currency code of the local amounts"
+      - name: payment_method
+        description: "Payment method; 'Unknown' when blank"
+      - name: line_count
+        description: "Number of invoice lines"
+      - name: invoice_count
+        description: "Distinct invoices; do not sum across rows"
+      - name: quantity
+        description: "Units sold or returned"
+      - name: gross_amount_eur
+        description: "Unit price x quantity before discount, in EUR"
+      - name: discount_amount_eur
+        description: "Discount amount (gross minus line total), in EUR"
+      - name: line_total
+        description: "Line total after discount, in local currency (currency_code_local)"
+      - name: incomplete_line_count
+        description: "Lines missing sku, customer_id or store_id"
+
   - name: uc3_fact_rtl_fsh_sales_monthly
     description: "Monthly sales per store x sku x transaction type x currency (business_month = month start)"
+    columns:
+      - name: business_month
+        description: "Month start date (e.g. 2024-01-01)"
+      - name: store_id
+        description: "Store key"
+      - name: sku
+        description: "SKU key"
+      - name: transaction_type
+        description: "Sale or Return; 'Unknown' when blank"
+      - name: currency_code_local
+        description: "ISO currency code of line_total_local"
+      - name: line_count
+        description: "Number of invoice lines"
+      - name: invoice_count
+        description: "Distinct invoices; do not sum across rows"
+      - name: customer_count
+        description: "Distinct customers; do not sum across rows"
+      - name: quantity
+        description: "Units sold or returned"
+      - name: line_total_local
+        description: "Line total after discount, in local currency"
+      - name: gross_amount_eur
+        description: "Unit price x quantity before discount, in EUR"
+      - name: discount_amount_eur
+        description: "Discount amount (gross minus line total), in EUR"
+      - name: line_total_eur
+        description: "Line total after discount, in EUR"
+
   - name: uc3_fact_rtl_fsh_sales_hourly
     description: "Hourly sales per store x transaction type x payment method x currency"
+    columns:
+      - name: business_date
+        description: "Transaction date"
+      - name: business_hour
+        description: "Hour of the transaction (0-23)"
+      - name: store_id
+        description: "Store key"
+      - name: transaction_type
+        description: "Sale or Return; 'Unknown' when blank"
+      - name: payment_method
+        description: "Payment method; 'Unknown' when blank"
+      - name: currency_code_local
+        description: "ISO currency code of line_total_local"
+      - name: line_count
+        description: "Number of invoice lines"
+      - name: invoice_count
+        description: "Distinct invoices; do not sum across rows"
+      - name: customer_count
+        description: "Distinct customers; do not sum across rows"
+      - name: quantity
+        description: "Units sold or returned"
+      - name: line_total_local
+        description: "Line total after discount, in local currency"
+      - name: gross_amount_eur
+        description: "Unit price x quantity before discount, in EUR"
+      - name: discount_amount_eur
+        description: "Discount amount (gross minus line total), in EUR"
+      - name: line_total_eur
+        description: "Line total after discount, in EUR"
+
   - name: uc3_fact_rtl_fsh_sales_employee
     description: "Daily sales per store x employee x transaction type x currency"
+    columns:
+      - name: business_date
+        description: "Transaction date"
+      - name: store_id
+        description: "Store key"
+      - name: employee_id
+        description: "Employee key"
+      - name: transaction_type
+        description: "Sale or Return; 'Unknown' when blank"
+      - name: currency_code_local
+        description: "ISO currency code of line_total_local"
+      - name: line_count
+        description: "Number of invoice lines"
+      - name: invoice_count
+        description: "Distinct invoices; do not sum across rows"
+      - name: customer_count
+        description: "Distinct customers; do not sum across rows"
+      - name: quantity
+        description: "Units sold or returned"
+      - name: line_total_local
+        description: "Line total after discount, in local currency"
+      - name: gross_amount_eur
+        description: "Unit price x quantity before discount, in EUR"
+      - name: discount_amount_eur
+        description: "Discount amount (gross minus line total), in EUR"
+      - name: line_total_eur
+        description: "Line total after discount, in EUR"
