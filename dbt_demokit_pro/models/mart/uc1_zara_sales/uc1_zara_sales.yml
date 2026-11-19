@@ -73,7 +73,7 @@ models:
         data_type: string
 
   - name: uc1_dim_season
-    description: "product material information"
+    description: "Season lookup: one row per season with its id"
     columns:
       - name: season
         description: "Season the product is associated with (e.g. Summer 2024)."

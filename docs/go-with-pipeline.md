@@ -184,13 +184,31 @@ Read credentials through `src/config.py`, never hard-coded. Write the model vers
 
 Connect Power BI to the `offybi_mart` database in Athena and import only the `<uc>_dim_*` and `<uc>_fact_*` tables. Report files live in `fabricspace/`; the theme is in `theme/`.
 
-## Checklist for the pull request
+## Automatic checks on push and pull request
 
-- [ ] Branch `feat/<uc>-<desc>`, no commit on `main`
-- [ ] Sampling notebook in `notebook/`, no raw data or secrets in it
-- [ ] DDL in `src/loader/load_config/<uc>_*.sql`, starting with `DROP TABLE IF EXISTS`
-- [ ] Source block in `models/sources.yml` for every new raw table
-- [ ] Work models (if any) in `models/work/<uc>/` with a `.yml`
-- [ ] Dims and facts in `models/mart/<uc>/`, with every column described in `<uc>_*.yml`
-- [ ] New seeds in `seeds/` named `ref_*`
-- [ ] `dbt parse` passes; `dbt run` and checks done in Athena
+Every push, and every pull request to `main`, runs the GitHub workflow `pipeline-checks` ([.github/workflows/pipeline-checks.yml](../.github/workflows/pipeline-checks.yml)). It reads the repo files only and uses fake AWS credentials, so it never touches Athena or S3.
+
+| Check | Rule |
+|---|---|
+| Branch name | `feat/<uc>-<desc>`, `fix/<desc>` or `docs/<desc>`, lowercase with `-` |
+| No data or secrets | no `.env`, `.parquet`, `.xlsx`, CSV outside `seeds/`; no AWS-key-like strings |
+| DDL | every table created in `load_config/*.sql` has a `DROP TABLE IF EXISTS` |
+| Sources | every table created in a DDL is listed in `sources.yml` |
+| Work and mart models | every model is listed in a `.yml` with a description; every `.yml` entry has a `.sql` |
+| Mart columns | every dim/fact lists its columns, each with a description |
+| Seeds | named `ref_*.csv` |
+| dbt | `dbt parse` passes |
+
+Run the rule checks locally before you push:
+
+```powershell
+.venv\Scripts\python.exe ci\check_pipeline.py
+```
+
+The result shows in the pull request's **Checks** tab; a red ❌ lists each file and the rule it breaks. The pull request description is pre-filled with the checklist ([.github/pull_request_template.md](../.github/pull_request_template.md)); tick the manual items yourself:
+
+- [ ] Sampling notebook has no raw data output or credentials
+- [ ] `dbt seed` / `dbt run` done for the changed models, results checked in Athena
+- [ ] Power BI report refreshed, if the change affects it
+
+`dbt run` is not automated on purpose: it writes to Athena and S3 and costs query time.

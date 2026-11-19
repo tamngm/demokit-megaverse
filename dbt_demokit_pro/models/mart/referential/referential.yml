@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: dim_calendar
+    description: "One row per date from the ref_calendar seed, with year / quarter / month / week attributes and previous-period dates"
+    columns:
+      - name: date
+        description: "Calendar date (key)"
+      - name: date_key
+        description: "Date as integer yyyymmdd (e.g. 20250314)"
+      - name: year
+        description: "Calendar year"
+      - name: quarter
+        description: "Quarter number (1-4)"
+      - name: quarter_desc
+        description: "Quarter label (Q1-Q4)"
+      - name: month
+        description: "Month number (1-12)"
+      - name: month_name
+        description: "Month name (March)"
+      - name: month_short
+        description: "Short month name (Mar)"
+      - name: year_month
+        description: "Year and month as text (2025-03)"
+      - name: month_start
+        description: "First day of the month"
+      - name: iso_year
+        description: "ISO week-numbering year"
+      - name: iso_week
+        description: "ISO week number"
+      - name: day_of_month
+        description: "Day of the month (1-31)"
+      - name: day_of_week
+        description: "Day of the week, 1 = Monday ... 7 = Sunday"
+      - name: day_name
+        description: "Day name (Friday)"
+      - name: day_short
+        description: "Short day name (Fri)"
+      - name: day_of_year
+        description: "Day of the year (1-366)"
+      - name: is_weekend
+        description: "1 for Saturday and Sunday, else 0"
+      - name: prev_day
+        description: "Previous day"
+      - name: same_day_prev_week
+        description: "Same day one week earlier"
+      - name: same_day_prev_month
+        description: "Same day one month earlier (clamped to month end)"
+      - name: same_day_prev_quarter
+        description: "Same day one quarter earlier (clamped to month end)"
+      - name: same_day_prev_year
+        description: "Same day one year earlier (29 Feb -> 28 Feb)"
+      - name: same_weekday_prev_year
+        description: "Same weekday 52 weeks earlier, for retail like-for-like comparison"
+      - name: prev_month_start
+        description: "First day of the previous month"
+      - name: prev_year_month
+        description: "Previous month as text (2025-02)"
+      - name: prev_quarter_start
+        description: "First day of the previous quarter"
+      - name: prev_year
+        description: "Previous calendar year"
+
+  - name: dim_exrate
+    description: "Exchange rates from the ref_exchange_rates seed: one row per currency"
+    columns:
+      - name: date
+        description: "Date of the rate"
+      - name: currency_code
+        description: "ISO currency code (key)"
+      - name: units_per_eur
+        description: "Units of the currency for 1 EUR"
+      - name: eur_per_unit
+        description: "EUR for 1 unit of the currency; multiply a local amount by it to get EUR"
+      - name: source
+        description: "Where the rate comes from"
+
+  - name: dim_time
+    description: "One row per minute of the day from the ref_time seed"
+    columns:
+      - name: time_key
+        description: "Minute of the day (0-1439, key)"
+      - name: time
+        description: "Time of day (hh:mm:ss)"
+      - name: hour
+        description: "Hour (0-23)"
+      - name: minute
+        description: "Minute (0-59)"
+      - name: hour_label
+        description: "Hour band label (00:00-00:59)"
+      - name: am_pm
+        description: "AM or PM"
+      - name: day_part
+        description: "Part of the day (Night, Morning, ...)"

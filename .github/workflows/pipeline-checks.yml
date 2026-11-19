@@ -1,0 +1,38 @@
+name: pipeline-checks
+
+# Rule checks + dbt parse on every push and every PR to main.
+# Uses fake AWS credentials: nothing here can reach Athena or S3.
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dbt and PyYAML
+        run: pip install dbt-athena pyyaml
+
+      - name: Rule checks
+        run: python ci/check_pipeline.py
+
+      - name: Fake AWS profile for dbt parse
+        run: |
+          aws configure set aws_access_key_id fake --profile aws_demokit_pro
+          aws configure set aws_secret_access_key fake --profile aws_demokit_pro
+          aws configure set region eu-west-1 --profile aws_demokit_pro
+
+      - name: dbt parse
+        working-directory: dbt_demokit_pro
+        run: dbt parse --profiles-dir .
