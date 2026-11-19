@@ -6,21 +6,21 @@
 
 ```mermaid
 flowchart TD
-    A["1. Get latest main<br/>git switch main<br/>git pull origin main"] --> B["2. Create branch<br/>git switch -c feat/uc2-retail-kit<br/>or fix/loader-path"]
+    A["1. Get latest main<br/>git switch main<br/>git pull origin main"] --> B["2. Create branch<br/>git switch -c feat/uc3-retail-fashion<br/>or fix/loader-path"]
     B --> C["3. Code, then save<br/>git add path/to/file<br/>git commit -m 'feat: ...'"]
-    C --> D["4. Push branch<br/>git push -u origin feat/uc2-retail-kit"]
+    C --> D["4. Push branch<br/>git push -u origin feat/uc3-retail-fashion"]
     D --> E["5. Open Pull Request on GitHub → main"]
     E --> F{"6. Review"}
     F -->|Changes requested| C
     F -->|Approved| G["7. Merge on GitHub"]
-    G --> H["8. Clean up<br/>git switch main<br/>git pull origin main<br/>git branch -d feat/uc2-retail-kit"]
+    G --> H["8. Clean up<br/>git switch main<br/>git pull origin main<br/>git branch -d feat/uc3-retail-fashion"]
 ```
 
 ## Branch names
 
 | Type | Pattern | Example |
 |---|---|---|
-| New work | `feat/<uc>-<short-desc>` | `feat/uc2-retail-kit` |
+| New work | `feat/<uc>-<short-desc>` | `feat/uc3-retail-fashion` |
 | Bug fix | `fix/<short-desc>` | `fix/loader-path` |
 | Docs only | `docs/<short-desc>` | `docs/git-how-to` |
 
@@ -34,7 +34,7 @@ git pull origin main
 
 ## 2. Create a branch (always from an up-to-date `main`)
 ```
-git switch -c feat/uc2-retail-kit
+git switch -c feat/uc3-retail-fashion
 ```
 
 ## 3. Save your work
@@ -42,13 +42,13 @@ git switch -c feat/uc2-retail-kit
 git status                      # see what changed
 git add path/to/file.sql        # one file
 git add dbt_demokit_pro/models  # or a whole folder
-git commit -m "feat: add uc2 retail kit tables"
+git commit -m "feat: add uc3 retail fashion tables"
 ```
 Run `git status` before every commit. Avoid `git add .`, because it stages everything.
 
 ## 4. Push your branch and open a PR
 ```
-git push -u origin feat/uc2-retail-kit   # first push
+git push -u origin feat/uc3-retail-fashion   # first push
 git push                                 # later pushes
 ```
 Then open a Pull Request on GitHub, targeting `main`. When it's approved, merge it on GitHub.
@@ -66,7 +66,7 @@ The PR updates automatically.
 ```
 git switch main
 git pull origin main
-git switch feat/uc2-retail-kit
+git switch feat/uc3-retail-fashion
 git merge main
 ```
 If there are conflicts: fix the files, then `git add <file>` and `git commit`.
@@ -75,7 +75,7 @@ If there are conflicts: fix the files, then `git add <file>` and `git commit`.
 ```
 git switch main
 git pull origin main
-git branch -d feat/uc2-retail-kit
+git branch -d feat/uc3-retail-fashion
 ```
 
 ## Quick fixes

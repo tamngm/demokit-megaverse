@@ -1,6 +1,8 @@
 -- Raw Zara sales (Kaggle marixe/zara-sales-for-eda) as uploaded to S3.
 -- The parquet keeps the original headers ("Product ID", "Sales Volume", ...), which Athena
 -- can't map by name, so columns are read by position: keep this order in sync with the file.
+DROP TABLE IF EXISTS offybi.uc1_zara_product_sales_raw;
+
 CREATE EXTERNAL TABLE IF NOT EXISTS offybi.uc1_zara_product_sales_raw (
     product_id BIGINT,
     product_position STRING,

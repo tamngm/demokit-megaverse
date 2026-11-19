@@ -1,0 +1,5 @@
+# Code owners: GitHub requests their review automatically on every pull request.
+# With "Require review from Code Owners" on the main branch rule, a PR needs their approval to merge.
+# Later lines win: add a folder rule below to give it a different owner.
+
+*   @tamngm
