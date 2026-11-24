@@ -1,0 +1,140 @@
+/// Grain: one row per payment instalment of a quote (quote_key x seq). Amounts in the quote currency and in EUR.
+table uc5_srm_fact_payment_schedule
+	lineageTag: 48e24b43-b5b5-4943-b72e-5efdea664a0e
+
+	/// Quote key; joins to uc5_srm_fact_quotes
+	column quote_key
+		dataType: string
+		lineageTag: 41be7821-61ff-4763-846c-ddc16bc0b7f7
+		summarizeBy: none
+		sourceColumn: quote_key
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Opportunity id
+	column oid
+		dataType: string
+		lineageTag: 7becbbcb-17f4-420a-a0b0-a1589ea587c2
+		summarizeBy: none
+		sourceColumn: oid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote number
+	column quote_number
+		dataType: string
+		lineageTag: 57b0ddf3-ef93-4d58-a968-0c2da875c2a2
+		summarizeBy: none
+		sourceColumn: quote_number
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Editor; joins to uc5_srm_dim_editor
+	column editor
+		dataType: string
+		lineageTag: ce094f0b-155d-40bb-b7cc-d52eab2346cb
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Instalment number
+	column seq
+		dataType: int64
+		formatString: 0
+		lineageTag: f120175d-20b7-482e-a50e-2312724b9b83
+		summarizeBy: sum
+		sourceColumn: seq
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Instalment label as printed
+	column label
+		dataType: string
+		lineageTag: 5e860db7-61ed-47d2-96e6-40a46e462510
+		summarizeBy: none
+		sourceColumn: label
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Due date; joins to dim_calendar
+	column due_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 24c19556-ccac-4305-b5b0-e0e8c3ff3832
+		summarizeBy: none
+		sourceColumn: due_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Start of the period paid
+	column period_start
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: c2f9d35a-711d-4870-8dea-fd496beccefd
+		summarizeBy: none
+		sourceColumn: period_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// End of the period paid
+	column period_end
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 03d2bedf-dd7c-4968-b592-d4662c4868fd
+		summarizeBy: none
+		sourceColumn: period_end
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Currency
+	column currency
+		dataType: string
+		lineageTag: d9bd5069-969f-4212-b586-3499acc56e3a
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Instalment amount, quote currency
+	column amount
+		dataType: double
+		lineageTag: d10cb6b6-b485-44d9-b3d4-34f7b6270096
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Instalment amount in EUR
+	column amount_eur
+		dataType: double
+		lineageTag: 8132c3f6-8294-49bb-ac36-6fcab0a0387f
+		summarizeBy: sum
+		sourceColumn: amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc5_srm_fact_payment_schedule = m
+		mode: import
+		queryGroup: fact
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_fact_payment_schedule", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

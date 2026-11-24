@@ -1,0 +1,201 @@
+table uc5_srm_fact_line_prices
+	lineageTag: a413f82b-c534-40f6-a124-1f676d4e29f7
+
+	column quote_key
+		dataType: string
+		lineageTag: d9da4b17-c487-4f65-a5f0-9e425fe058e2
+		summarizeBy: none
+		sourceColumn: quote_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column oid
+		dataType: string
+		lineageTag: 9824401c-4961-41bb-b92d-89025815ad9c
+		summarizeBy: none
+		sourceColumn: oid
+
+		annotation SummarizationSetBy = Automatic
+
+	column quote_number
+		dataType: string
+		lineageTag: 9d9f8e75-0c48-4726-bdfe-205a93af9c9a
+		summarizeBy: none
+		sourceColumn: quote_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_no
+		dataType: int64
+		formatString: 0
+		lineageTag: c98cecd8-598f-4029-a5d0-8a9260795704
+		summarizeBy: sum
+		sourceColumn: line_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column seq
+		dataType: int64
+		formatString: 0
+		lineageTag: c384a3bb-dc22-4d3c-8ecb-d88a2d271ea9
+		summarizeBy: sum
+		sourceColumn: seq
+
+		annotation SummarizationSetBy = Automatic
+
+	column editor
+		dataType: string
+		lineageTag: 4a2defcc-2b20-45ce-8025-79fc1ff3acdd
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	column sku
+		dataType: string
+		lineageTag: 0695cea8-02ee-41b6-8453-6537c3a44efb
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column component
+		dataType: string
+		lineageTag: e27bcd92-0314-4167-ac9b-bd5d3a8a5739
+		summarizeBy: none
+		sourceColumn: component
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_type
+		dataType: string
+		lineageTag: 10149098-9194-4f9e-90a1-d1683f7a6a71
+		summarizeBy: none
+		sourceColumn: discount_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column basis
+		dataType: string
+		lineageTag: 803a6373-4db5-4f01-8c57-f7465a187f7d
+		summarizeBy: none
+		sourceColumn: basis
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_period
+		dataType: string
+		lineageTag: 43087c4a-6c07-4d49-9511-e68bb268df38
+		summarizeBy: none
+		sourceColumn: price_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedule_label
+		dataType: string
+		lineageTag: f3ae70dd-0468-4c3f-b257-fc9d78467025
+		summarizeBy: none
+		sourceColumn: schedule_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column period_start
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: ad2b0156-2b25-4077-ac7e-f40f5bd051f2
+		summarizeBy: none
+		sourceColumn: period_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column period_end
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: e3b9d3d5-cdd7-48c3-9bfd-9571d5711825
+		summarizeBy: none
+		sourceColumn: period_end
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column printed_label
+		dataType: string
+		lineageTag: d2e2ddca-3301-4eb3-b386-8fe1bc3d0efc
+		summarizeBy: none
+		sourceColumn: printed_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency
+		dataType: string
+		lineageTag: 267fd2f2-05dd-411b-9930-86c050cb942f
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: double
+		lineageTag: 45168652-0ba0-4381-ae66-eeff24c9cdf2
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amount
+		dataType: double
+		lineageTag: 8823d08a-d436-4bbb-8ea4-89dec1c20b5f
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct
+		dataType: double
+		lineageTag: 02b19c47-21e9-42c4-b8f0-d926b5366c4e
+		summarizeBy: sum
+		sourceColumn: pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amount_eur
+		dataType: double
+		lineageTag: 95c5e6b7-9818-4372-9148-76f1aa1e2268
+		summarizeBy: sum
+		sourceColumn: amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column quote_line_key
+		dataType: string
+		lineageTag: 093f80a7-2a75-44cd-af49-e694a2126717
+		summarizeBy: none
+		sourceColumn: quote_line_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc5_srm_fact_line_prices = m
+		mode: import
+		queryGroup: fact
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_fact_line_prices", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

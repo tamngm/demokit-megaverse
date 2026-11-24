@@ -1,0 +1,683 @@
+/// Measures of the supplier relation report, one display folder per report page
+table _Measures
+	lineageTag: bde5a667-fc0f-4952-b88b-47ca198af9aa
+
+	/// Net spend excluding tax, in EUR (quote totals)
+	measure 'Spend EUR' = SUM(uc5_srm_fact_quotes[total_net_excl_tax_eur])
+		formatString: €#,##0
+		displayFolder: 1 Base
+		lineageTag: f7c4f5e3-18a9-4d8c-963d-9acd684fa5cb
+
+	/// Total at list price, in EUR (quote totals)
+	measure 'List EUR' = SUM(uc5_srm_fact_quotes[total_list_eur])
+		formatString: €#,##0
+		displayFolder: 1 Base
+		lineageTag: 7254992b-f0c1-49c5-bab6-f74348c61265
+
+	/// List minus net, in EUR
+	measure 'Discount EUR' = [List EUR] - [Spend EUR]
+		formatString: €#,##0
+		displayFolder: 1 Base
+		lineageTag: ea327fee-d3ca-41f0-8508-fad02433b6a1
+
+	/// 1 - net / list, recomputed (never an average of discount_rate)
+	measure 'Discount rate %' =
+			AVERAGE(uc5_srm_fact_quotes[discount_rate])
+			// DIVIDE([List EUR] - [Spend EUR], [List EUR])
+		formatString: 0.0%
+		displayFolder: 1 Base
+		lineageTag: 71355745-7403-4749-aee3-989308d2f1e8
+
+	/// Number of quote documents
+	measure '# Quotes' = DISTINCTCOUNTNOBLANK(uc5_srm_fact_quotes[quote_number])
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: 54aca9de-d2d5-48c2-805d-bb36ef16b2cb
+
+	/// Number of projects (distinct oid)
+	measure '# Projects' = DISTINCTCOUNT(uc5_srm_fact_quotes[oid])
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: dd93a196-c609-4a4c-b288-5fd208be74df
+
+	/// Number of suppliers in the supplier dimension
+	measure 'Total Suppliers' = COUNTROWS(uc5_srm_dim_supplier)
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: 4a3f6602-4d49-473b-896a-0d3b0ba3955b
+
+	/// Number of editors in the editor dimension
+	measure 'Total Editors' = COUNTROWS(uc5_srm_dim_editor)
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: e583f55c-9087-4755-a2a7-e9a98cde6409
+
+	/// Number of distinct suppliers quoting in the current context
+	measure '# Suppliers Quoted' = DISTINCTCOUNT(uc5_srm_fact_quotes[supplier])
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: 6e67e08e-5567-432b-afb1-a2f3d9730778
+
+	/// Number of distinct editors quoted in the current context
+	measure '# Editors Quoted' = DISTINCTCOUNT(uc5_srm_fact_quotes[editor])
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: 3e8e53e2-562f-45d5-acbb-6ebcfdba40c8
+
+	/// Number of distinct end customers quoted in the current context
+	measure '# End Customers' = DISTINCTCOUNT(uc5_srm_fact_quotes[end_customer])
+		formatString: #,##0
+		displayFolder: 1 Base
+		lineageTag: 34438396-0b8a-492f-b4c0-1b5d2b67cd97
+
+	/// Date of the first quote in the current context
+	measure 'First Contract Date' = MIN(uc5_srm_fact_quotes[contract_start])
+		formatString: dd/mm/yyyy
+		displayFolder: 1 Base
+		lineageTag: 2fcf5fce-5920-45af-862b-bcb14634f566
+
+	/// Date of the last quote in the current context
+	measure 'Last Contract Date' = MAX(uc5_srm_fact_quotes[contract_end])
+		formatString: dd/mm/yyyy
+		displayFolder: 1 Base
+		lineageTag: 554a97fc-bc62-4b69-a903-22b24a84996a
+
+	/// Reference "today": last quote date of the whole dataset (masked dates are shifted, so TODAY() would be wrong)
+	measure 'As Of Date' = CALCULATE(MAX(uc5_srm_fact_quotes[quote_date]), REMOVEFILTERS())
+		formatString: dd/mm/yyyy
+		displayFolder: 1 Base
+		lineageTag: 2d49c39b-e069-46c3-a204-371ac8bc4a1b
+
+	/// Suppliers with at least one quote in the 12 months up to the as-of date
+	measure 'Active Suppliers 12M' =
+			
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(uc5_srm_fact_quotes[supplier]),
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[quote_date] > EDATE(_asOf, -12),
+			        uc5_srm_fact_quotes[quote_date] <= _asOf
+			    )
+		formatString: #,##0
+		displayFolder: 2 Overview
+		lineageTag: 82e120e1-5bd1-4f53-87ad-b3e956cd5e28
+
+	/// Spend in the 12 months up to the as-of date
+	measure 'Spend L12M' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Spend EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[quote_date] > EDATE(_asOf, -12),
+			        uc5_srm_fact_quotes[quote_date] <= _asOf
+			    )
+		formatString: €#,##0
+		displayFolder: 2 Overview
+		lineageTag: 2728187d-54a9-4f5f-9edd-da2641cd9fe5
+
+	/// Spend in the 12 months before the last 12 months
+	measure 'Spend P12M' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Spend EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[quote_date] > EDATE(_asOf, -24),
+			        uc5_srm_fact_quotes[quote_date] <= EDATE(_asOf, -12)
+			    )
+		formatString: €#,##0
+		displayFolder: 2 Overview
+		lineageTag: b29e5c64-30e8-4cc4-85c6-fd6c5b9e8478
+
+	/// Spend last 6 months vs the 6 months before (the dataset covers about 16 months)
+	measure 'Spend Growth %' = DIVIDE([Spend L6M] - [Spend P6M], [Spend P6M])
+		formatString: +0%;-0%;0%
+		displayFolder: 2 Overview
+		lineageTag: f0cb07a1-9732-4974-886b-8091737b0114
+
+	/// Months between the last quote (any date) and the as-of date
+	measure 'Months Since Last Quote' = ```
+			
+			VAR _last = 
+			CALCULATE(MAX(uc5_srm_fact_quotes[quote_date]), REMOVEFILTERS(dim_calendar))
+			RETURN 
+			IF(NOT ISBLANK(_last), DATEDIFF(_last, [As Of Date], MONTH))
+			```
+		formatString: #,##0
+		displayFolder: 2 Overview
+		lineageTag: a42c2a23-b6ba-4a1f-8c3a-e8c3f7ab1659
+
+	/// New / Growing / Stable / Fading / Dormant: no quote for 12 months = Dormant; first quote in the last 6 months = New; else last 6 months vs prior 6 months
+	measure 'Relationship Status' =
+			VAR _asOf = [As Of Date]
+			VAR _months = [Months Since Last Quote]
+			VAR _first = CALCULATE(MIN(uc5_srm_fact_quotes[quote_date]), REMOVEFILTERS(dim_calendar))
+			VAR _growth = [Spend Growth %]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(_months), BLANK(),
+			        _months > 12, "Dormant",
+			        _first > EDATE(_asOf, -6), "New",
+			        ISBLANK([Spend L6M]), "Fading",
+			        _growth >= 0.1, "Growing",
+			        _growth <= -0.1, "Fading",
+			        "Stable"
+			    )
+		displayFolder: 2 Overview
+		lineageTag: 6cb8052b-cb5d-4f58-9b90-740c5193e544
+
+	/// Color for the relationship status (theme palette)
+	measure 'Relationship Status Color' =
+			SWITCH(
+			    [Relationship Status],
+			    "Growing", "#50BE87",
+			    "New", "#4BB4E6",
+			    "Stable", "#8F8F8F",
+			    "Fading", "#FF6600",
+			    "Dormant", "#595959"
+			)
+		displayFolder: 2 Overview
+		lineageTag: 807f56eb-9248-4c42-9b06-8c8db15b738c
+
+	/// Net line total in EUR (quote lines)
+	measure 'Line Net EUR' = SUM(uc5_srm_fact_quote_lines[line_total_net_eur])
+		formatString: €#,##0
+		displayFolder: 3 Price
+		lineageTag: 0f5fb5fb-9d04-42e3-9258-a68f9e0a903b
+
+	/// Line total at list price in EUR (quote lines)
+	measure 'Line List EUR' = SUM(uc5_srm_fact_quote_lines[line_total_list_eur])
+		formatString: €#,##0
+		displayFolder: 3 Price
+		lineageTag: 1d68fbc4-2ae9-4bee-98bd-3a36a534bcb0
+
+	/// 1 - line net / line list, recomputed on quote lines
+	measure 'Line Discount %' =
+			AVERAGE(uc5_srm_fact_quote_lines[discount_pct])/100
+			// DIVIDE([Line List EUR] - [Line Net EUR], [Line List EUR])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 3 Price
+		lineageTag: 08d2d08c-d005-421f-abad-fcee4dcad612
+
+	/// Quantity on quote lines
+	measure Quantity = SUM(uc5_srm_fact_quote_lines[quantity])
+		formatString: #,##0
+		displayFolder: 3 Price
+		lineageTag: f687ec84-1f5b-4dc7-a596-14f2280bd945
+
+	/// Average unit net price in EUR, weighted by quantity
+	measure 'Unit Net Price EUR' =
+			DIVIDE(
+			    SUMX(uc5_srm_fact_quote_lines, uc5_srm_fact_quote_lines[unit_net_price_eur] * uc5_srm_fact_quote_lines[quantity]),
+			    [Quantity]
+			)
+		formatString: €#,##0.00
+		displayFolder: 3 Price
+		lineageTag: 0d68cf17-8ffd-4c1d-9d84-c38b99525d5e
+
+	/// Lowest unit net price in EUR paid (zero prices left out)
+	measure 'Lowest Unit Net Price EUR' =
+			
+			MINX(
+			    FILTER(uc5_srm_fact_quote_lines, uc5_srm_fact_quote_lines[unit_net_price_eur] > 0),
+			    uc5_srm_fact_quote_lines[unit_net_price_eur]
+			)
+		formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+		displayFolder: 3 Price
+		lineageTag: 5808df4a-697d-484d-95d4-c978d4bdebb0
+
+	/// Supplier(s) of the most recent price for the lines in context
+	measure 'Highest Price Supplier' = ```
+			
+			VAR _lines =
+			    FILTER(
+			        uc5_srm_fact_quote_lines,
+			        uc5_srm_fact_quote_lines[unit_net_price_eur] > 0
+			    )
+			VAR _maxPrice =
+			    MAXX(_lines, uc5_srm_fact_quote_lines[unit_net_price_eur])
+			VAR _topLines =
+			    FILTER(_lines, uc5_srm_fact_quote_lines[unit_net_price_eur] = _maxPrice)
+			RETURN
+			    CONCATENATEX(
+			        DISTINCT(SELECTCOLUMNS(_topLines, "@supplier", uc5_srm_fact_quote_lines[supplier])),
+			        [@supplier],
+			        ", "
+			    )
+			
+			```
+		displayFolder: 3 Price
+		lineageTag: 83a0bfa9-9fdd-48b4-aa72-ba44da805129
+
+	/// Average percentage of DISCOUNT components (line prices); discounts may stack, do not sum across types
+	measure 'Avg Discount Component %' =
+			CALCULATE(
+			    AVERAGE(uc5_srm_fact_line_prices[pct]),
+			    uc5_srm_fact_line_prices[component] = "DISCOUNT"
+			)
+		formatString: 0.0
+		displayFolder: 3 Price
+		lineageTag: 2cd04b20-e1b4-4ca1-a69d-552333b7fbfc
+
+	/// Supplier with the highest discount % in the current context (e.g. one editor)
+	measure 'Best Discount Supplier' =
+			VAR _t =
+			    FILTER(
+			        ADDCOLUMNS(VALUES(uc5_srm_fact_quotes[supplier]), "@disc", [Discount rate %], "@list", [List EUR]),
+			        [@list] > 0 && NOT ISBLANK([@disc])
+			    )
+			RETURN MAXX(TOPN(1, _t, [@disc], DESC, uc5_srm_fact_quotes[supplier], ASC), uc5_srm_fact_quotes[supplier])
+		displayFolder: 4 Route to market
+		lineageTag: 67af506d-4417-49b8-8114-695f0f48a0ba
+
+	/// Supplier with the most quotes in the current context (e.g. one editor)
+	measure 'Most Used Supplier' =
+			VAR _t = ADDCOLUMNS(VALUES(uc5_srm_fact_quotes[supplier]), "@n", [# Quotes])
+			RETURN MAXX(TOPN(1, _t, [@n], DESC, uc5_srm_fact_quotes[supplier], ASC), uc5_srm_fact_quotes[supplier])
+		displayFolder: 4 Route to market
+		lineageTag: 4d4c3edf-a865-42ff-bf59-a0f96da9bcb2
+
+	/// Best discount % among suppliers in the current context
+	measure 'Best Supplier Discount %' =
+			MAXX(
+			    FILTER(
+			        ADDCOLUMNS(VALUES(uc5_srm_fact_quotes[supplier]), "@disc", [Discount rate %], "@list", [List EUR]),
+			        [@list] > 0
+			    ),
+			    [@disc]
+			)
+		formatString: 0.0%
+		displayFolder: 4 Route to market
+		lineageTag: 70e092af-30fc-4c69-ab06-8fabc0021dc5
+
+	/// Number of quote documents with doc_type = quote (versions / revisions before the order)
+	measure '# Quote Versions' = CALCULATE([# Quotes], uc5_srm_fact_quotes[doc_type] = "quote")
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 8fcda01a-6c53-41cf-a101-82db10992e53
+
+	/// Date of the first order document (order form, order confirmation or purchase order)
+	measure 'Order Date' =
+			CALCULATE(
+			    MIN(uc5_srm_fact_quotes[quote_date]),
+			    uc5_srm_fact_quotes[doc_type] IN { "order_form", "order_confirmation", "purchase_order" }
+			)
+		formatString: dd/mm/yyyy
+		displayFolder: 5 Deals
+		lineageTag: 05c791c5-102b-49f0-8ea7-372ba6628a42
+
+	/// Yes when the project has an order document
+	measure 'Reached Order' = IF(NOT ISBLANK([# Quotes]), IF(ISBLANK([Order Date]), "No", "Yes"))
+		displayFolder: 5 Deals
+		lineageTag: 731b2474-6d59-4041-a1fd-ae0816c5ab56
+
+	/// Negotiation time: days from the first document to the first order document; blank when a date is missing
+	measure 'Days Quote to Order' =
+			VAR _q = [Project Quote Date]
+			VAR _o = [Order Date]
+			RETURN IF(NOT ISBLANK(_q) && NOT ISBLANK(_o), DATEDIFF(_q, _o, DAY))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: e808e8c7-7d79-47c1-b007-8ee06837a2de
+
+	/// Net value of the first document of the context (e.g. one project)
+	measure 'First Quote Value' =
+			SUMX(
+			    TOPN(1, uc5_srm_fact_quotes, uc5_srm_fact_quotes[quote_date], ASC, uc5_srm_fact_quotes[quote_number], ASC),
+			    uc5_srm_fact_quotes[total_net_excl_tax_eur]
+			)
+		formatString: €#,##0
+		displayFolder: 5 Deals
+		lineageTag: f291bba4-f434-49f5-95c8-c06a43a6da05
+
+	/// Net value of the last document of the context (e.g. one project)
+	measure 'Final Quote Value' =
+			SUMX(
+			    TOPN(1, uc5_srm_fact_quotes, uc5_srm_fact_quotes[quote_date], DESC, uc5_srm_fact_quotes[quote_number], DESC),
+			    uc5_srm_fact_quotes[total_net_excl_tax_eur]
+			)
+		formatString: €#,##0
+		displayFolder: 5 Deals
+		lineageTag: dd38a383-2bab-4537-89c6-015ef06cee6e
+
+	/// Change of the net value from the first to the last document
+	measure 'Negotiation Change %' = DIVIDE([Final Quote Value] - [First Quote Value], [First Quote Value])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 5 Deals
+		lineageTag: d9edd401-fc4b-406b-b895-57e1a398f17c
+
+	/// Projects that reached an order document
+	measure '# Projects Ordered' = COUNTROWS(FILTER(VALUES(uc5_srm_fact_quotes[oid]), NOT ISBLANK([Order Date])))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: b82bbd8e-8169-4d22-8020-687069a22a43
+
+	/// Share of projects that reached an order document
+	measure 'Order Conversion %' = DIVIDE([# Projects Ordered], [# Projects])
+		formatString: 0%
+		displayFolder: 5 Deals
+		lineageTag: 93df3c25-cfa1-4803-947f-4b26c8c32b1c
+
+	/// Average number of documents per project
+	measure 'Avg Documents per Project' = DIVIDE([# Quotes], [# Projects])
+		formatString: #,##0.0
+		displayFolder: 5 Deals
+		lineageTag: 1a1b7d08-95f4-498e-b308-00a1d74cd1ee
+
+	/// Average days from first document to order, over projects that reached an order
+	measure 'Avg Days Quote to Order' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Days Quote to Order])
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 55123ca8-8b3c-4fdc-9c9e-4f16a13b15ae
+
+	/// Average value change during negotiation, over projects
+	measure 'Avg Negotiation Change %' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Negotiation Change %])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 5 Deals
+		lineageTag: 5db1c67f-6713-4c74-a621-f1a8dc49dd1e
+
+	/// Instalment amount in EUR (payment schedule)
+	measure 'Payment EUR' = SUM(uc5_srm_fact_payment_schedule[amount_eur])
+		formatString: €#,##0
+		displayFolder: 6 Payments
+		lineageTag: d3bc2a4d-12ca-4ddf-98b6-33ffa4091562
+
+	/// Payments due in the 90 days after the as-of date
+	measure 'Payments Due 90D' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Payment EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_payment_schedule[due_date] >= _asOf,
+			        uc5_srm_fact_payment_schedule[due_date] < _asOf + 90
+			    )
+		formatString: €#,##0
+		displayFolder: 6 Payments
+		lineageTag: fc7a605d-4c77-4f2e-bbda-ec885c1ff47e
+
+	/// 1 when the instalment in context is due in the next 90 days (visual filter)
+	measure 'Is Due 90D' = IF(NOT ISBLANK([Payments Due 90D]), 1)
+		formatString: 0
+		displayFolder: 6 Payments
+		lineageTag: e81464bd-d3c4-41a2-808b-89ba8bae4c70
+
+	/// Payments by due date (calendar on due_date), 12 months after the as-of date
+	measure 'Payments Due by Month' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Payment EUR],
+			        USERELATIONSHIP(uc5_srm_fact_payment_schedule[due_date], dim_calendar[date]),
+			        CROSSFILTER(uc5_srm_fact_quotes[quote_date], dim_calendar[date], NONE),
+			        KEEPFILTERS(DATESBETWEEN(dim_calendar[date], _asOf, EDATE(_asOf, 12) - 1))
+			    )
+		formatString: €#,##0
+		displayFolder: 6 Payments
+		lineageTag: 6d9183c9-c96f-4e27-87a0-6277d6c346e4
+
+	/// Quotes whose contract ends in the 180 days after the as-of date
+	measure '# Contracts Ending 180D' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [# Quotes],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[contract_end] >= _asOf,
+			        uc5_srm_fact_quotes[contract_end] <= _asOf + 180
+			    )
+		formatString: #,##0
+		displayFolder: 6 Payments
+		lineageTag: 19282222-6c40-4bd2-b26f-0ffffb05060b
+
+	/// Net value of the contracts ending in the next 180 days
+	measure 'Contract Value Ending 180D' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Spend EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[contract_end] >= _asOf,
+			        uc5_srm_fact_quotes[contract_end] <= _asOf + 180
+			    )
+		formatString: €#,##0
+		displayFolder: 6 Payments
+		lineageTag: 5f423ea9-1afd-47ee-8218-93c6b2a868f9
+
+	/// 1 when the quote in context has a contract ending in the next 180 days (visual filter)
+	measure 'Is Ending 180D' = IF([# Contracts Ending 180D] > 0, 1)
+		formatString: 0
+		displayFolder: 6 Payments
+		lineageTag: cd10f134-34d9-4601-ba69-2cf3b984d20f
+
+	/// Days from the as-of date to the contract end
+	measure 'Days Left' =
+			VAR _end = MAX(uc5_srm_fact_quotes[contract_end])
+			RETURN IF(NOT ISBLANK(_end), DATEDIFF([As Of Date], _end, DAY))
+		formatString: #,##0
+		displayFolder: 6 Payments
+		lineageTag: 25c74d9a-f99c-4320-a77d-796492ad843f
+
+	/// Most frequent payment terms in context
+	measure 'Usual Payment Terms' =
+			VAR _t =
+			    FILTER(
+			        ADDCOLUMNS(VALUES(uc5_srm_fact_quotes[payment_terms]), "@n", [# Quotes]),
+			        NOT ISBLANK(uc5_srm_fact_quotes[payment_terms]) && uc5_srm_fact_quotes[payment_terms] <> ""
+			    )
+			RETURN MAXX(TOPN(1, _t, [@n], DESC, uc5_srm_fact_quotes[payment_terms], ASC), uc5_srm_fact_quotes[payment_terms])
+		displayFolder: 6 Payments
+		lineageTag: 239f5356-be81-4f6a-bcba-b829bf064950
+
+	/// Most frequent billing frequency in context
+	measure 'Usual Billing Frequency' =
+			VAR _t =
+			    FILTER(
+			        ADDCOLUMNS(VALUES(uc5_srm_fact_quotes[billing_frequency]), "@n", [# Quotes]),
+			        NOT ISBLANK(uc5_srm_fact_quotes[billing_frequency]) && uc5_srm_fact_quotes[billing_frequency] <> ""
+			    )
+			RETURN MAXX(TOPN(1, _t, [@n], DESC, uc5_srm_fact_quotes[billing_frequency], ASC), uc5_srm_fact_quotes[billing_frequency])
+		displayFolder: 6 Payments
+		lineageTag: c5db20e7-feaa-4d6c-9c32-31673965d449
+
+	/// Average spend per end customer
+	measure 'Avg Spend per Customer' = DIVIDE([Spend EUR], [# End Customers])
+		formatString: €#,##0
+		displayFolder: 7 Customers
+		lineageTag: 6d321238-d323-4c33-9f09-acb77f9418eb
+
+	/// Spend in the 6 months up to the as-of date
+	measure 'Spend L6M' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Spend EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[quote_date] > EDATE(_asOf, -6),
+			        uc5_srm_fact_quotes[quote_date] <= _asOf
+			    )
+		formatString: €#,##0
+		displayFolder: 2 Overview
+		lineageTag: ceb0b4f4-0213-4f1c-85ba-8a731ede3090
+
+	/// Spend in the 6 months before the last 6 months
+	measure 'Spend P6M' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Spend EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_quotes[quote_date] > EDATE(_asOf, -12),
+			        uc5_srm_fact_quotes[quote_date] <= EDATE(_asOf, -6)
+			    )
+		formatString: €#,##0
+		displayFolder: 2 Overview
+		lineageTag: 099c5c7e-14b0-4e35-9010-26cde68faef7
+
+	/// Payments due in the 12 months after the as-of date
+	measure 'Payments Due 12M' =
+			VAR _asOf = [As Of Date]
+			RETURN
+			    CALCULATE(
+			        [Payment EUR],
+			        REMOVEFILTERS(dim_calendar),
+			        uc5_srm_fact_payment_schedule[due_date] >= _asOf,
+			        uc5_srm_fact_payment_schedule[due_date] < EDATE(_asOf, 12)
+			    )
+		formatString: €#,##0
+		displayFolder: 6 Payments
+		lineageTag: e14a95e9-2e38-4683-9c6f-f1e9757a98a4
+
+	/// 1 when the instalment in context is due in the next 12 months (visual filter)
+	measure 'Is Due 12M' = IF(NOT ISBLANK([Payments Due 12M]), 1)
+		formatString: 0
+		displayFolder: 6 Payments
+		lineageTag: 9ee48cb7-9292-4f5b-859f-34384a406569
+
+	measure 'Highest Unit Net Price EUR' =
+			
+			MAXX(
+			    FILTER(uc5_srm_fact_quote_lines, uc5_srm_fact_quote_lines[unit_net_price_eur] > 0),
+			    uc5_srm_fact_quote_lines[unit_net_price_eur]
+			)
+		formatString: "€"\ #,0.00;-"€"\ #,0.00;"€"\ #,0.00
+		displayFolder: 3 Price
+		lineageTag: 7fb5e92e-8421-40cf-839a-c256d1e3e64b
+
+	measure 'Lowest Price Supplier' =
+			
+			VAR _lines =
+			    FILTER(
+			        uc5_srm_fact_quote_lines,
+			        uc5_srm_fact_quote_lines[unit_net_price_eur] > 0
+			    )
+			VAR _minPrice =
+			    MINX(_lines, uc5_srm_fact_quote_lines[unit_net_price_eur])
+			VAR _topLines =
+			    FILTER(_lines, uc5_srm_fact_quote_lines[unit_net_price_eur] = _minPrice)
+			RETURN
+			    CONCATENATEX(
+			        DISTINCT(SELECTCOLUMNS(_topLines, "@supplier", uc5_srm_fact_quote_lines[supplier])),
+			        [@supplier],
+			        ", "
+			    )
+		displayFolder: 3 Price
+		lineageTag: 67f965e5-cad9-4b32-a2cf-79bbe375b6fb
+
+	/// Date of the first document (any type) of the project in context
+	measure 'Project Quote Date' = MIN(uc5_srm_fact_quotes[quote_date])
+		formatString: dd/mm/yyyy
+		displayFolder: 5 Deals
+		lineageTag: 36d09d01-30de-4fbd-8369-ccc429156b30
+
+	/// Lead time: days from the first order document to the contract start; negative = contract started before the order (backdated)
+	measure 'Days Order to Start' =
+			VAR _o = [Order Date]
+			VAR _s = [First Contract Date]
+			RETURN IF(NOT ISBLANK(_o) && NOT ISBLANK(_s), DATEDIFF(_o, _s, DAY))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 5d4a60b4-4c1e-4ef5-b751-43f9c94b4437
+
+	/// Contract length in days, contract start to contract end
+	measure 'Contract Length Days' =
+			VAR _s = [First Contract Date]
+			VAR _e = [Last Contract Date]
+			RETURN IF(NOT ISBLANK(_s) && NOT ISBLANK(_e), DATEDIFF(_s, _e, DAY))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 271f8363-3948-4867-a628-28f8a0230c05
+
+	/// Contract length in months, contract start to contract end
+	measure 'Contract Length Months' =
+			VAR _s = [First Contract Date]
+			VAR _e = [Last Contract Date]
+			RETURN IF(NOT ISBLANK(_s) && NOT ISBLANK(_e), DATEDIFF(_s, _e, MONTH))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: c6eac49c-c55d-462e-80eb-368bbebf1249
+
+	/// Share of the contract already run at the as-of date (0% not started, 100% ended)
+	measure 'Contract Elapsed %' =
+			VAR _s = [First Contract Date]
+			VAR _e = [Last Contract Date]
+			VAR _asOf = [As Of Date]
+			RETURN
+			    IF(
+			        NOT ISBLANK(_s) && NOT ISBLANK(_e) && _e > _s,
+			        MIN(1, MAX(0, DIVIDE(DATEDIFF(_s, _asOf, DAY), DATEDIFF(_s, _e, DAY))))
+			    )
+		formatString: 0%
+		displayFolder: 5 Deals
+		lineageTag: 72970f7d-6642-451c-a8df-c0a3ca291ec2
+
+	/// Days from the as-of date to the contract end (negative = already ended)
+	measure 'Days to Contract End' =
+			VAR _e = [Last Contract Date]
+			RETURN IF(NOT ISBLANK(_e), DATEDIFF([As Of Date], _e, DAY))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: b1b733a4-db08-4b17-b919-7938786ee2c7
+
+	/// Quoting / Ordered / Ordered, not started / Running / Ended, at the as-of date
+	measure 'Project Stage' =
+			VAR _asOf = [As Of Date]
+			VAR _o = [Order Date]
+			VAR _s = [First Contract Date]
+			VAR _e = [Last Contract Date]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK([# Quotes]), BLANK(),
+			        ISBLANK(_o), "Quoting",
+			        ISBLANK(_s), "Ordered",
+			        _s > _asOf, "Ordered, not started",
+			        NOT ISBLANK(_e) && _e < _asOf, "Ended",
+			        "Running"
+			    )
+		displayFolder: 5 Deals
+		lineageTag: c75041ac-6f21-4271-a409-f481f93730bf
+
+	/// Average lead time from order to contract start, over projects with both dates
+	measure 'Avg Days Order to Start' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Days Order to Start])
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 860548dc-2190-401b-a503-e57aab765949
+
+	/// Average contract length in days, over projects with contract dates
+	measure 'Avg Contract Length Days' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Contract Length Days])
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: 62321f16-c1fc-4b0c-81b0-5b99d7639b6e
+
+	/// Average contract length in months, over projects with contract dates
+	measure 'Avg Contract Length Months' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Contract Length Months])
+		formatString: #,##0.0
+		displayFolder: 5 Deals
+		lineageTag: 8848d7d9-6a29-4c17-99e9-56fb162347c0
+
+	/// Projects whose contract is running at the as-of date
+	measure '# Contracts Running' = COUNTROWS(FILTER(VALUES(uc5_srm_fact_quotes[oid]), [Project Stage] = "Running"))
+		formatString: #,##0
+		displayFolder: 5 Deals
+		lineageTag: dc010b40-1da7-47f6-bd2a-a5efd98e0bd8
+
+	measure 'Avg Days to Contract End' = AVERAGEX(VALUES(uc5_srm_fact_quotes[oid]), [Days to Contract End])
+		lineageTag: 1105dc42-9b9f-424d-9661-a01cb5bb5d79
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Dummy
+		dataType: string
+		isHidden
+		lineageTag: 9076dd93-28e8-437c-8200-276ad6fcb003
+		summarizeBy: none
+		sourceColumn: [Dummy]
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW("Dummy", BLANK())
+

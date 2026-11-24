@@ -1,0 +1,75 @@
+name: dbt-docs
+
+# On demand only: Actions tab -> dbt-docs -> Run workflow  (or: gh workflow run dbt-docs.yml)
+# Builds dbt docs + the Power BI ERDs (src/tool/tmdl_to_erd.py).
+# Uses fake AWS credentials: nothing here can reach Athena or S3 (no column types from Athena).
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Deploy to GitHub Pages (otherwise artifact only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: dbt-docs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dbt
+        run: pip install dbt-athena   # same as pipeline-checks
+
+      - name: Fake AWS profile (no Athena access)
+        run: |
+          aws configure set aws_access_key_id fake --profile aws_demokit_pro
+          aws configure set aws_secret_access_key fake --profile aws_demokit_pro
+          aws configure set region eu-west-1 --profile aws_demokit_pro
+
+      - name: Generate ERDs from Power BI relationships
+        run: python src/tool/tmdl_to_erd.py
+
+      - name: dbt docs generate
+        working-directory: dbt_demokit_pro
+        run: dbt docs generate --profiles-dir . --static --no-compile --empty-catalog
+
+      - name: Collect site
+        run: |
+          mkdir site
+          cp dbt_demokit_pro/target/index.html dbt_demokit_pro/target/static_index.html \
+             dbt_demokit_pro/target/manifest.json dbt_demokit_pro/target/catalog.json site/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dbt-docs
+          path: site
+
+      - uses: actions/upload-pages-artifact@v3
+        if: inputs.publish
+        with:
+          path: site
+
+  deploy:
+    if: inputs.publish
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

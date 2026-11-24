@@ -1,0 +1,311 @@
+/// One row per date from the ref_calendar seed, with year / quarter / month / week attributes and previous-period dates
+table dim_calendar
+	lineageTag: b5c928cd-0521-4e1f-925c-13e8053b0604
+
+	/// Calendar date (key)
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cfc8132e-3366-42d4-8447-631dca17e621
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Date as integer yyyymmdd (e.g. 20250314)
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c162a4d-0cf6-45ab-9c37-3362f80fbd64
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Calendar year
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: fe6c0a17-9b0c-4811-95e0-880faf16c051
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quarter number (1-4)
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f1e515d-d702-45ce-a631-3d367aebe85b
+		summarizeBy: none
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quarter label (Q1-Q4)
+	column quarter_desc
+		dataType: string
+		lineageTag: d008aa27-4b7d-41be-ab50-4675dd71a905
+		summarizeBy: none
+		sourceColumn: quarter_desc
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month number (1-12)
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: c14b5cdd-7590-4f8d-bb0d-94bb9c4a7eb4
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month name (March)
+	column month_name
+		dataType: string
+		lineageTag: 3b370c30-f383-4bec-b423-16067aa4ebe5
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Short month name (Mar)
+	column month_short
+		dataType: string
+		lineageTag: 000920f9-bda1-464c-b13a-68e0a5eb4864
+		summarizeBy: none
+		sourceColumn: month_short
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Year and month as text (2025-03)
+	column year_month
+		dataType: string
+		lineageTag: 3347232e-6be1-4df6-8bed-38244744c7e5
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	/// First day of the month
+	column month_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a8ffb2b4-e507-4c3e-ba02-48c397504c29
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// ISO week-numbering year
+	column iso_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 10ef4b84-a6fd-4317-956f-0a3dbcedd83e
+		summarizeBy: none
+		sourceColumn: iso_year
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ISO week number
+	column iso_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 269f303e-4f14-47eb-b56d-481eb60c4caf
+		summarizeBy: none
+		sourceColumn: iso_week
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Day of the month (1-31)
+	column day_of_month
+		dataType: int64
+		formatString: 0
+		lineageTag: e3080353-667b-4020-937b-7e570eecbac6
+		summarizeBy: none
+		sourceColumn: day_of_month
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Day of the week, 1 = Monday ... 7 = Sunday
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 8cabf11f-5b17-4aec-8cd3-dd3070519f62
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Day name (Friday)
+	column day_name
+		dataType: string
+		lineageTag: 790c00ac-2b5c-4348-bf89-e5a79675133e
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Short day name (Fri)
+	column day_short
+		dataType: string
+		lineageTag: f8b60f70-27c9-4cd5-826c-24a157102621
+		summarizeBy: none
+		sourceColumn: day_short
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Day of the year (1-366)
+	column day_of_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c35a6f5-a46b-4961-8152-38abbdefbb42
+		summarizeBy: none
+		sourceColumn: day_of_year
+
+		annotation SummarizationSetBy = Automatic
+
+	/// 1 for Saturday and Sunday, else 0
+	column is_weekend
+		dataType: int64
+		formatString: 0
+		lineageTag: d83bdabb-a44f-45f8-9251-3c2aaaacaad3
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Previous day
+	column prev_day
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 39e52de3-88f3-43c6-ac81-6377ec70bf1a
+		summarizeBy: none
+		sourceColumn: prev_day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Same day one week earlier
+	column same_day_prev_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5fcc964b-19c0-46ec-bd33-d33baa5c06aa
+		summarizeBy: none
+		sourceColumn: same_day_prev_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Same day one month earlier (clamped to month end)
+	column same_day_prev_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dee3e236-9971-4996-a2ca-d3038c9f7de1
+		summarizeBy: none
+		sourceColumn: same_day_prev_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Same day one quarter earlier (clamped to month end)
+	column same_day_prev_quarter
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 64769f07-7e70-43aa-a826-a157e0c6f02e
+		summarizeBy: none
+		sourceColumn: same_day_prev_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Same day one year earlier (29 Feb -> 28 Feb)
+	column same_day_prev_year
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: adfdf0aa-cdcc-41b9-b612-7afda2564c9e
+		summarizeBy: none
+		sourceColumn: same_day_prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Same weekday 52 weeks earlier, for retail like-for-like comparison
+	column same_weekday_prev_year
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: baade0d0-c6a8-4a68-bb0a-b316eed42079
+		summarizeBy: none
+		sourceColumn: same_weekday_prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// First day of the previous month
+	column prev_month_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3145ba70-e198-4174-bb71-d2db9bbaf08b
+		summarizeBy: none
+		sourceColumn: prev_month_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Previous month as text (2025-02)
+	column prev_year_month
+		dataType: string
+		lineageTag: b70effe3-54a7-4b7b-b781-b36fa01b908a
+		summarizeBy: none
+		sourceColumn: prev_year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	/// First day of the previous quarter
+	column prev_quarter_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4f372b70-d030-40e3-832a-184243d1a1d5
+		summarizeBy: none
+		sourceColumn: prev_quarter_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Previous calendar year
+	column prev_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 322903e2-af00-4a2b-88f3-fa94207fb7ac
+		summarizeBy: none
+		sourceColumn: prev_year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendar = m
+		mode: import
+		queryGroup: dim
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "dim_calendar", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,113 @@
+{
+  "name": "OCD_Orange-5f06786f.json",
+  "dataColors": [
+    "#FF6600",
+    "#085EBD",
+    "#4BB4E6",
+    "#50BE87",
+    "#9164CD",
+    "#595959",
+    "#FFDC00",
+    "#FFB4E6",
+    "#8F8F8F",
+    "#B5E8F7",
+    "#D6D6D6"
+  ],
+  "good": "#50BE87",
+  "neutral": "#FFDC00",
+  "bad": "#FF6600",
+  "maximum": "#FF6600",
+  "center": "#FFDC00",
+  "minimum": "#FFFFFF",
+  "null": "#D6D6D6",
+  "foreground": "#000000",
+  "foregroundNeutralSecondary": "#595959",
+  "foregroundNeutralTertiary": "#8F8F8F",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F2F2F2",
+  "backgroundNeutral": "#D6D6D6",
+  "tableAccent": "#FF6600",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Arial",
+      "color": "#000000"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Arial",
+      "color": "#000000"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Arial",
+      "color": "#000000"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Arial",
+      "color": "#000000"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#D6D6D6"
+              }
+            },
+            "radius": 0,
+            "width": 1
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Arial",
+            "fontSize": 14,
+            "bold": true,
+            "fontColor": {
+              "solid": {
+                "color": "#000000"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

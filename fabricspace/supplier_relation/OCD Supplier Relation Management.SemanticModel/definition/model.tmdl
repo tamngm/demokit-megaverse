@@ -1,0 +1,37 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup fact
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup dim
+
+	annotation PBI_QueryGroupOrder = 1
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["dim_calendar","uc5_srm_dim_customer","uc5_srm_dim_editor","uc5_srm_dim_sku","uc5_srm_dim_supplier","uc5_srm_dim_supplier_editor","uc5_srm_fact_payment_schedule","uc5_srm_fact_quote_lines","uc5_srm_fact_quotes","uc5_srm_fact_line_prices"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_calendar
+ref table uc5_srm_dim_customer
+ref table uc5_srm_dim_editor
+ref table uc5_srm_dim_sku
+ref table uc5_srm_dim_supplier
+ref table uc5_srm_fact_payment_schedule
+ref table uc5_srm_fact_quote_lines
+ref table uc5_srm_fact_quotes
+ref table uc5_srm_dim_supplier_editor
+ref table uc5_srm_fact_line_prices
+ref table _Measures
+
+ref cultureInfo en-US
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "OCD Supplier Relation Management"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bdfdcd7d-6a3c-4c00-bd27-7919f881ec80"
+  }
+}

@@ -7,7 +7,10 @@ transactions_2025-03-14.csv → retail_fashion/transactions/business_date=2025-0
 customers.csv               → retail_fashion/customers/customers.parquet          (unchanged)
 
 Usage:
-  python src/loader/convert_csv_to_parquet.py --sp-folder "raw_data/retail_kit_v3" --s3-prefix data/offybi/retail_fashion --dry-run
+1-first check the S3 folder it will plan to upload with --dry-run
+    python src/loader/convert_csv_to_parquet.py --sp-folder "raw_data/retail_kit_v3" --s3-prefix data/offybi/retail_fashion --dry-run
+2-everything is correct, then rerun without --dry-run
+    python src/loader/convert_csv_to_parquet.py --sp-folder "raw_data/retail_kit_v3" --s3-prefix data/offybi/retail_fashion
 """
 import argparse
 import io

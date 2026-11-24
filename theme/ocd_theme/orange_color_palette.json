@@ -1,0 +1,36 @@
+{
+  "name": "Our color palette",
+  "palettes": [
+    {
+      "group": "Orange Group identity colors",
+      "usage_share": "> 60%",
+      "colors": [
+        { "name": "Dark Grey",  "rgb": "rgb(89, 89, 89)",    "hex": "#595959" },
+        { "name": "Black",      "rgb": "rgb(0, 0, 0)",       "hex": "#000000" },
+        { "name": "Mid Grey",   "rgb": "rgb(143, 143, 143)", "hex": "#8F8F8F" },
+        { "name": "White",      "rgb": "rgb(255, 255, 255)", "hex": "#FFFFFF" },
+        { "name": "Light Grey", "rgb": "rgb(214, 214, 214)", "hex": "#D6D6D6" },
+        { "name": "Orange",     "rgb": "rgb(255, 102, 0)",   "hex": "#FF6600" }
+      ]
+    },
+    {
+      "group": "Orange Cyberdefense secondary colors",
+      "usage_share": "<= 30%",
+      "colors": [
+        { "name": "Light Blue", "rgb": "rgb(181, 232, 247)", "hex": "#B5E8F7" },
+        { "name": "Dark Blue",  "rgb": "rgb(8, 94, 189)",    "hex": "#085EBD" },
+        { "name": "Sky Blue",   "rgb": "rgb(75, 180, 230)",  "hex": "#4BB4E6" },
+        { "name": "Green",      "rgb": "rgb(80, 190, 135)",  "hex": "#50BE87" }
+      ]
+    },
+    {
+      "group": "Optional secondary colors",
+      "usage_share": "0% to 10%",
+      "colors": [
+        { "name": "Pink",   "rgb": "rgb(255, 180, 230)", "hex": "#FFB4E6" },
+        { "name": "Yellow", "rgb": "rgb(255, 220, 0)",   "hex": "#FFDC00" },
+        { "name": "Purple", "rgb": "rgb(145, 100, 205)", "hex": "#9164CD" }
+      ]
+    }
+  ]
+}

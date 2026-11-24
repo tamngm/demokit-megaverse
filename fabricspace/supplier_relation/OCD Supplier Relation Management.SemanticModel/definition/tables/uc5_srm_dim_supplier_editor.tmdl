@@ -1,0 +1,78 @@
+/// One row per supplier x editor: which supplier sells which editor, with the number of quotes and first / last seen
+table uc5_srm_dim_supplier_editor
+	lineageTag: 0432f70c-12d9-48d9-817f-3567839da713
+
+	/// Supplier name; joins to uc5_srm_dim_supplier
+	column supplier
+		dataType: string
+		lineageTag: 9a28d00e-6cfc-420a-91aa-79e1b5112415
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	/// vendor_direct, distributor, service_provider, internal_affiliate
+	column supplier_type
+		dataType: string
+		lineageTag: b764d992-7990-4f6a-9035-e96934655bdc
+		summarizeBy: none
+		sourceColumn: supplier_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Editor name; joins to uc5_srm_dim_editor
+	column editor
+		dataType: string
+		lineageTag: 4e498ba5-f389-42c9-ad71-3a37bd6e32e2
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Date of the first quote from this supplier for this editor
+	column first_seen
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 4a172d1b-bf5c-4688-9245-cd93d57022c8
+		summarizeBy: none
+		sourceColumn: first_seen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Date of the last quote from this supplier for this editor
+	column last_seen
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 5051b630-79b0-4554-9159-9744a2fa7f17
+		summarizeBy: none
+		sourceColumn: last_seen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column quote_count
+		dataType: int64
+		formatString: 0
+		lineageTag: b32186ec-4049-4218-9f13-c9126f635034
+		summarizeBy: sum
+		sourceColumn: quote_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc5_srm_dim_supplier_editor = m
+		mode: import
+		queryGroup: dim
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_dim_supplier_editor", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

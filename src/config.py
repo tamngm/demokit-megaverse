@@ -26,3 +26,5 @@ MS_TENANT_ID = os.getenv('MS_TENANT_ID')
 MS_CLIENT_ID = os.getenv('MS_CLIENT_ID')
 MS_CLIENT_SECRET = os.getenv('MS_CLIENT_SECRET')     # only for --mode app
 SP_SITE_URL = os.getenv('SP_SITE_URL')               # e.g. https://<tenant>.sharepoint.com/sites/<site>
+
+MASKING_KEY = os.getenv('MASKING_KEY')               # secret for src/tool/mask_dataset.py; same key = same masked values

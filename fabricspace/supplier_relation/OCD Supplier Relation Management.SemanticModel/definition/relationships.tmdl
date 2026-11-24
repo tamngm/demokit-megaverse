@@ -1,0 +1,50 @@
+relationship AutoDetected_93ef9be9-e651-4e11-b85c-d0798307a929
+	fromColumn: uc5_srm_fact_quotes.end_customer
+	toColumn: uc5_srm_dim_customer.end_customer
+
+relationship AutoDetected_ca8780dd-d65f-4dc8-bebb-b468931f6926
+	fromColumn: uc5_srm_fact_quotes.editor
+	toColumn: uc5_srm_dim_editor.editor
+
+relationship AutoDetected_b9dba3e4-9cea-4ba4-b5ea-a8048ad48063
+	fromColumn: uc5_srm_dim_supplier_editor.editor
+	toColumn: uc5_srm_dim_editor.editor
+
+relationship AutoDetected_dd5e2d51-ad14-4c43-a5f3-8df22562011b
+	fromColumn: uc5_srm_fact_quotes.supplier
+	toColumn: uc5_srm_dim_supplier.supplier
+
+relationship AutoDetected_a60431d6-3e0a-440c-b644-3613ee751ce5
+	fromColumn: uc5_srm_dim_supplier_editor.supplier
+	toColumn: uc5_srm_dim_supplier.supplier
+
+relationship AutoDetected_fb8bde92-8863-4bd5-804d-0d4f03048f41
+	fromColumn: uc5_srm_fact_payment_schedule.quote_key
+	toColumn: uc5_srm_fact_quotes.quote_key
+
+relationship AutoDetected_bfeaae8a-6b69-40f0-8184-b21774caa190
+	fromColumn: uc5_srm_fact_quote_lines.quote_key
+	toColumn: uc5_srm_fact_quotes.quote_key
+
+relationship AutoDetected_fdb30546-d575-4490-a752-c161aac33afb
+	fromColumn: uc5_srm_fact_quote_lines.sku
+	toColumn: uc5_srm_dim_sku.sku_code
+
+relationship 810aa057-2567-3384-6094-82f10a17b867
+	fromColumn: uc5_srm_fact_quotes.quote_date
+	toColumn: dim_calendar.date
+
+relationship AutoDetected_727c8f4a-96d3-449d-8c6c-a2fd583b67c9
+	fromColumn: uc5_srm_fact_line_prices.quote_line_key
+	toColumn: uc5_srm_fact_quote_lines.quote_line_key
+
+relationship 'payment_schedule due_date to calendar'
+	isActive: false
+	fromColumn: uc5_srm_fact_payment_schedule.due_date
+	toColumn: dim_calendar.date
+
+relationship 'quotes contract_end to calendar'
+	isActive: false
+	fromColumn: uc5_srm_fact_quotes.contract_end
+	toColumn: dim_calendar.date
+
