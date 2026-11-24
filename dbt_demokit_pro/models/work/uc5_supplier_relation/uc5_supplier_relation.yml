@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: uc5_srm_supplier_editor_wk
+    description: "Supplier x editor pairs: the supplier list (uc5_srm_supplier_editor) full-joined with the pairs seen in quote lines, with supplier type, number of quotes and first / last seen. Feeds uc5_srm_dim_supplier, uc5_srm_dim_editor and uc5_srm_dim_supplier_editor."
+    columns:
+      - name: supplier
+        description: "Supplier name"
+      - name: editor
+        description: "Editor name"
+      - name: supplier_type
+        description: "Supplier type from the supplier list; NULL for pairs found only in quote lines"
+      - name: quote_count
+        description: "Number of quotes (supplier list, else distinct quote numbers in quote lines)"
+      - name: first_seen
+        description: "First quote date from the supplier list"
+      - name: last_seen
+        description: "Last quote date from the supplier list"
+
+  # ---------------- data quality (raw tables) ----------------
+  - name: uc5_srm_dq_checks_wk
+    description: "Catalogue of the data quality checks run on the uc5 raw tables: one row per check"
+    columns:
+      - name: check_id
+        description: "Check id (C01, C02 ...)"
+        data_tests: [unique, not_null]
+      - name: check_name
+        description: "Short name of the check"
+      - name: dimension
+        description: "Quality dimension: completeness, uniqueness, integrity, consistency, validity"
+      - name: severity
+        description: "high (breaks keys or leaves data out of the marts), medium (missing link or doubtful value), low (informational)"
+      - name: table_name
+        description: "Raw table(s) checked"
+      - name: description
+        description: "What the check looks for and its impact"
+
+  - name: uc5_srm_dq_issues_wk
+    description: "Data quality issues in the uc5 raw tables: one row per issue (check x record), to report and fix at the source"
+    columns:
+      - name: check_id
+        description: "Check id; joins to uc5_srm_dq_checks_wk"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('uc5_srm_dq_checks_wk')
+                field: check_id
+      - name: check_name
+        description: "Short name of the check"
+      - name: dimension
+        description: "Quality dimension of the check"
+      - name: severity
+        description: "high, medium or low"
+      - name: table_name
+        description: "Raw table where the issue is"
+      - name: oid
+        description: "Opportunity id of the record; NULL for checks reported per value (SKU, supplier, currency)"
+      - name: quote_number
+        description: "Quote number of the record (may be empty: that is the issue for C01 and C04)"
+      - name: line_no
+        description: "Line number, for issues on quote lines"
+      - name: detail
+        description: "Values that explain the issue (e.g. declared=5, found=3)"
+
+  - name: uc5_srm_dq_summary_wk
+    description: "Data quality summary of the uc5 raw tables: one row per check with its issue count and PASS / FAIL (checks without issues included)"
+    columns:
+      - name: check_id
+        description: "Check id"
+        data_tests: [unique, not_null]
+      - name: check_name
+        description: "Short name of the check"
+      - name: dimension
+        description: "Quality dimension of the check"
+      - name: severity
+        description: "high, medium or low"
+      - name: table_name
+        description: "Raw table(s) checked"
+      - name: description
+        description: "What the check looks for and its impact"
+      - name: issue_count
+        description: "Number of issues found (rows in uc5_srm_dq_issues_wk)"
+      - name: oid_count
+        description: "Number of projects (oid) affected; 0 for checks reported per value"
+      - name: status
+        description: "PASS when no issue is found, else FAIL"

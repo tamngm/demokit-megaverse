@@ -1,0 +1,36 @@
+/// One row per supplier: supplier type, number of editors and quotes, first / last seen
+table uc5_srm_dim_supplier
+	lineageTag: 428dd04f-3e00-45f5-9662-0936174ba83e
+
+	/// Supplier name (key); joins to the facts
+	column supplier
+		dataType: string
+		lineageTag: ccd63940-af4d-4668-8327-9ccd3e51f29b
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	/// vendor_direct, distributor, service_provider, internal_affiliate
+	column supplier_type
+		dataType: string
+		lineageTag: 99a7d60b-a462-400d-b349-ee8104f77988
+		summarizeBy: none
+		sourceColumn: supplier_type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc5_srm_dim_supplier = m
+		mode: import
+		queryGroup: dim
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_dim_supplier", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

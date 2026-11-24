@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "OCD Supplier Relation Management"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fd97614d-6e69-43c9-9c36-503a945f8a85"
+  }
+}

@@ -27,6 +27,7 @@ An Athena `LOCATION` is always a folder of files with one schema, never a single
 
 - uc1 mart reads `ref('uc1_za_product_sales_stg')`.
 - uc3 mart: `uc3_dim_rtl_fsh_*` and `uc3_fact_rtl_fsh_*` read the two uc3 work models or `source('uc3_retail_fashion', ...)`; amounts are converted to EUR with the `ref_exchange_rates` seed.
+- uc5 mart (`models/mart/uc5_supplier_relation/`): `uc5_srm_dim_*` / `uc5_srm_fact_*` read `source('uc5_supplier_relation', ...)` (masked supplier quotes); the supplier, editor and supplier x editor dims read the work model `uc5_srm_supplier_editor_wk` (supplier list full-joined with the pairs in quote lines). Facts link on `quote_key` (`hash_key('oid', 'quote_number')`, macro in `macros/parsing/hash_key.sql`); every model starts with `SELECT DISTINCT` because the source has exact duplicate rows.
 
 ## Python and credentials
 - `src/` holds only `config.py` and the loader. `create_athena_tbl.py` (the only entry point) adds `src/` to `sys.path` for `import config`.

@@ -11,6 +11,7 @@ Retail analytics demo: team uploads raw files to S3 → Athena raw tables (`src/
 ## Rules (check → instead)
 - Raw CSV date columns → declare `string` in the DDL; parse in dbt with `try(date_parse(split_part(trim(col),' ',1),'%m/%d/%Y'))`.
 - Joining on text keys → `lower()` both sides; never normalize case on one side only.
+- Filtering "missing" text in Parquet made by `convert_csv_to_parquet.py` → empty cells are `''`, not NULL: use `NULLIF(trim(col), '') IS NOT NULL`, never `col IS NOT NULL` alone.
 - New raw table → DDL in `src/loader/load_config/<uc>_*.sql` AND an entry in `models/sources.yml`, in the same change.
 - Deleting or renaming a model → remove or rename its block in the folder's shared `.yml` in the same change.
 - uc3 files go in `models/*/uc3_retail_fashion/`, uc1 files in `models/*/uc1_zara_sales/`; never nest one use case inside another.
@@ -28,3 +29,4 @@ Retail analytics demo: team uploads raw files to S3 → Athena raw tables (`src/
 ## Corrections log
 When Claude gets something wrong, add a rule above (what to check → what to do instead) and one line here.
 - 2026-10: status join failed (case changed on one side only) → "lower() both sides" rule.
+- 2026-11: uc5 `quote_line_key` not unique (`quote_number IS NOT NULL` kept empty strings) → "NULLIF(trim(col), '')" rule.

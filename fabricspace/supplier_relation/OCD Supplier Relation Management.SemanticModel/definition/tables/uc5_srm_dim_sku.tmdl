@@ -1,0 +1,98 @@
+/// One row per SKU: the SKU list, plus SKUs found only in quote lines so every line finds its SKU
+table uc5_srm_dim_sku
+	lineageTag: 4cb335b2-99cb-4578-94d9-b51e17645c35
+
+	/// SKU code (key); joins to uc5_srm_fact_quote_lines.sku and uc5_srm_fact_line_prices.sku
+	column sku_code
+		dataType: string
+		lineageTag: 8b747207-c127-4471-8005-c6f8f837ae86
+		summarizeBy: none
+		sourceColumn: sku_code
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Editor of the SKU
+	column editor
+		dataType: string
+		lineageTag: 006d202a-c7af-4848-b3a6-375727c635ea
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SKU description
+	column description
+		dataType: string
+		lineageTag: 4ac05285-7a7c-4098-8fab-36deba21feaf
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SOFTWARE, HARDWARE, SERVICE, FEE
+	column item_type
+		dataType: string
+		lineageTag: 4fbedce8-f233-4e24-b0b2-7b36f37a2854
+		summarizeBy: none
+		sourceColumn: item_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Number of quotes the SKU appears in; NULL for SKUs found only in quote lines
+	column times_quoted
+		dataType: int64
+		formatString: 0
+		lineageTag: f1182a21-e130-4c77-bebc-e25068c9f981
+		summarizeBy: none
+		sourceColumn: times_quoted
+
+		annotation SummarizationSetBy = Automatic
+
+	/// First quote date; NULL for SKUs found only in quote lines
+	column first_seen
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 705fd010-04c8-4457-802c-2d94e6b26c27
+		summarizeBy: none
+		sourceColumn: first_seen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Last quote date; NULL for SKUs found only in quote lines
+	column last_seen
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: c4b76536-4c84-48f2-82b7-9336f08665ed
+		summarizeBy: none
+		sourceColumn: last_seen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// true when the SKU is not in the SKU list and was added from the quote lines
+	column is_from_lines_only
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dd0566b0-afcd-44af-a8b9-1bc798444809
+		summarizeBy: none
+		sourceColumn: is_from_lines_only
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc5_srm_dim_sku = m
+		mode: import
+		queryGroup: dim
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_dim_sku", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,27 @@
+/// One row per editor (software / hardware vendor) found in any uc5 table
+table uc5_srm_dim_editor
+	lineageTag: c58d6e23-0951-44d2-ad58-516a9be6a63d
+
+	/// Editor name (key); joins to the facts
+	column editor
+		dataType: string
+		lineageTag: c394eb9d-cbcd-460a-964a-b8d28ec45e62
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uc5_srm_dim_editor = m
+		mode: import
+		queryGroup: dim
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_dim_editor", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

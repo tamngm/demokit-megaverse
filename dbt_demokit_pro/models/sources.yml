@@ -28,6 +28,27 @@ sources:
       - name: uc3_rtl_fsh_transactions
         description: "Timely sales and returns per date x store x product x currency (aggregated from invoice lines); 3 yearly files"
 
+  - name: uc5_supplier_relation
+    description: "Supplier quotes knowledge base (pulse_sku_kb.xlsx), masked, as Parquet in s3://offy-bi-demo/data/offybi/supplier_relation/"
+    schema: offybi
+    tables:
+      - name: uc5_srm_quotes
+        description: "One row per quote document: supplier, editor, customer, dates, currency, totals"
+      - name: uc5_srm_quote_lines
+        description: "One row per quote line: SKU, quantity, unit prices, discount, totals, dates"
+      - name: uc5_srm_price_matrix
+        description: "Same lines as quote_lines, one column per kind of price (list, each discount, net, per year)"
+      - name: uc5_srm_line_prices
+        description: "One row per price component of a line (net, list, discounts, fees, by period)"
+      - name: uc5_srm_quote_adjustments
+        description: "Quote-level adjustments: tax, freight, one-time discounts"
+      - name: uc5_srm_payment_schedule
+        description: "Payment instalments per quote"
+      - name: uc5_srm_skus
+        description: "One row per SKU: editor, description, item type, times quoted, first / last seen"
+      - name: uc5_srm_supplier_editor
+        description: "One row per supplier x editor: supplier type, number of quotes, first / last seen"
+
   - name: referential
     schema: offybi
     tables:

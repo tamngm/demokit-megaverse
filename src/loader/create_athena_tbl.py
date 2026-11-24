@@ -1,3 +1,28 @@
+"""
+Create (or recreate) Athena raw tables from a DDL file.
+
+Purpose:
+  Runs every statement of one .sql file from src/loader/load_config/ on Athena, one statement at a time
+  (Athena accepts one statement per query). Use it after the data files are in S3, to expose them as
+  raw tables in the `offybi` database that dbt reads through models/sources.yml.
+
+Usage (from the repo root):
+  .venv\\Scripts\\python.exe src\\loader\\create_athena_tbl.py <file.sql>
+  e.g. .venv\\Scripts\\python.exe src\\loader\\create_athena_tbl.py uc3_retail_fashion_kit.sql
+  Without an argument, it lists the .sql files available in load_config/.
+
+Files it uses:
+  - src/loader/load_config/<file.sql>  the DDL: DROP TABLE IF EXISTS ... then CREATE EXTERNAL TABLE ... ,
+                                       statements separated by `;` (no `;` inside strings or comments)
+  - src/config.py (reads .env)         AWS keys, region, ATHENA_DATABASE, ATHENA_OUTPUT_LOCATION,
+                                       ATHENA_WORKGROUP
+
+Notes:
+  - Creates the `offybi` database if it does not exist.
+  - DROP TABLE removes only the table definition: the data in S3 is kept.
+  - Everything after -- on a line is removed before the file is split, so do not use -- inside strings.
+  - Exit code 0 when every statement succeeds, 1 otherwise (failed tables are listed).
+"""
 import logging
 import os
 import re

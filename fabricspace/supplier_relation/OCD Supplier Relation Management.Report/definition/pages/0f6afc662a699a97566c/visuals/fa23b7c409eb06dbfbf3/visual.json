@@ -1,0 +1,588 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "fa23b7c409eb06dbfbf3",
+  "position": {
+    "x": 36,
+    "y": 722,
+    "z": 18000,
+    "height": 334,
+    "width": 1848,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "quote_date"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.quote_date",
+              "nativeQueryRef": "quote_date",
+              "displayName": "Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "supplier"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.supplier",
+              "nativeQueryRef": "supplier",
+              "displayName": "Supplier"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "oid"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.oid",
+              "nativeQueryRef": "oid",
+              "displayName": "Project"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "project_name"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.project_name",
+              "nativeQueryRef": "project_name",
+              "displayName": "Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "doc_type"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.doc_type",
+              "nativeQueryRef": "doc_type",
+              "displayName": "Document"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "revision"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.revision",
+              "nativeQueryRef": "revision",
+              "displayName": "Rev."
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "quote_number"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.quote_number",
+              "nativeQueryRef": "quote_number",
+              "displayName": "Number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "editor"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.editor",
+              "nativeQueryRef": "editor",
+              "displayName": "Editor"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "end_customer"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.end_customer",
+              "nativeQueryRef": "end_customer",
+              "displayName": "End customer"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "List EUR"
+                }
+              },
+              "queryRef": "_Measures.List EUR",
+              "nativeQueryRef": "List EUR",
+              "displayName": "List EUR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Spend EUR"
+                }
+              },
+              "queryRef": "_Measures.Spend EUR",
+              "nativeQueryRef": "Spend EUR",
+              "displayName": "Net EUR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Discount rate %"
+                }
+              },
+              "queryRef": "_Measures.Discount %",
+              "nativeQueryRef": "Discount %",
+              "displayName": "Discount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "payment_terms"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.payment_terms",
+              "nativeQueryRef": "payment_terms",
+              "displayName": "Payment terms"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "billing_frequency"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.billing_frequency",
+              "nativeQueryRef": "billing_frequency",
+              "displayName": "Billing"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "contract_start"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.contract_start",
+              "nativeQueryRef": "contract_start",
+              "displayName": "Contract start"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "uc5_srm_fact_quotes"
+                    }
+                  },
+                  "Property": "contract_end"
+                }
+              },
+              "queryRef": "uc5_srm_fact_quotes.contract_end",
+              "nativeQueryRef": "contract_end",
+              "displayName": "Contract end"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "uc5_srm_fact_quotes"
+                  }
+                },
+                "Property": "quote_date"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#000000'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#000000'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#000000'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D6D6D6'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "5D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Supplier history: every document (newest first)'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#000000'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

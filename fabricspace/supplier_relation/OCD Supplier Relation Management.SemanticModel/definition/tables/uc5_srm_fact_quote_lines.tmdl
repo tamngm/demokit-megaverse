@@ -1,0 +1,334 @@
+/// Grain: one row per quote line (quote_line_key). Exact duplicate rows removed. Amounts in the line currency and in EUR.
+table uc5_srm_fact_quote_lines
+	lineageTag: c44ae072-b093-43f4-856a-bf1cf2e3495c
+
+	/// Line key (hash of quote_key + line_no + line_seq)
+	column quote_line_key
+		dataType: string
+		lineageTag: 913566bc-3538-4cef-a23b-8963cfeeae7e
+		summarizeBy: none
+		sourceColumn: quote_line_key
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote key; joins to uc5_srm_fact_quotes
+	column quote_key
+		dataType: string
+		lineageTag: cfca9dee-e4d6-4db6-98eb-cac15932ee0c
+		summarizeBy: none
+		sourceColumn: quote_key
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Opportunity id
+	column oid
+		dataType: string
+		lineageTag: 6a777eff-33cc-446e-8eef-57fcb3390e6f
+		summarizeBy: none
+		sourceColumn: oid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote number
+	column quote_number
+		dataType: string
+		lineageTag: ac00140f-a816-47f0-80a6-fae4d6d26179
+		summarizeBy: none
+		sourceColumn: quote_number
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Line number in the quote
+	column line_no
+		dataType: int64
+		formatString: 0
+		lineageTag: 51c70d3b-6d3f-477b-8504-58d98dee5252
+		summarizeBy: sum
+		sourceColumn: line_no
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Parent line number (support / add-on lines)
+	column parent_line_no
+		dataType: double
+		lineageTag: 3c8aaef7-1c60-4272-8001-8c78185ce63d
+		summarizeBy: sum
+		sourceColumn: parent_line_no
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Supplier; joins to uc5_srm_dim_supplier
+	column supplier
+		dataType: string
+		lineageTag: 548cbac4-4085-4d81-9359-a11623ef3948
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Editor; joins to uc5_srm_dim_editor
+	column editor
+		dataType: string
+		lineageTag: e1aee7b4-1855-4fb6-bce9-e0e161458e72
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SKU; joins to uc5_srm_dim_sku.sku_code
+	column sku
+		dataType: string
+		lineageTag: 1bec803d-c819-42c9-ae56-a21615a183f0
+		summarizeBy: none
+		sourceColumn: sku
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SKU covered by this line (support, renewal)
+	column covered_sku
+		dataType: string
+		lineageTag: c972836e-9ed5-40de-bfdf-65a651760b2b
+		summarizeBy: none
+		sourceColumn: covered_sku
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SOFTWARE, HARDWARE, SERVICE, FEE
+	column item_type
+		dataType: string
+		lineageTag: 7463fd94-f563-494c-97e2-8048f7cef164
+		summarizeBy: none
+		sourceColumn: item_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Line description
+	column description
+		dataType: string
+		lineageTag: d0af8e85-0848-49cb-9325-8f284d5f08a4
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Unit of measure
+	column unit_of_measure
+		dataType: string
+		lineageTag: c088651d-583e-4f24-b4f2-4b5ecb41caf2
+		summarizeBy: none
+		sourceColumn: unit_of_measure
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Business line (demo scenario)
+	column business_line
+		dataType: string
+		lineageTag: 4bfe35a8-ca59-4922-91ca-2bcf72d69e62
+		summarizeBy: none
+		sourceColumn: business_line
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Line start date
+	column start_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 1d9fdb56-2363-4fcd-ac7f-a89715c11a4f
+		summarizeBy: none
+		sourceColumn: start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Line end date
+	column end_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: b4efe908-8f84-40f1-92c4-591f2a249c65
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Line term in months
+	column term_months
+		dataType: double
+		lineageTag: db514b30-a9ef-41aa-8354-6e7d5a56ecae
+		summarizeBy: sum
+		sourceColumn: term_months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line currency
+	column currency
+		dataType: string
+		lineageTag: 1d00809d-4c18-4f31-abf9-d24fd29d9133
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantity
+	column quantity
+		dataType: double
+		lineageTag: 82d6cacc-4509-4a0c-90e9-ced8590f2abc
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Unit list price, line currency
+	column unit_list_price
+		dataType: double
+		lineageTag: dd921603-0f1f-4144-a1a5-eb7eb95f9b39
+		summarizeBy: sum
+		sourceColumn: unit_list_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Unit net price, line currency
+	column unit_net_price
+		dataType: double
+		lineageTag: 47697fc9-37c7-4da9-b46d-a811a91c888c
+		summarizeBy: sum
+		sourceColumn: unit_net_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Discount % on the line
+	column discount_pct
+		dataType: double
+		lineageTag: 1514b547-5ad7-4119-a3b8-b30b31168cb7
+		summarizeBy: sum
+		sourceColumn: discount_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Effective discount % (net vs list)
+	column effective_discount_pct
+		dataType: double
+		lineageTag: 1615a93f-1705-4c87-a9ae-5e358ebbe4b0
+		summarizeBy: sum
+		sourceColumn: effective_discount_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line total at list price, line currency
+	column line_total_list
+		dataType: double
+		lineageTag: ef994852-6af3-4fde-8c1d-7ece7fa92cd8
+		summarizeBy: sum
+		sourceColumn: line_total_list
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line total net, line currency
+	column line_total_net
+		dataType: double
+		lineageTag: 4e198f2d-6b9b-455f-a942-08b3365377cb
+		summarizeBy: sum
+		sourceColumn: line_total_net
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// line_total_list - line_total_net, line currency
+	column line_discount_amount
+		dataType: double
+		lineageTag: 6a4ccfa9-5958-41e4-896c-f82195cbba67
+		summarizeBy: sum
+		sourceColumn: line_discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// EUR for 1 unit of the line currency (ref_exchange_rates)
+	column eur_per_unit
+		dataType: double
+		lineageTag: 1a8beba5-860c-45da-854f-7c9b30e8f5a0
+		summarizeBy: sum
+		sourceColumn: eur_per_unit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Unit net price in EUR
+	column unit_net_price_eur
+		dataType: double
+		lineageTag: c2cad048-362d-4a62-96bb-d30b032c9795
+		summarizeBy: sum
+		sourceColumn: unit_net_price_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line total at list price in EUR
+	column line_total_list_eur
+		dataType: double
+		lineageTag: 75ef0148-f65a-4006-91a9-af3a37aa78b6
+		summarizeBy: sum
+		sourceColumn: line_total_list_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line total net in EUR
+	column line_total_net_eur
+		dataType: double
+		lineageTag: fcd1c6d3-b6af-4526-8973-d57eb11d212e
+		summarizeBy: sum
+		sourceColumn: line_total_net_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Line discount amount in EUR
+	column line_discount_amount_eur
+		dataType: double
+		lineageTag: e04e288e-3484-406c-9b58-098d55b39f79
+		summarizeBy: sum
+		sourceColumn: line_discount_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc5_srm_fact_quote_lines = m
+		mode: import
+		queryGroup: fact
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_fact_quote_lines", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+

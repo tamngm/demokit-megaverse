@@ -1,0 +1,375 @@
+/// Grain: one row per quote (quote_key = oid + quote_number). Exact duplicate rows removed; documents of one oid without a quote_number grouped into one quote. Amounts in the quote currency and in EUR.
+table uc5_srm_fact_quotes
+	lineageTag: 0be6cdd2-1e42-4360-8a2b-da46bd079716
+
+	/// Quote key (hash of oid + quote_number); joins to the other uc5 facts
+	column quote_key
+		dataType: string
+		lineageTag: a7cff45a-a57d-4ac9-8739-9d2addd5c311
+		summarizeBy: none
+		sourceColumn: quote_key
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Opportunity id
+	column oid
+		dataType: string
+		lineageTag: 6d62ee65-5e01-4892-bf74-71603c515a03
+		summarizeBy: none
+		sourceColumn: oid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote number; NULL for documents without one
+	column quote_number
+		dataType: string
+		lineageTag: 73b064ea-24ae-40b0-ad2b-f8edc6d3c5d9
+		summarizeBy: none
+		sourceColumn: quote_number
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Number of source documents grouped in this quote (usually 1)
+	column document_count
+		dataType: int64
+		formatString: 0
+		lineageTag: fe12f6f6-b239-4f2f-b34f-19166acfe2fc
+		summarizeBy: sum
+		sourceColumn: document_count
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Supplier; joins to uc5_srm_dim_supplier
+	column supplier
+		dataType: string
+		lineageTag: 3727a5ad-4f2e-4ca7-ae59-44b89e432740
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Supplier type
+	column supplier_type
+		dataType: string
+		lineageTag: c7f443e4-4b84-44f0-9d75-0a0f327bf791
+		summarizeBy: none
+		sourceColumn: supplier_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Editor; joins to uc5_srm_dim_editor
+	column editor
+		dataType: string
+		lineageTag: 585a11b9-0ab0-4b7b-b0fc-726b00c315f3
+		summarizeBy: none
+		sourceColumn: editor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// End customer; joins to uc5_srm_dim_customer
+	column end_customer
+		dataType: string
+		lineageTag: b53b84b3-e6a5-4878-8b43-ebf4adac1eb5
+		summarizeBy: none
+		sourceColumn: end_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	/// quote, order_form, order_confirmation, purchase_order ...
+	column doc_type
+		dataType: string
+		lineageTag: dd7ebe5e-7595-4ad7-a17e-f522d93d0646
+		summarizeBy: none
+		sourceColumn: doc_type
+
+		annotation SummarizationSetBy = Automatic
+
+	/// BUY (supplier quote to us) or SELL (our quote to the customer)
+	column direction
+		dataType: string
+		lineageTag: 2fbb2cfb-1a30-4163-be5d-b05c853cc546
+		summarizeBy: none
+		sourceColumn: direction
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote revision
+	column revision
+		dataType: string
+		lineageTag: 8a9b2eba-b36f-4de6-9258-4dbf603ba6d3
+		summarizeBy: none
+		sourceColumn: revision
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quote date; joins to dim_calendar
+	column quote_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: cdc3337c-fd4f-436f-8200-038831e6319f
+		summarizeBy: none
+		sourceColumn: quote_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// End of the quote validity
+	column valid_until
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 3f1ee975-e4d0-43d4-8b4e-a656ae262355
+		summarizeBy: none
+		sourceColumn: valid_until
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Days from quote_date to valid_until; NULL if either date is missing
+	column validity_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c94f966-b9d9-4365-a97f-ec0615814f61
+		summarizeBy: sum
+		sourceColumn: validity_days
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Contract start date
+	column contract_start
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 681ff880-cf35-4328-add3-e6c673bb204a
+		summarizeBy: none
+		sourceColumn: contract_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Contract end date
+	column contract_end
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 8e6f416d-8705-4e3c-bd5e-8cbb08f46207
+		summarizeBy: none
+		sourceColumn: contract_end
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Contract term in months
+	column term_months
+		dataType: double
+		lineageTag: bb8eac7a-a3e7-4d3c-9609-aeb1399a6b52
+		summarizeBy: sum
+		sourceColumn: term_months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// monthly, annual, upfront
+	column billing_frequency
+		dataType: string
+		lineageTag: d19e6396-f56b-40a4-870e-af0dc4a73641
+		summarizeBy: none
+		sourceColumn: billing_frequency
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Payment terms as printed
+	column payment_terms
+		dataType: string
+		lineageTag: e5d8ba03-6656-44d3-8b9f-e554b01ba366
+		summarizeBy: none
+		sourceColumn: payment_terms
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Incoterms
+	column incoterms
+		dataType: string
+		lineageTag: 9c882ac4-2354-4d66-8228-4a75d5a4f0c1
+		summarizeBy: none
+		sourceColumn: incoterms
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Project name
+	column project_name
+		dataType: string
+		lineageTag: afc98670-d10b-4a82-9e5f-0cb37e3a6d0a
+		summarizeBy: none
+		sourceColumn: project_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Vendor quote reference
+	column vendor_quote_ref
+		dataType: string
+		lineageTag: 4ef33a48-5cfe-4c6c-9a16-f53f319c7d40
+		summarizeBy: none
+		sourceColumn: vendor_quote_ref
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Deal registration id(s)
+	column deal_reg
+		dataType: string
+		lineageTag: 5183c903-1f4b-412a-b29f-0ba075c297aa
+		summarizeBy: none
+		sourceColumn: deal_reg
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Supplier sales contact
+	column sales_contact
+		dataType: string
+		lineageTag: a52f4e6e-a69f-4bcd-9fd7-175c6fb93136
+		summarizeBy: none
+		sourceColumn: sales_contact
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Business line (demo scenario)
+	column business_line
+		dataType: string
+		lineageTag: 5977da85-b2ce-4d54-9047-664efa6a1fce
+		summarizeBy: none
+		sourceColumn: business_line
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Number of lines as declared on the quote
+	column line_count_declared
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f93c655-41b8-4b43-bba1-8403ef2f950e
+		summarizeBy: sum
+		sourceColumn: line_count_declared
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Number of lines found in uc5_srm_fact_quote_lines
+	column line_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 06866d2d-0ce3-491e-8308-295a8a516f18
+		summarizeBy: sum
+		sourceColumn: line_count
+
+		annotation SummarizationSetBy = Automatic
+
+	/// EUR for 1 unit of the quote currency (ref_exchange_rates)
+	column eur_per_unit
+		dataType: double
+		lineageTag: 972e8053-91ec-4dd6-9ec7-94fbdba52bdc
+		summarizeBy: sum
+		sourceColumn: eur_per_unit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Total at list price in EUR
+	column total_list_eur
+		dataType: double
+		lineageTag: cde90fc4-af2e-4877-aad3-98e9b64890fa
+		summarizeBy: sum
+		sourceColumn: total_list_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Total net excluding tax in EUR
+	column total_net_excl_tax_eur
+		dataType: double
+		lineageTag: fe55b0a7-73b1-4360-9638-583cb762d3ab
+		summarizeBy: sum
+		sourceColumn: total_net_excl_tax_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Tax amount in EUR
+	column tax_amount_eur
+		dataType: double
+		lineageTag: 22c601ab-e513-40f5-8934-ae01e20e92ca
+		summarizeBy: sum
+		sourceColumn: tax_amount_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Total including tax in EUR
+	column total_incl_tax_eur
+		dataType: double
+		lineageTag: 8497736d-15db-45cc-a118-a25c61470e68
+		summarizeBy: sum
+		sourceColumn: total_incl_tax_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 1 - total_net / total_list as a ratio (0.25 = 25%); recompute in Power BI instead of averaging
+	column discount_rate
+		dataType: double
+		lineageTag: 777588c8-9d19-4efe-9811-a9ed0a42fd23
+		summarizeBy: sum
+		sourceColumn: discount_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tax_amt_qadj_eur
+		dataType: double
+		lineageTag: faecb9ae-3463-4037-bda5-c21b8d56315f
+		summarizeBy: sum
+		sourceColumn: tax_amt_qadj_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_amt_qadj_eur
+		dataType: double
+		lineageTag: 8e543e05-a3b4-4c81-be03-a5360c3ff437
+		summarizeBy: sum
+		sourceColumn: freight_amt_qadj_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column onetime_disc_amt_qadj_eur
+		dataType: double
+		lineageTag: dbde00f4-d33d-4e6b-9f24-f0470ef112e1
+		summarizeBy: sum
+		sourceColumn: onetime_disc_amt_qadj_eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition uc5_srm_fact_quotes = m
+		mode: import
+		queryGroup: fact
+		source =
+				let
+				  Source = Odbc.DataSource("dsn=aws-bi-demo", [HierarchicalNavigation=true]),
+				  #"Navigation 1" = Source{[Name = "AwsDataCatalog", Kind = "Database"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[Name = "offybi_mart", Kind = "Schema"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[Name = "uc5_srm_fact_quotes", Kind = "Table"]}[Data]
+				in
+				  #"Navigation 3"
+
+	annotation PBI_ResultType = Table
+
