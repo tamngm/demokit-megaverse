@@ -45,7 +45,9 @@ jobs:
 
       - name: dbt docs generate
         working-directory: dbt_demokit_pro
-        run: dbt docs generate --profiles-dir . --static --no-compile --empty-catalog
+        run: |
+          dbt parse --profiles-dir .
+          dbt docs generate --profiles-dir . --static --no-compile --empty-catalog
 
       - name: Collect site
         run: |
